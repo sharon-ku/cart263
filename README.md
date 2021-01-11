@@ -1,1 +1,1 @@
-# cart263
+# CART263 - Creative Computation I
