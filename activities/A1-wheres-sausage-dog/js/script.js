@@ -11,10 +11,16 @@ When clicked successfully, the sausage dog will start spinning.
 "use strict";
 
 // number of animal images
-const NUM_ANIMAL_IMAGES = 10;
+const NUM_ANIMALS = 10;
 
-// array that stores animal images
+// array that stores animals
+let animals = [];
+
+// array that stores animal images (everything except sausage dog)
 let animalImages = [];
+
+// our friendly neighborhood sausage dog
+let sausageDog;
 
 // background fill color: vibrant green
 let bgFill = {
@@ -23,12 +29,14 @@ let bgFill = {
   b: 151,
 };
 
+
+
 // preload()
 //
 // Preload all images
 function preload() {
   // loop through all animal images and push into animalImages array
-  for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
+  for (let i = 0; i < NUM_ANIMALS; i++) {
     let animalImage = loadImage(`assets/images/animal${i}.png`);
     animalImages.push(animalImage);
   }
@@ -38,12 +46,26 @@ function preload() {
 //
 // Create canvas and new objects here
 function setup() {
+  // create a canvas that covers entire window
   createCanvas(windowWidth, windowHeight);
+
+  // Create new temporary animal objects and push to animals array
+  for (let i = 0; i < NUM_ANIMALS; i++) {
+    let animal = new Animal(animalImages[i]);
+    animals.push(animal);
+  }
 }
 
 // draw()
 //
 // Description of draw() goes here.
 function draw() {
+  // Set background color of canvas
   background(bgFill.r, bgFill.g, bgFill.b);
+
+  // Display animals
+  for (let i = 0; i < NUM_ANIMALS; i++) {
+    let animal = animals[i];
+    animal.display();
+  }
 }
