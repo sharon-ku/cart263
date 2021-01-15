@@ -34,8 +34,6 @@ class SausageDog extends Animal {
     }
   }
 
-
-
   // Give theta a rotationSpeed to make sausage dog spin
   spin() {
     this.theta += this.rotationSpeed;

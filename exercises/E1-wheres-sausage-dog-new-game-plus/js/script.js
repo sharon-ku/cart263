@@ -12,7 +12,16 @@ When clicked successfully, the sausage dog will start spinning.
 
 // state of program
 // all possible states: intro, game, defeat, victory
-let state = `game`;
+let state = `intro`;
+
+// title
+let title = undefined;
+
+// intro sausage dog
+let introDog = undefined;
+
+// play button in intro
+let playButton = undefined;
 
 // ANIMALS (does not include sausage dog)
 // number of animal images
@@ -66,16 +75,33 @@ function preload() {
 
 // setup()
 //
-// Create canvas and new objects here
+// Create canvas and new objects here, remove all strokes
 function setup() {
-  // create a canvas that covers entire window
+  // Create a canvas that covers entire window
   createCanvas(windowWidth, windowHeight);
+
+  // Remove all strokes
+  noStroke();
+
+// Create all elements for intro: title, intro dog, and play button
+  createIntroElements();
 
   // Create new animal objects and push to animals array
   createAnimals();
 
   // Create a new sausage dog
   createSausageDog();
+}
+
+// Create all elements for intro: title, intro dog, and play button
+function createIntroElements() {
+  title = new Title();
+
+  let x = width / 2;
+  let y = title.y + 400;
+  introDog = new IntroDog(x, y, sausageDogImage);
+
+  playButton = new PlayButton(title);
 }
 
 // Create new animal objects and push to animals array
@@ -110,7 +136,7 @@ function createSausageDog() {
 
 // draw()
 //
-// Set mouse's x and y positions, set background color, display all animals, make sausage dog spin if clicked on it
+// Set mouse's x and y positions, set background color, set states
 function draw() {
   // Setting mouse's x and y position to cursor's position
   mouse.x = mouseX;
@@ -119,6 +145,42 @@ function draw() {
   // Set background color of canvas
   background(bgFill.r, bgFill.g, bgFill.b);
 
+  // Set states
+  if (state === `intro`) {
+    intro();
+  }
+  else if (state === `game`) {
+    game();
+  }
+  else if (state === `victory`) {
+    victory();
+  }
+  else if (state === `defeat`) {
+    defeat();
+  }
+}
+
+// Intro state
+// Display title and play button
+function intro() {
+  // Update the title
+  title.update();
+
+  // Update the play button
+  playButton.update();
+
+  // Update intro dog
+  // introDog.update();
+
+  // If play button clicked, set to game state
+  if (playButton.clicked) {
+    state = `game`;
+  }
+}
+
+// Game state
+// Display all animals and have them walk left to right, make sausage dog spin if clicked on it
+function game() {
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
     animals[i].update();
@@ -130,5 +192,14 @@ function draw() {
 
 // If mouse is pressed, call sausage dog's mousePressed method
 function mousePressed() {
-  sausageDog.mousePressed(mouse);
+  if (state === `intro`) {
+    playButton.mousePressed(mouse);
+  } else if (state === `game`) {
+    sausageDog.mousePressed(mouse);
+  }
+}
+
+// Victory state
+function victory() {
+
 }
