@@ -6,6 +6,10 @@ class Animal {
     // position
     this.x = x;
     this.y = y;
+    // velocity
+    this.vx = 5;
+    this.vy = 0;
+    this.speed = random(1.5, 2.5);
     // angle of image about its center point (used for rotation)
     this.theta = 0;
     // hitbox dimensions of image
@@ -17,6 +21,11 @@ class Animal {
 
   // Update every frame
   update() {
+    // Make animal walk
+    this.walk();
+    // If animal exceeds right side of canvas, warp it back to left side
+    this.warp();
+    // Display image of animal
     this.display();
   }
 
@@ -28,6 +37,21 @@ class Animal {
     rotate(this.theta);
     image(this.image, 0, 0);
     pop();
+  }
+
+  // Animal walks towards the right
+  walk() {
+    // Set x velocity to speed value
+    this.vx = this.speed;
+    // Increase x position with vx
+    this.x += this.vx;
+  }
+
+  // When animal exceeds right side of canvas, warp it back to left side
+  warp() {
+    if (this.x > (width + this.image.width)) {
+      this.x -= width + this.image.width + 100;
+    }
   }
 
   // Returns true if subject overlaps with animal's hitbox area

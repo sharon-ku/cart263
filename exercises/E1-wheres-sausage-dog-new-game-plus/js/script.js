@@ -10,6 +10,10 @@ When clicked successfully, the sausage dog will start spinning.
 
 "use strict";
 
+// state of program
+// all possible states: intro, game, defeat, victory
+let state = `game`;
+
 // ANIMALS (does not include sausage dog)
 // number of animal images
 const NUM_ANIMALS = 100;
@@ -78,7 +82,7 @@ function setup() {
 function createAnimals() {
   for (let i = 0; i < NUM_ANIMALS; i++) {
     // Setting random x and y positions
-    let x = random(border, width - border);
+    let x = random(-width, width);
     let y = random(border, height - border);
 
     // Selecting random image
