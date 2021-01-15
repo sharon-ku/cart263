@@ -2,46 +2,39 @@
 // Displayed on canvas
 // When clicked, it spins around itself
 class SausageDog extends Animal {
-  constructor(sausageDogImage) {
-    super();
-    // image of animal
-    this.image = sausageDogImage;
-    // hitbox size of image
+  constructor(x, y, image) {
+    super(x, y, image);
+    // hitbox dimensions of image
     this.hitbox = {
       width: 125,
       height: 100,
     };
-    // angle of image about its center point (used for rotation)
-    this.theta = 0;
     // rotation speed
     this.rotationSpeed = PI / 100;
-    // set to true if time to spin
-    this.timeToSpin = false;
+    // set to true if dog is found
+    this.found = false;
   }
 
-  // Returns true if subject overlaps with sausage dog's hitbox area
-  overlapsWith({ x, y }) {
-    if (
-      x > this.x - this.hitbox.width / 2 &&
-      x < this.x + this.hitbox.width / 2 &&
-      y > this.y - this.hitbox.height / 2 &&
-      y < this.y + this.hitbox.height / 2
-    ) {
-      return true;
-    } else {
-      return false;
+  // Update sausage dog every frame
+  update() {
+    super.update();
+
+    // If user found the dog, let it spin!
+    if (this.found) {
+      this.spin();
     }
   }
 
-  // Display image of the animal
-  display() {
-    push();
-    imageMode(CENTER);
-    translate(this.x, this.y);
-    rotate(this.theta);
-    image(this.image, 0, 0);
-    pop();
+  // If user clicks on sausage dog, set timeToSpin sausage dog to true
+  mousePressed(mouse) {
+    if (this.overlapsWith(mouse)) {
+      this.found = true;
+    } else {
+      this.found = false;
+    }
   }
+
+
 
   // Give theta a rotationSpeed to make sausage dog spin
   spin() {

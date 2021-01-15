@@ -1,5 +1,5 @@
 /**************************************************
-Assignment 1: Where's Sausage Dog
+Assignment 1: Where's Sausage Dog?
 Sharon Ku
 
 The canvas will display many random images of animals at random positions,
@@ -10,18 +10,19 @@ When clicked successfully, the sausage dog will start spinning.
 
 "use strict";
 
-// number of animal images (does not include sausage dog)
-const NUM_ANIMALS = 10;
-
+// ANIMALS (does not include sausage dog)
+// number of animal images
+const NUM_ANIMALS = 100;
+// number of animal images
+const NUM_ANIMAL_IMAGES = 10;
 // array that stores all non-sausage-dog animals
 let animals = [];
+// array that stores animal images
+let animalImages = [];
 
-// array that stores animal images (does not include sausage dog)
-const animalImages = [];
-
+// SAUSAGE DOG
 // our friendly neighborhood sausage dog
-let sausageDog;
-
+let sausageDog = undefined;
 // sausage dog image
 let sausageDogImage = undefined;
 
@@ -31,6 +32,9 @@ let bgFill = {
   g: 227,
   b: 151,
 };
+
+// border around canvas where animals cannot be displayed
+let border = 80;
 
 // mouse's x and y positions
 let mouse = {
@@ -45,7 +49,7 @@ let mouse = {
 // Preload all images
 function preload() {
   // Loop through all animal images, load them, and push into animalImages array (does not include sausage dog)
-  for (let i = 0; i < NUM_ANIMALS; i++) {
+  for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
     let animalImage = loadImage(`assets/images/animal${i}.png`);
     animalImages.push(animalImage);
   }
@@ -63,14 +67,39 @@ function setup() {
   // create a canvas that covers entire window
   createCanvas(windowWidth, windowHeight);
 
-  // Create new temporary animal objects and push to animals array (does not include sausage dog)
-  for (let i = 0; i < NUM_ANIMALS; i++) {
-    let animal = new Animal(animalImages[i]);
-    animals.push(animal);
-  }
+  // Create new animal objects and push to animals array
+  createAnimals();
 
   // Create a new sausage dog
-  sausageDog = new SausageDog(sausageDogImage);
+  createSausageDog();
+}
+
+// Create new animal objects and push to animals array
+function createAnimals() {
+  for (let i = 0; i < NUM_ANIMALS; i++) {
+    // Setting random x and y positions
+    let x = random(border, width - border);
+    let y = random(border, height - border);
+
+    // Selecting random image
+    let animalImage = random(animalImages);
+
+    // Create an animal
+    let animal = new Animal(x, y, animalImage);
+
+    // Push temporary animal object into animals array
+    animals.push(animal);
+  }
+}
+
+// Create a new sausage dog
+function createSausageDog() {
+  // Setting random x and y positions
+  let x = random(border, width - border);
+  let y = random(border, height - border)
+
+  // Create a new sausage dog;
+  sausageDog = new SausageDog(x, y, sausageDogImage);
 }
 
 /* ----------------------------------------------------------------------- */
@@ -86,34 +115,16 @@ function draw() {
   // Set background color of canvas
   background(bgFill.r, bgFill.g, bgFill.b);
 
-  // Display all animals (sausage dog included!)
-  displayAllAnimals();
+  // Update all non-sausage-dog animals
+  for (let i = 0; i < animals.length; i++) {
+    animals[i].update();
+  }
 
-  // When user clicks the sausage dog, the sausage dog will start spinning
-  spinningSausageDog();
+  // Update sausage dog
+  sausageDog.update();
 }
 
-// Display all animals (sausage dog included!)
-function displayAllAnimals() {
-  // Display all non-sausage-dog animals
-  for (let i = 0; i < NUM_ANIMALS; i++) {
-    let animal = animals[i];
-    animal.display();
-  }
-
-  // Display sausage dog
-  sausageDog.display();
-}
-
-// When user clicks the sausage dog, the sausage dog will start spinning
-function spinningSausageDog() {
-  // If user clicks on sausage dog, set timeToSpin sausage dog to true
-  if (mouseIsPressed && sausageDog.overlapsWith(mouse)) {
-    sausageDog.timeToSpin = true;
-  }
-
-  // If it's time for sausage dog to spin, let it spin!
-  if (sausageDog.timeToSpin) {
-    sausageDog.spin();
-  }
+// If mouse is pressed, call sausage dog's mousePressed method
+function mousePressed() {
+  sausageDog.mousePressed(mouse);
 }
