@@ -167,10 +167,10 @@ function intro() {
   title.update();
 
   // Update the play button
-  playButton.update();
+  playButton.update(mouse);
 
   // Update intro dog
-  // introDog.update();
+  introDog.update();
 
   // If play button clicked, set to game state
   if (playButton.clicked) {
