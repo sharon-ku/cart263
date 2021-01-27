@@ -49,9 +49,26 @@ let sausageDogImage = undefined;
 
 // background fill color: vibrant green
 let bgFill = {
-  r: 84,
-  g: 227,
-  b: 151,
+  normal: {
+    r: 84,
+    g: 227,
+    b: 151,
+  },
+  level1: {
+    r: 84,
+    g: 227,
+    b: 151,
+  },
+  level2: {
+    r: 52,
+    g: 99,
+    b: 74,
+  },
+  level3: {
+    r: 0,
+    g: 0,
+    b: 0,
+  },
 };
 
 // border around canvas where animals cannot be displayed
@@ -160,7 +177,7 @@ function draw() {
   mouse.y = mouseY;
 
   // Set background color of canvas
-  background(bgFill.r, bgFill.g, bgFill.b);
+  background(bgFill.normal.r, bgFill.normal.g, bgFill.normal.b);
 
   // Set states
   if (state === `intro`) {
@@ -219,7 +236,13 @@ function game() {
   }
 }
 
+// Level 1
+// Static animals
 function level1() {
+  // Set level 1 background color
+  background(bgFill.level1.r, bgFill.level1.g, bgFill.level1.b);
+
+  // Update the level to 2 if dog is found
   if (sausageDog.updateLevel) {
     level = 2;
     // Reset all animals' positions
@@ -237,9 +260,43 @@ function level1() {
   sausageDog.update(level);
 }
 
+// Level 2
+// Moving animals
 function level2() {
+  // Set level 2 background color
+  background(bgFill.level2.r, bgFill.level2.g, bgFill.level2.b);
 
-  background(0);
+  // Update the level to 3 if dog is found
+  if (sausageDog.updateLevel) {
+    level = 3;
+    // Reset all animals' positions
+    resetAnimalPositions();
+    sausageDog.updateLevel = false;
+  }
+
+  // Update all non-sausage-dog animals
+  for (let i = 0; i < animals.length; i++) {
+    animals[i].update(level);
+  }
+
+  // Update sausage dog
+  sausageDog.update(level);
+
+}
+
+// Level 3
+// Moving animals
+function level3() {
+  // Set level 2 background color
+  background(bgFill.level3.r, bgFill.level3.g, bgFill.level3.b);
+
+  // Update the level to 3 if dog is found
+  if (sausageDog.updateLevel) {
+    state = `victory`;
+    // Reset all animals' positions
+    resetAnimalPositions();
+    sausageDog.updateLevel = false;
+  }
 
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
