@@ -47,15 +47,6 @@ let sausageDog = undefined;
 // sausage dog image
 let sausageDogImage = undefined;
 
-// Set to true if time to make new creatures
-let createNewCreatures = false;
-
-// Set to true if time to empty animals array
-let timeToDeleteExistingAnimals = false;
-
-// Set to true if time to recreate animals
-let timeToReplenishAnimals = false;
-
 // background fill color: vibrant green
 let bgFill = {
   r: 84,
@@ -239,40 +230,24 @@ function level1() {
 
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
-    animals[i].update(level, createNewCreatures);
+    animals[i].update(level);
   }
 
   // Update sausage dog
-  sausageDog.update(level, createNewCreatures);
+  sausageDog.update(level);
 }
 
 function level2() {
-  // // delete existing animals in array and create new ones at random positions
-  // resetAllAnimals();
-
-
 
   background(0);
-  // if (this.sausageDog.createNewCreatures) {
-  //   // Create new animal objects and push to animals array
-  //   createAnimals();
-  //
-  //   // Create a new sausage dog
-  //   createSausageDog();
-  //
-  //   // Set createNewCreatures to false to avoid making infinite creatures
-  //
-  // }
-  //
-  //
 
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
-    animals[i].update(level, createNewCreatures);
+    animals[i].update(level);
   }
 
   // Update sausage dog
-  sausageDog.update(level, createNewCreatures);
+  sausageDog.update(level);
 
 }
 
@@ -286,42 +261,6 @@ function resetAnimalPositions() {
   // Change sausage dog's position
   sausageDog.changePosition();
 }
-
-// // Delete existing animals in array and create new ones at random positions
-// function resetAllAnimals() {
-//   timeToDeleteExistingAnimals = true;
-//
-//   // Delete existing animals in array
-//   deleteExistingAnimals();
-//
-//   replenishAnimals();
-//
-//   console.log(`numAnimals = ${animals.length}`);
-// }
-//
-// // Delete existing animals in array
-// function deleteExistingAnimals() {
-//   if (timeToDeleteExistingAnimals) {
-//     animals.splice(0, animals.length);
-//   }
-//
-//   sausageDog.remove();
-//
-//   timeToDeleteExistingAnimals = false;
-//   timeToReplenishAnimals = true;
-// }
-//
-// // Replenish animals in array
-// function replenishAnimals() {
-//   if (timeToReplenishAnimals) {
-//     // Create new animal objects and push to animals array
-//     createAnimals();
-//
-//     // Create a new sausage dog
-//     createSausageDog();
-//   }
-//   timeToReplenishAnimals = false;
-// }
 
 // If mouse is pressed, call sausage dog's mousePressed method
 function mousePressed() {

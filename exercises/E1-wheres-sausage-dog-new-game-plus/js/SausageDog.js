@@ -18,7 +18,7 @@ class SausageDog extends Animal {
   }
 
   // Update sausage dog every frame
-  update(level, createNewCreatures) {
+  update(level) {
     super.update(level);
 
     // If user found the dog, let it spin and update level
