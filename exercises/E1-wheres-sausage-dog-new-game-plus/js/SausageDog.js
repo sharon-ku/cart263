@@ -28,29 +28,7 @@ class SausageDog extends Animal {
       // let dog spin
       // this.spin();
 
-      // // Set create new creatures to true
-      // createNewCreatures = true;
-
-      // // update level based on current level
-      // this.changeLevel(createNewCreatures);
     }
-
-    // if (this.updateLevel) {
-    //   if (level === 1) {
-    //     level = 2;
-    //     this.updateLevel = false;
-    //   }
-    //   else if (level === 2) {
-    //     level = 3;
-    //     this.updateLevel = false;
-    //   }
-    //   else if (level === 3) {
-    //     level = 4;
-    //     this.updateLevel = false;
-    //   }
-    //
-    // }
-    // // console.log(`${level}`);
   }
 
 
