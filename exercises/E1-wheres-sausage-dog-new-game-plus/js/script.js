@@ -12,10 +12,18 @@ When clicked successfully, the sausage dog will start spinning.
 
 // state of program
 // all possible states: intro, game, defeat, victory
-let state = `intro`;
+let state = `game`;
 
-// title
+// level of game
+// all possible levels: 1, 2, 3
+let level = 1;
+
+// title displayed in intro state
 let title = undefined;
+// text displayed in victory state
+let victoryText = undefined;
+// text displayed in defeat state
+let defeatText = undefined;
 
 // intro sausage dog
 let introDog = undefined;
@@ -25,7 +33,7 @@ let playButton = undefined;
 
 // ANIMALS (does not include sausage dog)
 // number of animal images
-const NUM_ANIMALS = 100;
+const NUM_ANIMALS = 200;
 // number of animal images
 const NUM_ANIMAL_IMAGES = 10;
 // array that stores all non-sausage-dog animals
@@ -38,6 +46,9 @@ let animalImages = [];
 let sausageDog = undefined;
 // sausage dog image
 let sausageDogImage = undefined;
+
+// Set to true if time to make new creatures
+let createNewCreatures = false;
 
 // background fill color: vibrant green
 let bgFill = {
@@ -91,6 +102,9 @@ function setup() {
 
   // Create a new sausage dog
   createSausageDog();
+
+  // Create end state text (victoryText and defeatText)
+  createEndingText();
 }
 
 // Create all elements for intro: title, intro dog, and play button
@@ -98,7 +112,7 @@ function createIntroElements() {
   title = new Title();
 
   let x = width / 2;
-  let y = title.y + 400;
+  let y = title.y + 480;
   introDog = new IntroDog(x, y, sausageDogImage);
 
   playButton = new PlayButton(title);
@@ -128,8 +142,14 @@ function createSausageDog() {
   let x = random(border, width - border);
   let y = random(border, height - border)
 
-  // Create a new sausage dog;
+  // Create a new sausage dog
   sausageDog = new SausageDog(x, y, sausageDogImage);
+}
+
+// Create end state text (victoryText and defeatText)
+function createEndingText() {
+  victoryText = new VictoryText();
+  defeatText = new DefeatText();
 }
 
 /* ----------------------------------------------------------------------- */
@@ -181,13 +201,66 @@ function intro() {
 // Game state
 // Display all animals and have them walk left to right, make sausage dog spin if clicked on it
 function game() {
+  console.log(`${level}`);
+
+
+  // // Update all non-sausage-dog animals
+  // for (let i = 0; i < animals.length; i++) {
+  //   animals[i].update(level);
+  // }
+  //
+  // // Update sausage dog
+  // sausageDog.update(level);
+
+  // Setting up the levels
+  if (level === 1) {
+    level1();
+  } else if (level === 2) {
+    level2();
+  } else if (level === 3) {
+    level3();
+  }
+}
+
+function level1() {
+  if (sausageDog.updateLevel) {
+    level = 2;
+    sausageDog.updateLevel = false;
+  }
+
+
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
-    animals[i].update();
+    animals[i].update(level, createNewCreatures);
   }
 
   // Update sausage dog
-  sausageDog.update();
+  sausageDog.update(level, createNewCreatures);
+}
+
+function level2() {
+  console.log(`2`);
+  background(0);
+  // if (this.sausageDog.createNewCreatures) {
+  //   // Create new animal objects and push to animals array
+  //   createAnimals();
+  //
+  //   // Create a new sausage dog
+  //   createSausageDog();
+  //
+  //   // Set createNewCreatures to false to avoid making infinite creatures
+  //
+  // }
+  //
+  //
+  // Update all non-sausage-dog animals
+  for (let i = 0; i < animals.length; i++) {
+    animals[i].update(level, createNewCreatures);
+  }
+
+  // Update sausage dog
+  sausageDog.update(level, createNewCreatures);
+
 }
 
 // If mouse is pressed, call sausage dog's mousePressed method
@@ -201,5 +274,12 @@ function mousePressed() {
 
 // Victory state
 function victory() {
+  // Update the victoryText
+  victoryText.update();
+}
 
+// Defeat state
+function defeat() {
+  // Update the defeatText
+  defeatText.update();
 }

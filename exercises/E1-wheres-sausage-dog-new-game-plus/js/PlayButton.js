@@ -6,7 +6,7 @@ class PlayButton {
     this.rect = {
       // position
       x: title.x,
-      y: title.y + 300,
+      y: title.y + 280,
       // color
       fill: {
         // current color: darkish, foresty green

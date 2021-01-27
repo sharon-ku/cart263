@@ -20,13 +20,34 @@ class Animal {
   }
 
   // Update every frame
-  update() {
+  update(level) {
     // Make animal walk
     this.walk();
     // If animal exceeds right side of canvas, warp it back to left side
     this.warp();
     // Display image of animal
     this.display();
+
+    // if (level === 1) {
+    //   // Display image of animal
+    //   this.display();
+    // }
+    // else if (level === 2) {
+    //   // Make animal walk
+    //   this.walk();
+    //   // If animal exceeds right side of canvas, warp it back to left side
+    //   this.warp();
+    //   // Display image of animal
+    //   this.display();
+    // }
+    // else if (level === 3) {
+    //   // Make animal walk
+    //   this.walk();
+    //   // If animal exceeds right side of canvas, warp it back to left side
+    //   this.warp();
+    //   // Display image of animal
+    //   this.display();
+    // }
   }
 
   // Display image of the animal
