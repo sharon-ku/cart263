@@ -1,6 +1,6 @@
 // Intro sausage dog
 // Displayed on canvas
-// When clicked, it spins around itself
+// Walks around
 class IntroDog extends SausageDog {
   constructor(x, y, image) {
     super(x, y, image);

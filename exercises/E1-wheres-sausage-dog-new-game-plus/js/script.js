@@ -32,8 +32,8 @@ let introDog = undefined;
 let playButton = undefined;
 
 // ANIMALS (does not include sausage dog)
-// number of animal images
-const NUM_ANIMALS = 200;
+// number of animals
+const NUM_ANIMALS = 400;
 // number of animal images
 const NUM_ANIMAL_IMAGES = 10;
 // array that stores all non-sausage-dog animals
@@ -47,17 +47,17 @@ let sausageDog = undefined;
 // sausage dog image
 let sausageDogImage = undefined;
 
-// background fill color: vibrant green
+// background fill colors
 let bgFill = {
   normal: {
-    r: 84,
-    g: 227,
-    b: 151,
+    r: 66,
+    g: 199,
+    b: 128,
   },
   level1: {
-    r: 84,
-    g: 227,
-    b: 151,
+    r: 66,
+    g: 199,
+    b: 128,
   },
   level2: {
     r: 52,
@@ -72,7 +72,7 @@ let bgFill = {
 };
 
 // border around canvas where animals cannot be displayed
-let border = 80;
+let border = 20;
 
 // mouse's x and y positions
 let mouse = {
@@ -215,17 +215,6 @@ function intro() {
 // Game state
 // Display all animals and have them walk left to right, make sausage dog spin if clicked on it
 function game() {
-  console.log(`${level}`);
-
-
-  // // Update all non-sausage-dog animals
-  // for (let i = 0; i < animals.length; i++) {
-  //   animals[i].update(level);
-  // }
-  //
-  // // Update sausage dog
-  // sausageDog.update(level);
-
   // Setting up the levels
   if (level === 1) {
     level1();
@@ -233,6 +222,11 @@ function game() {
     level2();
   } else if (level === 3) {
     level3();
+  }
+
+  // Cue defeat state if user did not click on sausage dog
+  if (sausageDog.defeat) {
+    defeat();
   }
 }
 
@@ -243,14 +237,33 @@ function level1() {
   background(bgFill.level1.r, bgFill.level1.g, bgFill.level1.b);
 
   // Update the level to 2 if dog is found
+  switchLevel();
+
+  // Update all animals
+  updateAllAnimals();
+}
+
+// Switch levels depending on current level + reset animal positions
+function switchLevel() {
   if (sausageDog.updateLevel) {
-    level = 2;
+    if (level === 1) {
+      level = 2;
+    } else if (level === 2) {
+      level = 3;
+    } else if (level === 3) {
+      level = 4;
+      state = `victory`;
+    }
+
     // Reset all animals' positions
     resetAnimalPositions();
+    // Set update level to false since we are done updating level
     sausageDog.updateLevel = false;
   }
+}
 
-
+// Update all animals
+function updateAllAnimals() {
   // Update all non-sausage-dog animals
   for (let i = 0; i < animals.length; i++) {
     animals[i].update(level);
@@ -267,21 +280,10 @@ function level2() {
   background(bgFill.level2.r, bgFill.level2.g, bgFill.level2.b);
 
   // Update the level to 3 if dog is found
-  if (sausageDog.updateLevel) {
-    level = 3;
-    // Reset all animals' positions
-    resetAnimalPositions();
-    sausageDog.updateLevel = false;
-  }
+  switchLevel();
 
-  // Update all non-sausage-dog animals
-  for (let i = 0; i < animals.length; i++) {
-    animals[i].update(level);
-  }
-
-  // Update sausage dog
-  sausageDog.update(level);
-
+  // Update all animals
+  updateAllAnimals();
 }
 
 // Level 3
@@ -291,42 +293,32 @@ function level3() {
   background(bgFill.level3.r, bgFill.level3.g, bgFill.level3.b);
 
   // Update the level to 3 if dog is found
-  if (sausageDog.updateLevel) {
-    state = `victory`;
-    // Reset all animals' positions
-    resetAnimalPositions();
-    sausageDog.updateLevel = false;
-  }
+  switchLevel();
 
-  // Update all non-sausage-dog animals
-  for (let i = 0; i < animals.length; i++) {
-    animals[i].update(level);
-  }
-
-  // Update sausage dog
-  sausageDog.update(level);
-
+  // Update all animals
+  updateAllAnimals();
 }
 
 // Reset positions of animals
 function resetAnimalPositions() {
   // Change all non-sausage-dog animals' positions
   for (let i = 0; i < animals.length; i++) {
-    animals[i].changePosition();
+    animals[i].changePosition(border);
   }
 
   // Change sausage dog's position
-  sausageDog.changePosition();
+  sausageDog.changePosition(border);
 }
 
-// If mouse is pressed, call sausage dog's mousePressed method
+// Defines what happens when mouse is pressed
 function mousePressed() {
+  // If state is intro, set what happens if play button is pressed
   if (state === `intro`) {
     playButton.mousePressed(mouse);
-  } else if (state === `game`) {
+  }
+  // If state is game, call sausage dog's mousePressed method
+  else if (state === `game`) {
     sausageDog.mousePressed(mouse);
-
-
   }
 }
 
@@ -334,10 +326,16 @@ function mousePressed() {
 function victory() {
   // Update the victoryText
   victoryText.update();
+
+  // Display spinning sausage dog that kind of floats around mindlessly
+  sausageDog.update(level);
 }
 
 // Defeat state
 function defeat() {
+  // Set background color of canvas
+  background(bgFill.normal.r, bgFill.normal.g, bgFill.normal.b);
+
   // Update the defeatText
   defeatText.update();
 }
