@@ -1,18 +1,19 @@
 /**************************************************
-Assignment 1: Where's Sausage Dog?
+Exercise: Where's Sausage Dog? New Game+
 Sharon Ku
 
 The canvas will display many random images of animals at random positions,
 one of which will be a sausage dog.
 The player has to click on the sausage dog to win the game.
-When clicked successfully, the sausage dog will start spinning.
+There are 3 levels in total. If player completes them, player will be rewarded with a spinning dog.
+If not, player will feel bad after reading the defeat text.
 **************************************************/
 
 "use strict";
 
 // state of program
 // all possible states: intro, game, defeat, victory
-let state = `game`;
+let state = `intro`;
 
 // level of game
 // all possible levels: 1, 2, 3
