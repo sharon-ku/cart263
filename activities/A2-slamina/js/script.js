@@ -16,6 +16,9 @@ https://github.com/dariusk/corpora/blob/master/data/animals/common.json
 // current animal
 let currentAnimal;
 
+// reversed name of animal
+let reversedAnimal;
+
 // contains list of animal names
 const animals = [
   "aardvark",
@@ -154,28 +157,41 @@ const animals = [
   "zebra"
 ];
 
-
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
+
   // Check if annyang is available
   if (annyang) {
     // Create commands
     let command = {
       // If the user responds, check if answer is correct
-      'I think it is ': checkResponse
+      'I think it is *tag': checkResponse,
     }
     // Add the commands and start annyang
     annyang.addCommands(command);
     annyang.start();
   }
+}
 
+// When mouse pressed, generate a random reversed animal name and have computer say it
+function mousePressed() {
+  // Generates a random animal name reversed
+  generateAnimalName();
+  // Say reversed animal name using ResponsiveVoice
+  responsiveVoice.speak(`${reversedAnimal}`, `UK English Female`, {
+    rate: 0.5,
+  });
+}
+
+// Generates a random animal name reversed
+function generateAnimalName() {
   // Choose a random animal from animals array
   currentAnimal = random(animals);
 
   // Reverse animal's name
-  reverseString(currentAnimal);
+  reversedAnimal = reverseString(currentAnimal);
 }
 
 // Reverses the provided string
@@ -192,8 +208,17 @@ function reverseString(string) {
 
 // Checks whether user's answer was correct or incorrect
 // Returns false if incorrect
-function checkResponse() {
-
+function checkResponse(tag) {
+  // If animal name is the same as what user said, return true
+  if (currentAnimal === tag) {
+    print(true);
+    return true;
+  }
+  // else, if animal name said is incorrect, return false
+  else {
+    print(false);
+    return false;
+  }
 }
 
 // draw()
@@ -201,12 +226,5 @@ function checkResponse() {
 // Description of draw() goes here.
 function draw() {
 
-  // // Choose a random animal from animals array
-  // currentAnimal = random(animals);
-  // print(currentAnimal);
-  //
-  // // Split letters in array
-  // splitTokens(currentAnimal);
-  // print(currentAnimal);
 
 }
