@@ -3,7 +3,7 @@ Exercise 2: Slamina New Game+
 Sharon Ku
 
 The program will speak the name of a common animal backwards.
-The user will have to say (with their voice) what they think it is in the form “I think it is x.”
+The user will have to say (with their voice) what they think the animal is
 If they get it right, their guess will be displayed in green.
 If they get it wrong, their guess will be displayed in red.
 
@@ -25,7 +25,6 @@ let currentAnswer = ``;
 
 // contains list of animal names
 const animals = [
-  "aardvark",
   "alligator",
   "alpaca",
   "antelope",
@@ -68,7 +67,6 @@ const animals = [
   "fox",
   "frog",
   "gazelle",
-  "gila monster",
   "giraffe",
   "gnu",
   "goat",
@@ -111,7 +109,6 @@ const animals = [
   "mustang",
   "mynah bird",
   "newt",
-  "ocelot",
   "opossum",
   "orangutan",
   "oryx",
@@ -133,13 +130,11 @@ const animals = [
   "ram",
   "rat",
   "reindeer",
-  "reptile",
   "rhinoceros",
   "salamander",
   "seal",
   "sheep",
   "shrew",
-  "silver fox",
   "skunk",
   "sloth",
   "snake",
@@ -157,7 +152,6 @@ const animals = [
   "wolverine",
   "wombat",
   "woodchuck",
-  "yak",
   "zebra"
 ];
 
@@ -190,7 +184,7 @@ function setup() {
     // Create commands
     let commands = {
       // If the user responds, set the current answer to the animal guessed
-      'I think it is *animal': guessAnimal,
+      '*animal': guessAnimal,
     }
     // Add the commands and start annyang
     annyang.addCommands(commands);
@@ -226,12 +220,10 @@ function draw() {
 
 // When mouse pressed, generate a random reversed animal name and have computer say it
 function mousePressed() {
-  // Generates a random animal name reversed
+  // Generates a random animal name reversed after 5 seconds
   generateAnimalName();
-  // Say reversed animal name using ResponsiveVoice
-  responsiveVoice.speak(reversedAnimal, `UK English Female`, {
-    rate: 0.5, // slow down voice
-  });
+  // Computer says animal name backwards after 5 seconds
+  sayReversedAnimalName();
 }
 
 // Generate a random animal name reversed
@@ -241,6 +233,13 @@ function generateAnimalName() {
 
   // Reverse animal's name
   reversedAnimal = reverseString(currentAnimal);
+}
+
+// Computer says animal name backwards after 5 seconds
+function sayReversedAnimalName() {
+  responsiveVoice.speak(reversedAnimal, `UK English Female`, {
+    rate: 0.5, // slow down voice
+  });
 }
 
 // Reverses the provided string
