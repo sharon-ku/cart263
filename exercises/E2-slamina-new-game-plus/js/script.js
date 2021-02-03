@@ -4,8 +4,8 @@ Sharon Ku
 
 The program will speak the name of a common animal backwards.
 The user will have to say (with their voice) what they think the animal is in the form "This is a x."
-If they get it right, their guess will be displayed in green.
-If they get it wrong, their guess will be displayed in red.
+If they get it right, their guess will be displayed in green and the computer will say something nice.
+If they get it wrong, their guess will be displayed in red and the computer will say something mean.
 
 Animal names from Darius Kazemi:
 https://github.com/dariusk/corpora/blob/master/data/animals/common.json
@@ -22,6 +22,12 @@ let reversedAnimal;
 
 // stores answer that user has said
 let currentAnswer = ``;
+
+// number of correct answers
+let numCorrectAnswers = 0;
+
+// true if user just got an answer right --> then update numCorrectAnswers
+let timeToUpdateNumCorrectAnswers = false;
 
 // possible nice words of encouragement from computer
 let niceMessage = [
@@ -40,14 +46,14 @@ let meanMessage = [
   "Not even close",
   "You're not so good at this",
   "Preposterous!",
-  "I like it better when you were smart",
+  "I liked it better when you were smart",
 ];
 
-// true if it's time for computer to say something nice
-let timeToSayNiceMessage = false;
+// true if user's answer is right
+let victoryTime = false;
 
-// true if it's time for computer to say something mean
-let timeToSayMeanMessage = false;
+// true if user's answer is wrong
+let defeatTime = false;
 
 // true if it's time to check if answer is correct
 let timeToCheckIfAnswerCorrect = false;
@@ -97,13 +103,9 @@ const animals = [
   "frog",
   "gazelle",
   "giraffe",
-  "gnu",
   "goat",
   "gopher",
   "gorilla",
-  "grizzly bear",
-  "ground hog",
-  "guinea pig",
   "hamster",
   "hedgehog",
   "hippopotamus",
@@ -125,18 +127,15 @@ const animals = [
   "llama",
   "lynx",
   "mandrill",
-  "marmoset",
   "mink",
   "mole",
   "mongoose",
   "monkey",
   "moose",
-  "mountain goat",
   "mouse",
   "mule",
   "muskrat",
   "mustang",
-  "mynah bird",
   "newt",
   "opossum",
   "orangutan",
@@ -152,7 +151,6 @@ const animals = [
   "polar bear",
   "porcupine",
   "porpoise",
-  "prairie dog",
   "puma",
   "rabbit",
   "raccoon",
@@ -232,32 +230,67 @@ function draw() {
   // Set background color
   background(bgColor);
 
-  // If it's time for computer to say something nice
-  if (timeToSayNiceMessage) {
-    // Have computer say some nice words of encouragement
-    computerSaysNiceMessage();
-  }
-  // Else if it's time for computer to say something mean
-  else if (timeToSayMeanMessage) {
-    // Have computer say some mean words
-    computerSaysMeanMessage();
-  }
+  // Update and display number of correct answers
+  updateNumCorrectAnswers();
 
+  // Check if answer is correct
+  checkIfAnswerIsCorrect();
+
+  // React to user's answer based on whether it is correct or not
+  reactToAnswer();
+
+  // Display current answer on screen and change its color depending on whether it was right or wrong
+  displayGuess();
+}
+
+// Update and display the number of correct answers
+function updateNumCorrectAnswers() {
+  // Display numCorrectAnswers on corner of canvas
+  displayNumCorrectAnswers();
+
+  // If it's time to update numCorrectAnswers, add 1 to counter
+  if (timeToUpdateNumCorrectAnswers) {
+    numCorrectAnswers += 1;
+    timeToUpdateNumCorrectAnswers = false;
+  }
+}
+
+// Check if the answer is correct and react to it
+function checkIfAnswerIsCorrect() {
   // If it's time to check if answer is correct
   if (timeToCheckIfAnswerCorrect) {
     // If user's guess is correct
     if (currentAnimal === currentAnswer) {
       // It's time for computer to say something nice
-      timeToSayNiceMessage = true;
+      victoryTime = true;
     }
     // If incorrect
     else {
       // Have computer say something mean and discouraging so that the user will know to do better next time
-      timeToSayMeanMessage = true;
+      defeatTime = true;
     }
     timeToCheckIfAnswerCorrect = false;
   }
+}
 
+// React to user's answer based on whether it is correct or not
+function reactToAnswer() {
+  // If it's victory time (user got right answer)
+  if (victoryTime) {
+    // Have computer say some nice words of encouragement
+    computerSaysNiceMessage();
+    // Update numCorrectAnswers counter
+    timeToUpdateNumCorrectAnswers = true;
+  }
+  // Else if it's defeat time (user got wrong answer)
+  else if (defeatTime) {
+    // Have computer say some mean words
+    computerSaysMeanMessage();
+  }
+}
+
+// Display current answer on screen and change its color depending on whether it was right or wrong
+function displayGuess() {
   // Change text display color depending on whether answer is right or wrong
   // If answer is correct:
   if (currentAnimal === currentAnswer) {
@@ -274,14 +307,26 @@ function draw() {
   text(currentAnswer, width/2, height/2);
 }
 
-function computerSaysNiceMessage() {
-  responsiveVoice.speak(random(niceMessage));
-  timeToSayNiceMessage = false;
+// Display numCorrectAnswers on corner of canvas
+function displayNumCorrectAnswers() {
+  push();
+  fill(255);
+  textSize(30);
+  textAlign(CENTER);
+  text(`Correct: ${numCorrectAnswers}`, width - 130, 80);
+  pop();
 }
 
+// Computer says a nice message
+function computerSaysNiceMessage() {
+  responsiveVoice.speak(random(niceMessage));
+  victoryTime = false;
+}
+
+// Computer says a mean message
 function computerSaysMeanMessage() {
   responsiveVoice.speak(random(meanMessage));
-  timeToSayMeanMessage = false;
+  defeatTime = false;
 }
 
 // When mouse pressed, generate a random reversed animal name and have computer say it
