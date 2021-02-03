@@ -11,13 +11,17 @@ Animal names from Darius Kazemi:
 https://github.com/dariusk/corpora/blob/master/data/animals/common.json
 **************************************************/
 
+// because being strict is good
 "use strict";
 
 // current animal
-let currentAnimal;
+let currentAnimal = ``;
 
 // reversed name of animal
 let reversedAnimal;
+
+// stores answer that user has said
+let currentAnswer = ``;
 
 // contains list of animal names
 const animals = [
@@ -157,22 +161,67 @@ const animals = [
   "zebra"
 ];
 
+// Background color
+let bgColor = 0;
+
+// Green color for correct answer
+let colorForCorrectAnswer = {
+  r: 82,
+  g: 199,
+  b: 113,
+};
+
+// Red color for incorrect answer
+let colorForWrongAnswer = {
+  r: 252,
+  g: 86,
+  b: 91,
+};
+
 // setup()
 //
-// Description of setup() goes here.
+// Create canvas, input commands for annyang, set text properties
 function setup() {
+  // Create a canvas
+  createCanvas(800, 800);
 
   // Check if annyang is available
   if (annyang) {
     // Create commands
-    let command = {
-      // If the user responds, check if answer is correct
-      'I think it is *tag': checkResponse,
+    let commands = {
+      // If the user responds, set the current answer to the animal guessed
+      'I think it is *animal': guessAnimal,
     }
     // Add the commands and start annyang
-    annyang.addCommands(command);
+    annyang.addCommands(commands);
     annyang.start();
+
+    // Set text properties
+    textAlign(CENTER);
+    textSize(width / 8);
   }
+}
+
+// draw()
+//
+// Set background color, display guess (sets text color depending on whether guess is right or wrong)
+function draw() {
+  // Set background color
+  background(bgColor);
+
+  // If user's guess is correct
+  if (currentAnimal === currentAnswer) {
+    // Set guess color to green
+    fill(colorForCorrectAnswer.r, colorForCorrectAnswer.g, colorForCorrectAnswer.b);
+  }
+  // If incorrect
+  else {
+    // Set guess color to red
+    fill(colorForWrongAnswer.r, colorForWrongAnswer.g, colorForWrongAnswer.b);
+  }
+
+  // Display text
+  text(currentAnswer, width/2, height/2);
 }
 
 // When mouse pressed, generate a random reversed animal name and have computer say it
@@ -180,12 +229,12 @@ function mousePressed() {
   // Generates a random animal name reversed
   generateAnimalName();
   // Say reversed animal name using ResponsiveVoice
-  responsiveVoice.speak(`${reversedAnimal}`, `UK English Female`, {
-    rate: 0.5,
+  responsiveVoice.speak(reversedAnimal, `UK English Female`, {
+    rate: 0.5, // slow down voice
   });
 }
 
-// Generates a random animal name reversed
+// Generate a random animal name reversed
 function generateAnimalName() {
   // Choose a random animal from animals array
   currentAnimal = random(animals);
@@ -206,25 +255,8 @@ function reverseString(string) {
   return result;
 }
 
-// Checks whether user's answer was correct or incorrect
-// Returns false if incorrect
-function checkResponse(tag) {
-  // If animal name is the same as what user said, return true
-  if (currentAnimal === tag) {
-    print(true);
-    return true;
-  }
-  // else, if animal name said is incorrect, return false
-  else {
-    print(false);
-    return false;
-  }
-}
-
-// draw()
-//
-// Description of draw() goes here.
-function draw() {
-
-
+// Sets currentAnswer to the guess that user just said
+function guessAnimal(animal) {
+  // also converts answer to all lowercase
+  currentAnswer = animal.toLowerCase();
 }
