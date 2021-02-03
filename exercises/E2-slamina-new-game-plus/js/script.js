@@ -3,7 +3,7 @@ Exercise 2: Slamina New Game+
 Sharon Ku
 
 The program will speak the name of a common animal backwards.
-The user will have to say (with their voice) what they think the animal is
+The user will have to say (with their voice) what they think the animal is in the form "This is a x."
 If they get it right, their guess will be displayed in green.
 If they get it wrong, their guess will be displayed in red.
 
@@ -22,6 +22,35 @@ let reversedAnimal;
 
 // stores answer that user has said
 let currentAnswer = ``;
+
+// possible nice words of encouragement from computer
+let niceMessage = [
+  "Wow genius",
+  "Incredible!",
+  "How did you guess this? I would not have guessed this in a million years",
+  "I want to be with someone as smart as you",
+  "A+ goes to you!",
+  "Mindblown",
+];
+
+// possible mean words from computer
+let meanMessage = [
+  "Ha",
+  "Better luck next time, you'll need it",
+  "Not even close",
+  "You're not so good at this",
+  "Preposterous!",
+  "I like it better when you were smart",
+];
+
+// true if it's time for computer to say something nice
+let timeToSayNiceMessage = false;
+
+// true if it's time for computer to say something mean
+let timeToSayMeanMessage = false;
+
+// true if it's time to check if answer is correct
+let timeToCheckIfAnswerCorrect = false;
 
 // contains list of animal names
 const animals = [
@@ -184,7 +213,7 @@ function setup() {
     // Create commands
     let commands = {
       // If the user responds, set the current answer to the animal guessed
-      '*animal': guessAnimal,
+      'This is a *animal': guessAnimal,
     }
     // Add the commands and start annyang
     annyang.addCommands(commands);
@@ -203,12 +232,39 @@ function draw() {
   // Set background color
   background(bgColor);
 
-  // If user's guess is correct
+  // If it's time for computer to say something nice
+  if (timeToSayNiceMessage) {
+    // Have computer say some nice words of encouragement
+    computerSaysNiceMessage();
+  }
+  // Else if it's time for computer to say something mean
+  else if (timeToSayMeanMessage) {
+    // Have computer say some mean words
+    computerSaysMeanMessage();
+  }
+
+  // If it's time to check if answer is correct
+  if (timeToCheckIfAnswerCorrect) {
+    // If user's guess is correct
+    if (currentAnimal === currentAnswer) {
+      // It's time for computer to say something nice
+      timeToSayNiceMessage = true;
+    }
+    // If incorrect
+    else {
+      // Have computer say something mean and discouraging so that the user will know to do better next time
+      timeToSayMeanMessage = true;
+    }
+    timeToCheckIfAnswerCorrect = false;
+  }
+
+  // Change text display color depending on whether answer is right or wrong
+  // If answer is correct:
   if (currentAnimal === currentAnswer) {
     // Set guess color to green
     fill(colorForCorrectAnswer.r, colorForCorrectAnswer.g, colorForCorrectAnswer.b);
   }
-  // If incorrect
+  // Else if answer is wrong:
   else {
     // Set guess color to red
     fill(colorForWrongAnswer.r, colorForWrongAnswer.g, colorForWrongAnswer.b);
@@ -216,6 +272,16 @@ function draw() {
 
   // Display text
   text(currentAnswer, width/2, height/2);
+}
+
+function computerSaysNiceMessage() {
+  responsiveVoice.speak(random(niceMessage));
+  timeToSayNiceMessage = false;
+}
+
+function computerSaysMeanMessage() {
+  responsiveVoice.speak(random(meanMessage));
+  timeToSayMeanMessage = false;
 }
 
 // When mouse pressed, generate a random reversed animal name and have computer say it
@@ -254,8 +320,11 @@ function reverseString(string) {
   return result;
 }
 
-// Sets currentAnswer to the guess that user just said
+// Update currentAnswer with guess and set that it's time to check if answer is correct
 function guessAnimal(animal) {
-  // also converts answer to all lowercase
+  // Sets currentAnswer to the guess that user just said
+  // And convert answer to all lowercase
   currentAnswer = animal.toLowerCase();
+  // Set that it's time to check if answer is correct
+  timeToCheckIfAnswerCorrect = true;
 }
