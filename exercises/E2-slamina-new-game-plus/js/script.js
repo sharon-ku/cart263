@@ -25,6 +25,19 @@ let currentAnswer = ``;
 
 // number of correct answers
 let numCorrectAnswers = 0;
+let correctAnswersText = {
+  fillColor: 255,
+  size: 30,
+  x: 670,
+  y: 80,
+};
+
+// text size of guess that is displayed on screen
+let guessTextSize = 0;
+// max size that the text can reach
+let maxTextSize = 50;
+// text size increase rate
+let textSizeGrowth = 0.5;
 
 // true if user just got an answer right --> then update numCorrectAnswers
 let timeToUpdateNumCorrectAnswers = false;
@@ -201,7 +214,7 @@ let colorForWrongAnswer = {
 
 // setup()
 //
-// Create canvas, input commands for annyang, set text properties
+// Create canvas, input commands for annyang
 function setup() {
   // Create a canvas
   createCanvas(800, 800);
@@ -216,10 +229,6 @@ function setup() {
     // Add the commands and start annyang
     annyang.addCommands(commands);
     annyang.start();
-
-    // Set text properties
-    textAlign(CENTER);
-    textSize(width / 8);
   }
 }
 
@@ -246,7 +255,7 @@ function draw() {
 // Update and display the number of correct answers
 function updateNumCorrectAnswers() {
   // Display numCorrectAnswers on corner of canvas
-  displayNumCorrectAnswers();
+  displayNumCorrectAnswers(correctAnswersText);
 
   // If it's time to update numCorrectAnswers, add 1 to counter
   if (timeToUpdateNumCorrectAnswers) {
@@ -303,17 +312,29 @@ function displayGuess() {
     fill(colorForWrongAnswer.r, colorForWrongAnswer.g, colorForWrongAnswer.b);
   }
 
-  // Display text
+  // increase text size of guess
+  increaseGuessTextSize();
+
+  // Display text showing user's guess
+  textAlign(CENTER);
+  textSize(guessTextSize);
   text(currentAnswer, width/2, height/2);
 }
 
+// Increase text size of guess
+function increaseGuessTextSize() {
+  if (guessTextSize < maxTextSize) {
+    guessTextSize += textSizeGrowth;
+  }
+}
+
 // Display numCorrectAnswers on corner of canvas
-function displayNumCorrectAnswers() {
+function displayNumCorrectAnswers({fillColor, size, x, y}) {
   push();
-  fill(255);
-  textSize(30);
+  fill(fillColor);
+  textSize(size);
   textAlign(CENTER);
-  text(`Correct: ${numCorrectAnswers}`, width - 130, 80);
+  text(`Correct: ${numCorrectAnswers}`, x, y);
   pop();
 }
 
@@ -366,10 +387,13 @@ function reverseString(string) {
 }
 
 // Update currentAnswer with guess and set that it's time to check if answer is correct
+// Also update text size of guess to 0
 function guessAnimal(animal) {
   // Sets currentAnswer to the guess that user just said
   // And convert answer to all lowercase
   currentAnswer = animal.toLowerCase();
   // Set that it's time to check if answer is correct
   timeToCheckIfAnswerCorrect = true;
+  // Reset text size to 0
+  guessTextSize = 0;
 }
