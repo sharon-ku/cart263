@@ -9,10 +9,10 @@ Here is a description of this template p5 project.
 
 // stores spy profile information
 let spyProfile = {
-  name: `stranger`,
-  alias: `potato head`,
-  secretWeapon: `water bottle`,
-  password: `kitkat`
+  name: `**REDACTED**`,
+  alias: `**REDACTED**`,
+  secretWeapon: `**REDACTED**`,
+  password: `**REDACTED**`
 };
 
 // background color
@@ -49,11 +49,17 @@ function setup() {
 
   // Check if there's saved data, then copy it into the profile
   if (data) {
-    // If there is, use the name in the data
-    spyProfile.name = data.name;
-    spyProfile.alias = data.alias;
-    spyProfile.secretWeapon = data.secretWeapon;
-    spyProfile.password = data.password;
+    // Ask use to type password
+    let password = prompt(`What's your password?`);
+
+    // If the password matches the password stored in the data, then load data of spy's profile
+    if (password === data.password) {
+      // If there is, set the spy data to the already saved data
+      spyProfile.name = data.name;
+      spyProfile.alias = data.alias;
+      spyProfile.secretWeapon = data.secretWeapon;
+      spyProfile.password = data.password;
+    }
   }
   else {
     // If there's no data, generate a spy profile
