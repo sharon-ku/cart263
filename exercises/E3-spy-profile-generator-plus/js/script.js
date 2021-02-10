@@ -12,19 +12,24 @@ let spyProfile = {
   name: `**REDACTED**`,
   alias: `**REDACTED**`,
   secretWeapon: `**REDACTED**`,
+  favoriteHobby: `**REDACTED**`,
+  petName: `**REDACTED**`,
   password: `**REDACTED**`
 };
 
 // background color
-let bgColor = 0;
+const BG_COLOR = 0;
 
-// strange word
+// Store data
+//   strange word (used for alias)
 let strangeWordData = undefined;
-
-// common object
+//   common object (used for secret weapon)
 let objectData = undefined;
-
-// tarot interpretation
+//   verb (used for favorite hobby)
+let verbData = undefined;
+//   condiment (used for pet name)
+let condimentData = undefined;
+//   tarot interpretation (used for password)
 let tarotData = undefined;
 
 // store top secret label image
@@ -38,12 +43,19 @@ let borders = [];
 
 // Preload JSON files and images
 function preload() {
+  // LOADING JSON FILES-----
   // Load JSON file containing a list of strange words
   strangeWordData = loadJSON(`assets/data/strange_words.json`);
   // Load JSON file containing a list of objects
   objectData = loadJSON(`assets/data/objects.json`);
+  // Load JSON file containing a list of verbs
+  verbData = loadJSON(`assets/data/verbs.json`);
+  // Load JSON file containing a list of condiments
+  condimentData = loadJSON(`assets/data/condiments.json`);
   // Load JSON file containing a list of tarot interpretations
   tarotData = loadJSON(`assets/data/tarot_interpretations.json`);
+
+  // LOADING IMAGES-----
   // Load image for top secret label
   topSecretLabelImage = loadImage(`assets/images/top-secret-label.png`);
 }
@@ -69,6 +81,8 @@ function setup() {
       spyProfile.name = data.name;
       spyProfile.alias = data.alias;
       spyProfile.secretWeapon = data.secretWeapon;
+      spyProfile.favoriteHobby = data.favoriteHobby;
+      spyProfile.petName = data.petName;
       spyProfile.password = data.password;
     }
   }
@@ -81,10 +95,7 @@ function setup() {
   topSecretLabel = new TopSecretLabel(topSecretLabelImage);
 
   // Create new border lines and store in borders array
-  let topBorder = new TopBorder();
-  borders.push(topBorder);
-  let bottomBorder = new BottomBorder();
-  borders.push(bottomBorder);
+  createNewBorders();
 }
 
 // Generate a spy profile
@@ -98,6 +109,14 @@ function generateSpyProfile() {
   // Set the spy's secret weapon to a random object
   spyProfile.secretWeapon = random(objectData.objects);
 
+  // Find a random verb
+  let verb = random(verbData.verbs);
+  // Set the spy's favorite hobby to a random verb
+  spyProfile.favoriteHobby = `to ${verb.present}`;
+
+  // Set the spy's pet name to a random condiment
+  spyProfile.petName = random(condimentData.condiments);
+
   // Find a random tarot card
   let card = random(tarotData.tarot_interpretations);
   // Set the spy's password to a random key word from the tarot interpretations
@@ -107,35 +126,67 @@ function generateSpyProfile() {
   localStorage.setItem(`spy-profile-data`, JSON.stringify(spyProfile));
 }
 
+// Create new border lines and store in borders array
+function createNewBorders() {
+  let topBorder = new TopBorder();
+  borders.push(topBorder);
+  let bottomBorder = new BottomBorder();
+  borders.push(bottomBorder);
+}
+
 // draw()
 //
 // Description of draw() goes here.
 function draw() {
   // Set a background color
-  background(bgColor);
+  background(BG_COLOR);
 
-  // Store spy profile text
+  // Display spy profile text
+  displaySpyProfileText();
+
+  // Display top secret label
+  topSecretLabel.display();
+
+  // Display border lines
+  for (let i = 0; i < borders.length; i++) {
+    borders[i].display();
+  }
+}
+
+// If Delete key is pressed, remove all data stored for spy profile
+function keyPressed() {
+  if (keyCode === DELETE) {
+    localStorage.removeItem(`spy-profile-data`);
+
+    spyProfile.name = `**REDACTED**`;
+    spyProfile.alias = `**REDACTED**`;
+    spyProfile.secretWeapon = `**REDACTED**`;
+    spyProfile.favoriteHobby = `**REDACTED**`;
+    spyProfile.petName = `**REDACTED**`;
+    spyProfile.password = `**REDACTED**`;
+  }
+}
+
+// Display spy profile text
+function displaySpyProfileText() {
   let profile = `**SPY PROFILE**
 
 Name: ${spyProfile.name}
 Alias: ${spyProfile.alias}
 Secret Weapon: ${spyProfile.secretWeapon}
-Password: ${spyProfile.password}`;
+Favorite Hobby: ${spyProfile.favoriteHobby}
+Pet Name: ${spyProfile.petName}
+Password: ${spyProfile.password}
 
-  // Display spy profile
+
+**IN THE CASE OF IDENTITY THEFT**
+CLICK 'DELETE' ON YOUR KEYBOARD TO REMOVE ALL INFORMATION`;
+
   push();
   fill(255);
   textFont(`Courier, monospace`)
   textAlign(LEFT, TOP);
   textSize(30);
-  text(profile, 100, 200);
+  text(profile, 100, 150);
   pop();
-
-  // Display top secret label
-  topSecretLabel.display();
-
-  // Display border line
-  for (let i = 0; i < borders.length; i++) {
-    borders[i].display();
-  }
 }
