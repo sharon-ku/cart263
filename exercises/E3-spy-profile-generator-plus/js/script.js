@@ -2,7 +2,14 @@
 Exercise 3: Spy Profile Generator++
 Sharon Ku
 
-Here is a description of this template p5 project.
+When the user first loads the proram it will ask for their name in a text prompt.
+Once provided, the program will generate and save the user's super secret spy profile using random JSON data.
+Profile contains: name, alias, secret weapon, favorite hobby, pet name, and password.
+When the user returns later, they will need to enter their generated password to view their profile again.
+User can delete all information by clicking DELETE key (this is for extreme cases like identity theft!!!)
+
+Sources:
+JSON files from https://github.com/dariusk/corpora
 **************************************************/
 
 "use strict";
@@ -62,7 +69,7 @@ function preload() {
 
 // setup()
 //
-// Description of setup() goes here.
+// Create canvas, check if spy profile data exists already and either generate new data or restore old data, check password if restoring old data, create objects from classes
 function setup() {
   // Create a canvas
   createCanvas(windowWidth, windowHeight);
@@ -136,7 +143,7 @@ function createNewBorders() {
 
 // draw()
 //
-// Description of draw() goes here.
+// Set background color, display spy profile text, display top secret label image, display two red border lines
 function draw() {
   // Set a background color
   background(BG_COLOR);
@@ -153,11 +160,13 @@ function draw() {
   }
 }
 
-// If Delete key is pressed, remove all data stored for spy profile
+// If Delete key is pressed:
 function keyPressed() {
   if (keyCode === DELETE) {
+    // Remove all data stored for spy profile
     localStorage.removeItem(`spy-profile-data`);
 
+    // Set all data to REDACTED
     spyProfile.name = `**REDACTED**`;
     spyProfile.alias = `**REDACTED**`;
     spyProfile.secretWeapon = `**REDACTED**`;
