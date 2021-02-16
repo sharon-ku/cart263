@@ -5,6 +5,8 @@ Sharon Ku
 Here is a description of this template p5 project.
 **************************************************/
 
+"use strict";
+
 // background fill
 let bgFill = {
   r: 62,
