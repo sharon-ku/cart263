@@ -15,7 +15,7 @@ class Boat {
     this.thetaMax = PI/4;
     // rotational movement information
     this.angularVelocity = 0;
-    this.rotationSpeed = PI / 1000;
+    this.angularSpeed = PI / 1000;
 
     // image information
     this.width = 230;
@@ -35,11 +35,11 @@ class Boat {
   swerve() {
     // If mouse is on right side of boat, make boat swerve right
     if (mouseX > this.x) {
-      this.angularVelocity = this.rotationSpeed;
+      this.angularVelocity = this.angularSpeed;
     }
     // ELse, if mouse is on left side of boat, make boat swerve left
     else if (mouseX < this.x) {
-      this.angularVelocity = -this.rotationSpeed;
+      this.angularVelocity = -this.angularSpeed;
     }
     // Update theta of boat
     this.theta += this.angularVelocity;
@@ -76,7 +76,5 @@ class Boat {
     image(this.image, 0, 0, this.width, this.height);
     pop();
   }
-
-
 
 }

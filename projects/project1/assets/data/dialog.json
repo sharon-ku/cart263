@@ -1,0 +1,31 @@
+{
+  "description": "List of dialog used in The Water Scene",
+  "dialog": [
+    {
+      "string": [
+        "Hello, I am your tour guide on this boat adventure.",
+        "My name is"
+      ],
+      "delay": 3000
+    },
+    {
+      "string": [
+        "How do you imagine my voice to sound like?"
+      ],
+      "delay": 3000
+    },
+    {
+      "string": [
+        "Yay! I have a voice now!",
+        "Before I forget, what is your name?"
+      ],
+      "responses": [
+        "is that it?",
+        "I am awfully sorry for mishearing.",
+        "Let's start our journey!"
+      ],
+      "delay": 3000
+    }
+
+  ]
+}

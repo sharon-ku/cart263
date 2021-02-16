@@ -18,11 +18,21 @@ let boatImage;
 // user-controlled boat
 let boat;
 
+// store all dialog
+let dialog;
+
+// array of rocks
+let rocks = [];
+// number of rocks
+let numRocks = 10;
+
+
 // preload()
 //
-// Preload images
+// Preload images, JSON files
 function preload() {
   boatImage = loadImage(`assets/images/boat.png`);
+  dialog = loadJSON(`assets/data/dialog.json`);
 }
 
 // setup()
@@ -35,6 +45,12 @@ function setup() {
   // Create a new boat
   boat = new Boat(boatImage);
 
+  // Create new rocks
+  for (let i = 0; i < numRocks; i++) {
+    let rock = new Rock();
+    rocks.push(rock);
+  }
+
 }
 
 // draw()
@@ -42,6 +58,11 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
   background(bgFill.r, bgFill.g, bgFill.b);
+
+  // Display rocks
+  for (let i = 0; i < rocks.length; i++) {
+    rocks[i].update();
+  }
 
   // Update the boat's behaviour
   boat.update();
