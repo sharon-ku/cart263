@@ -27,6 +27,16 @@ let bubbles = [];
 // number of bubbles
 let numBubbles = 1;
 
+// Coordinates of index finger tip and base
+let fingerTip = {
+  x: undefined,
+  y: undefined,
+};
+let fingerBase = {
+  x: undefined,
+  y: undefined,
+}
+
 // setup()
 //
 // Description of setup() goes here.
@@ -79,6 +89,7 @@ function loading() {
   background(bgFill);
 
   push();
+  fill(255);
   textSize(32);
   textStyle(BOLD);
   textAlign(CENTER, CENTER);
@@ -104,6 +115,10 @@ function running() {
   // Update bubbles
   for (let i = 0; i < bubbles.length; i++) {
     bubbles[i].update();
+
+    if (bubbles[i].overlapsWith(fingerTip)) {
+      bubbles.splice(i, 1);
+    }
   }
 }
 
@@ -114,22 +129,22 @@ function displayPin(hand) {
   let tip = index[3];
   let base = index[0];
 
-  let tipX = tip[0];
-  let tipY = tip[1];
+  fingerTip.x = tip[0];
+  fingerTip.y = tip[1];
 
-  let baseX = base[0];
-  let baseY = base[1];
+  fingerBase.x = base[0];
+  fingerBase.y = base[1];
 
   // Draw a line from tip to base of finger
   push();
   stroke(255);
-  line(tipX, tipY, baseX, baseY);
+  line(fingerTip.x, fingerTip.y, fingerBase.x, fingerBase.y);
   pop();
 
   // Draw a red circle at base of index finger
   push();
   noStroke();
   fill(255, 0, 0);
-  ellipse(baseX, baseY, 30);
+  ellipse(fingerBase.x, fingerBase.y, 30);
   pop();
 }

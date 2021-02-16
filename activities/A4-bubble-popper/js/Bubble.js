@@ -49,12 +49,15 @@ class Bubble {
     pop();
   }
 
-  // // Returns true if subject overlaps with bubble
-  // overlapsWith(subject) {
-  //   if (subject.) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  // Returns true if subject overlaps with bubble
+  overlapsWith({x, y}) {
+    // Calculate distance between subject and bubble
+    let distBtwSubjectAndBubble = dist(x, y, this.x, this.y);
+    // If distance calculated is less than bubble's radius, then subject is overlapping with bubble and return true
+    if (distBtwSubjectAndBubble < this.size / 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
