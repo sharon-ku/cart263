@@ -22,6 +22,8 @@ class Bubble {
   update() {
     // Display bubble
     this.display();
+    // Constrain bubble's movement to inside of canvas
+    this.constrain();
     // Move bubble randomly on canvas
     this.float();
   }
@@ -37,7 +39,12 @@ class Bubble {
     // Update position with velocity
     this.x += this.vx;
     this.y += this.vy;
+  }
 
+  // Constrain bubble's movement to inside of canvas
+  constrain() {
+    this.x = constrain(this.x, 0, width);
+    this.y = constrain(this.y, 0, height);
   }
 
   // Display bubble as ellipse

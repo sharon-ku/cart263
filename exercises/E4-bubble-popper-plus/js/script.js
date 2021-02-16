@@ -1,9 +1,9 @@
 /**************************************************
-Activity 4: Bubble Popper
+Exercise 4: Bubble Popper
 Sharon Ku
 
 Using hand tracking we turn the user's index finger into a pin on our program's canvas.
-A bubble floats upward repeatedly and the user can pop the bubble with the pointy end of their pin-finger.
+Bubbles float aroudn randomly and the user can pop the bubble with the pointy end of their pin-finger.
 **************************************************/
 "use strict";
 
@@ -25,9 +25,9 @@ let bgFill = 0;
 // Store bubbles
 let bubbles = [];
 // number of bubbles
-let numBubbles = 1;
+let numBubbles = 20;
 
-// Coordinates of index finger tip and base
+// Coordinates of index finger's tip and base
 let fingerTip = {
   x: undefined,
   y: undefined,
@@ -35,11 +35,14 @@ let fingerTip = {
 let fingerBase = {
   x: undefined,
   y: undefined,
-}
+};
+
+// Section around canvas that bubbles cannot move to
+let border = 50;
 
 // setup()
 //
-// Description of setup() goes here.
+// Create canvas, start webcam, start Handpose model, listen for prediction events from Handpose, create bubbles
 function setup() {
   // Create a canvas
   createCanvas(640, 480);
@@ -64,6 +67,11 @@ function setup() {
 
 
   // Create new bubbles and store in bubbles array
+  createBubbles();
+}
+
+// Create new bubbles and store in bubbles array
+function createBubbles() {
   for (let i = 0; i < numBubbles; i++) {
     // Create a new bubble
     let bubble = new Bubble();
@@ -88,6 +96,7 @@ function loading() {
   // Set background color
   background(bgFill);
 
+  // Display "Loading [model's name]" text
   push();
   fill(255);
   textSize(32);
@@ -97,7 +106,7 @@ function loading() {
   pop();
 }
 
-// Displays the webcam.
+// Display the webcam:
 // If there is a hand it outlines it and highlights the tip of the index finger.
 function running() {
   // Display the webcam with reversed image so it's a mirror
@@ -108,23 +117,18 @@ function running() {
   if (predictions.length > 0) {
     // Get the hand predicted
     let hand = predictions[0];
+    // Provided with a detected hand, get coordinates of tip and base of index finger
+    getCoordinatesOfIndexFinger(hand);
     // Display pin on canvas (that runs through length of index finger)
-    displayPin(hand);
+    displayPin();
   }
 
-  // Update bubbles
-  for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].update();
-
-    if (bubbles[i].overlapsWith(fingerTip)) {
-      bubbles.splice(i, 1);
-    }
-  }
+  // Update bubbles and remove bubble if it's been popped
+  updateBubbles();
 }
 
-// Provided with a detected hand, it highlights the length of the index finger
-function displayPin(hand) {
-  // Get coordinates of tip and base of index finger
+// Provided with a detected hand, get coordinates of tip and base of index finger
+function getCoordinatesOfIndexFinger(hand) {
   let index = hand.annotations.indexFinger;
   let tip = index[3];
   let base = index[0];
@@ -134,7 +138,10 @@ function displayPin(hand) {
 
   fingerBase.x = base[0];
   fingerBase.y = base[1];
+}
 
+// Draw pin along the length of the index finger
+function displayPin() {
   // Draw a line from tip to base of finger
   push();
   stroke(255);
@@ -147,4 +154,16 @@ function displayPin(hand) {
   fill(255, 0, 0);
   ellipse(fingerBase.x, fingerBase.y, 30);
   pop();
+}
+
+// Update bubbles' behaviour and remove bubble if it's been popped
+function updateBubbles() {
+  for (let i = 0; i < bubbles.length; i++) {
+    bubbles[i].update();
+
+    // If bubble overlaps with finger tip, remove bubble from array
+    if (bubbles[i].overlapsWith(fingerTip)) {
+      bubbles.splice(i, 1);
+    }
+  }
 }
