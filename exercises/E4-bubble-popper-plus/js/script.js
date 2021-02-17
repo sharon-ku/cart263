@@ -3,7 +3,7 @@ Exercise 4: Bubble Popper
 Sharon Ku
 
 Using hand tracking we turn the user's index finger into a pin on our program's canvas.
-Bubbles float aroudn randomly and the user can pop the bubble with the pointy end of their pin-finger.
+Bubbles float around randomly and the user can pop the bubble with the pointy end of their pin-finger.
 **************************************************/
 "use strict";
 
@@ -29,7 +29,7 @@ let border = 50;
 // Store bubbles
 let bubbles = [];
 // number of bubbles
-let numBubbles = 20;
+let numBubbles = 2;
 
 // Coordinates of index finger's tip and base
 let fingerTip = {
@@ -59,6 +59,33 @@ let loadingText = {
   style: `BOLD`,
 }
 
+// Array of clowns
+let clowns = [];
+// Clown image
+let clownImage = undefined;
+
+// Victory text
+let victoryText = {
+  string: `BRAVO
+EXPERT BUBBLE POPPER!`,
+  size: {
+    current: 25,
+    max: 40,
+    min: 20,
+    changeRate: 0,
+    positiveChangeRate: 0.6,
+    negativeChangeRate: -0.8,
+    increaseSize: true,
+  },
+  fill: 255,
+};
+
+// preload()
+//
+// Preload images
+function preload(){
+  clownImage = loadImage(`assets/images/clown.png`);
+}
 
 // setup()
 //
@@ -83,7 +110,6 @@ function setup() {
   handpose.on(`predict`, function(results) {
     predictions = results;
   });
-
 
   // Create new bubbles and store in bubbles array
   createBubbles();
@@ -144,6 +170,12 @@ function running() {
 
   // Update bubbles and remove bubble if it's been popped
   updateBubbles(border);
+
+  // If all bubbles have been popped, display victory text that grows and shrinks, party style
+  if (bubbles.length === 0) {
+    changeTextSize();
+    displayVictoryText();
+  }
 }
 
 // Provided with a detected hand, get coordinates of tip and base of index finger
@@ -175,14 +207,59 @@ function displayPin() {
   pop();
 }
 
-// Update bubbles' behaviour and remove bubble if it's been popped
+// Update bubbles' behaviour
+// Also remove bubble and drop a clown if bubble's been popped
 function updateBubbles(border) {
   for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].update(border);
+    let bubble = bubbles[i];
+    // Update bubble's behaviour
+    bubble.update(border);
 
-    // If bubble overlaps with finger tip, remove bubble from array
-    if (bubbles[i].overlapsWith(fingerTip)) {
+    // If bubble overlaps with finger tip, remove bubble from array and create clown on bubble's last position
+    if (bubble.overlapsWith(fingerTip)) {
+      // create a new clown on bubble's last position
+      let clown = new Clown(clownImage, bubble.x, bubble.y);
+      clowns.push(clown);
+      // remove bubble from array
       bubbles.splice(i, 1);
     }
+
+    // Update clown's behaviour
+    for (let j = 0; j < clowns.length; j++) {
+      clowns[j].update();
+    }
   }
+}
+
+// Decrease and increase victory text size
+function changeTextSize() {
+  // If text size reaches min size, increase its size
+  if (victoryText.size.current <= victoryText.size.min) {
+    victoryText.size.increaseSize = true;
+  }
+  // If text size reaches max size, decrease text size
+  else if (victoryText.size.current >= victoryText.size.max) {
+    victoryText.size.increaseSize = false;
+  }
+
+  // If it's time to increase size, set size to positive change rate
+  if (victoryText.size.increaseSize) {
+    victoryText.size.changeRate = victoryText.size.positiveChangeRate;
+  }
+  // Else, set to negative change rate
+  else {
+    victoryText.size.changeRate = victoryText.size.negativeChangeRate;
+  }
+
+  // Update text's current s ize
+  victoryText.size.current += victoryText.size.changeRate;
+}
+
+// Display victory text
+function displayVictoryText() {
+  push();
+  fill(victoryText.fill);
+  textSize(victoryText.size.current);
+  textAlign(CENTER, CENTER);
+  text(victoryText.string, width/2, height/2);
 }
