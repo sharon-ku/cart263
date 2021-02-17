@@ -19,11 +19,11 @@ class Bubble {
   }
 
   // Update all behaviour of bubble
-  update() {
+  update(border) {
     // Display bubble
     this.display();
     // Constrain bubble's movement to inside of canvas
-    this.constrain();
+    this.constrain(border);
     // Move bubble randomly on canvas
     this.float();
   }
@@ -43,8 +43,8 @@ class Bubble {
 
   // Constrain bubble's movement to inside of canvas
   constrain() {
-    this.x = constrain(this.x, 0, width);
-    this.y = constrain(this.y, 0, height);
+    this.x = constrain(this.x, border, width - border);
+    this.y = constrain(this.y, border, height - border);
   }
 
   // Display bubble as ellipse

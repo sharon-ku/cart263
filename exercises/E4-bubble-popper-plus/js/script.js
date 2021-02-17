@@ -10,6 +10,7 @@ Bubbles float aroudn randomly and the user can pop the bubble with the pointy en
 // Current state of program
 // All possible states: loading, running
 let state = `loading`;
+
 // User's webcam
 let video = undefined;
 // The name of our model
@@ -21,6 +22,9 @@ let predictions = [];
 
 // Background color
 let bgFill = 0;
+
+// Section around canvas that bubbles cannot move to
+let border = 50;
 
 // Store bubbles
 let bubbles = [];
@@ -37,8 +41,24 @@ let fingerBase = {
   y: undefined,
 };
 
-// Section around canvas that bubbles cannot move to
-let border = 50;
+// Pin appearance information
+let pin = {
+  lineStrokeFill: 255,
+  circleFill: {
+    r: 255,
+    g: 0,
+    b: 0,
+  },
+  circleSize: 30,
+};
+
+// Loading text information
+let loadingText = {
+  fill: 255,
+  size: 32,
+  style: `BOLD`,
+}
+
 
 // setup()
 //
@@ -61,7 +81,6 @@ function setup() {
 
   // Listen for prediction events from Handpose and store the results in our predictions array when the occur
   handpose.on(`predict`, function(results) {
-    console.log(results);
     predictions = results;
   });
 
@@ -98,9 +117,9 @@ function loading() {
 
   // Display "Loading [model's name]" text
   push();
-  fill(255);
-  textSize(32);
-  textStyle(BOLD);
+  fill(loadingText.fill);
+  textSize(loadingText.size);
+  textStyle(loadingText.style);
   textAlign(CENTER, CENTER);
   text(`Loading ${modelName}...`, width / 2, height / 2);
   pop();
@@ -124,7 +143,7 @@ function running() {
   }
 
   // Update bubbles and remove bubble if it's been popped
-  updateBubbles();
+  updateBubbles(border);
 }
 
 // Provided with a detected hand, get coordinates of tip and base of index finger
@@ -144,22 +163,22 @@ function getCoordinatesOfIndexFinger(hand) {
 function displayPin() {
   // Draw a line from tip to base of finger
   push();
-  stroke(255);
+  stroke(pin.lineStrokeFill);
   line(fingerTip.x, fingerTip.y, fingerBase.x, fingerBase.y);
   pop();
 
   // Draw a red circle at base of index finger
   push();
   noStroke();
-  fill(255, 0, 0);
-  ellipse(fingerBase.x, fingerBase.y, 30);
+  fill(pin.circleFill.r, pin.circleFill.g, pin.circleFill.b);
+  ellipse(fingerBase.x, fingerBase.y, pin.circleSize);
   pop();
 }
 
 // Update bubbles' behaviour and remove bubble if it's been popped
-function updateBubbles() {
+function updateBubbles(border) {
   for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].update();
+    bubbles[i].update(border);
 
     // If bubble overlaps with finger tip, remove bubble from array
     if (bubbles[i].overlapsWith(fingerTip)) {
