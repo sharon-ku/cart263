@@ -29,7 +29,7 @@ let border = 50;
 // Store bubbles
 let bubbles = [];
 // number of bubbles
-let numBubbles = 2;
+let numBubbles = 15;
 
 // Coordinates of index finger's tip and base
 let fingerTip = {
