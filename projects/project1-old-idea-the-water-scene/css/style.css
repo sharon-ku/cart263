@@ -1,0 +1,14 @@
+body {
+  /* remove padding and margin */
+  padding: 0;
+  margin: 0;
+
+  /* set background color to black */
+  background: black;
+
+  /* center items on page */
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
