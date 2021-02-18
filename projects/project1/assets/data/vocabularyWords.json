@@ -1,0 +1,54 @@
+{
+  "description": "3 sets of English vocabulary words with corresponding Cantonese word, English sentence, Cantonese sentence, and image file names",
+  "set1": [
+    {
+      "englishWord": "happy",
+      "cantoneseWord": "開心",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    },
+    {
+      "englishWord": "angry",
+      "cantoneseWord": "嬲",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    }
+
+  ],
+  "set2": [
+    {
+      "englishWord": "happy",
+      "cantoneseWord": "開心",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    },
+    {
+      "englishWord": "angry",
+      "cantoneseWord": "嬲",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    }
+
+  ],
+  "set3": [
+    {
+      "englishWord": "happy",
+      "cantoneseWord": "開心",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    },
+    {
+      "englishWord": "angry",
+      "cantoneseWord": "嬲",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    }
+
+  ]
+}
