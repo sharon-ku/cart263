@@ -1,0 +1,20 @@
+{
+  "description": "List of English vocabulary words",
+  "vocabulary_words": [
+    {
+      "englishWord": "happy",
+      "cantoneseWord": "開心",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    },
+    {
+      "englishWord": "angry",
+      "cantoneseWord": "嬲",
+      "englishSentence": "I am happy to see you",
+      "cantoneseSentence": "",
+      "imageName": ["happy-image0.png"]
+    }
+
+  ]
+}
