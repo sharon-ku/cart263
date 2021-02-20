@@ -7,7 +7,7 @@ Here is a description of this template p5 project.
 "use strict";
 
 // States of program
-// Possible states: intro, lesson, game, end
+// Possible states: intro, lessons, game, end
 let state = `intro`;
 
 // Vocabulary word
@@ -36,6 +36,10 @@ let paperLine = {
   strokeWeight: 1.5,
   spacing: 30
 };
+
+// Introduction circles
+let introCircles = [];
+const NUM_INTRO_CIRCLES = 15;
 
 
 // preload()
@@ -69,7 +73,11 @@ function setup() {
   // };
   // titleRectangle = new Rectangle(titleRectangleProperties);
 
-
+  // Create intro circles are store in array
+  for (let i = 0; i < NUM_INTRO_CIRCLES; i++) {
+     let introCircle = new IntroCircle();
+     introCircles.push(introCircle);
+  }
 }
 
 // draw()
@@ -102,21 +110,56 @@ function intro() {
   drawHorizontalLines();
   drawVerticalLines();
 
-  // Set parameters for title
-  let title = {
-    string: `學英語`,
+  // Test position of rectangles for lesson sets
+  push();
+  rectMode(CENTER);
+  fill(0, 0, 125);
+  let distFromEdge = 250;
+  let rectWidth = 290;
+  let rectHeight = 180;
+  // left rectangle
+  rect(distFromEdge, 460, rectWidth, rectHeight, 30);
+  // middle rectangle
+  rect(width / 2, 460, rectWidth, rectHeight, 30);
+  // right rectangle
+  rect(width - distFromEdge, 460, rectWidth, rectHeight, 30);
+  pop();
+
+  // Make intro circles move around randomly
+  for (let i = 0; i < introCircles.length; i++) {
+    introCircles[i].update();
+  }
+
+  // Set parameters for Cantonese title
+  let cantoneseTitle = {
+    string: `學英語: 情緒`,
     x: width / 2,
-    y: 150,
+    y: 113,
     r: 0,
     g: 0,
     b: 0,
-    size: 80,
+    size: 100,
     font: font,
     horizAlign: CENTER,
     vertAlign: CENTER,
   }
-  // Display title
-  displayText(title);
+  // Set parameters for English title
+  let englishTitle = {
+    string: `Learn How to Say Emotions in English`,
+    x: width / 2,
+    y: 217,
+    r: 119,
+    g: 198,
+    b: 220,
+    size: 40,
+    font: font,
+    horizAlign: CENTER,
+    vertAlign: CENTER,
+  }
+  // Display Cantonese title
+  displayText(cantoneseTitle);
+  // Display English title underneath
+  displayText(englishTitle);
 }
 
 // Draw horizontal lines across the page
@@ -169,4 +212,11 @@ function displayText({string, x, y, r, g, b, size, font, horizAlign, vertAlign})
   fill(r, g, b);
   text(string, x, y);
   pop();
+}
+
+// STATE: lesson()
+//
+//
+function lesson() {
+
 }
