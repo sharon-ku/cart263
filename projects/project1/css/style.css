@@ -1,4 +1,10 @@
 body {
   padding: 0;
   margin: 0;
+  background: blanchedalmond;
+  /* Center canvas */
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
