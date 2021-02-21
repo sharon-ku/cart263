@@ -1,36 +1,99 @@
 {
   "description": "3 sets of English vocabulary words with corresponding Cantonese word, English sentence, Cantonese sentence, and image file names",
-  "set1": [
+  "lessonWords": [
     {
       "englishWord": "happy",
       "cantoneseWord": "開心",
       "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "cantoneseSentence": "我很開心見到你",
+      "imageName": ["happy0.png", "happy1.png"]
     },
     {
       "englishWord": "angry",
       "cantoneseWord": "嬲",
-      "englishSentence": "I am happy to see you",
+      "englishSentence": "I am angry that you stepped on my favourite potato chips.",
+      "cantoneseSentence": "我為你踩到我最喜歡的薯片感到很嬲。",
+      "imageName": ["angry0.png", "angry1.png"]
+    },
+    {
+      "englishWord": "tired",
+      "cantoneseWord": "攰",
+      "englishSentence": "I am tired from a productive day of eating snacks.",
       "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "imageName": ["tired0.png", "tired1.png"]
+    },
+    {
+      "englishWord": "scared",
+      "cantoneseWord": "驚",
+      "englishSentence": "I am scared of the Cookie Monster.",
+      "cantoneseSentence": "",
+      "imageName": ["scared0.png", "scared1.png"]
+    },
+    {
+      "englishWord": "confused",
+      "cantoneseWord": "迷茫",
+      "englishSentence": "I am confused why this cake looks so much like me.",
+      "cantoneseSentence": "",
+      "imageName": ["confused0.png", "confused1.png"]
+    },
+    {
+      "englishWord": "energetic",
+      "cantoneseWord": "有活力",
+      "englishSentence": "I am energetic whenever I see a table full of food!",
+      "cantoneseSentence": "",
+      "imageName": ["energetic0.png", "energetic1.png"]
+    },
+    {
+      "englishWord": "jealous",
+      "cantoneseWord": "妒忌",
+      "englishSentence": "I am jealous that your lunch is bigger than mine.",
+      "cantoneseSentence": "",
+      "imageName": ["jealous0.png", "jealous1.png"]
+    },
+    {
+      "englishWord": "shocked",
+      "cantoneseWord": "震驚",
+      "englishSentence": "I am shocked that you don't know how delicious these marshmallows taste!",
+      "cantoneseSentence": "",
+      "imageName": ["shocked0.png", "shocked1.png"]
+    },
+    {
+      "englishWord": "annoyed",
+      "cantoneseWord": "忟",
+      "englishSentence": "I am annoyed that these candies aren't on sale today",
+      "cantoneseSentence": "",
+      "imageName": ["annoyed0.png", "annoyed1.png"]
+    },
+    {
+      "englishWord": "bored",
+      "cantoneseWord": "悶",
+      "englishSentence": "I am bored because my brother hid all my snacks away.",
+      "cantoneseSentence": "",
+      "imageName": ["bored0.png", "bored1.png"]
     }
 
+
   ],
+
+
+
+
+
+
   "set2": [
     {
       "englishWord": "happy",
       "cantoneseWord": "開心",
       "englishSentence": "I am happy to see you",
       "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "imageName": ["happy0.png"]
     },
     {
       "englishWord": "angry",
       "cantoneseWord": "嬲",
       "englishSentence": "I am happy to see you",
       "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "imageName": ["happy0.png"]
     }
 
   ],
@@ -40,14 +103,14 @@
       "cantoneseWord": "開心",
       "englishSentence": "I am happy to see you",
       "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "imageName": ["happy0.png"]
     },
     {
       "englishWord": "angry",
       "cantoneseWord": "嬲",
       "englishSentence": "I am happy to see you",
       "cantoneseSentence": "",
-      "imageName": ["happy-image0.png"]
+      "imageName": ["happy0.png"]
     }
 
   ]
