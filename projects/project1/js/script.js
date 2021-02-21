@@ -110,6 +110,7 @@ function intro() {
   drawHorizontalLines();
   drawVerticalLines();
 
+
   // Test position of rectangles for lesson sets
   push();
   rectMode(CENTER);
@@ -124,6 +125,16 @@ function intro() {
   // right rectangle
   rect(width - distFromEdge, 460, rectWidth, rectHeight, 30);
   pop();
+
+  // Test position of text on rect button
+  push();
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(30);
+  text(`學習新單詞
+Learn New Words`, distFromEdge, 460);
+  pop();
+
 
   // Make intro circles move around randomly
   for (let i = 0; i < introCircles.length; i++) {

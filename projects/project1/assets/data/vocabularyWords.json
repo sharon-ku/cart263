@@ -4,71 +4,71 @@
     {
       "englishWord": "happy",
       "cantoneseWord": "開心",
-      "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "我很開心見到你",
+      "englishSentence": "I am happy to see you.",
+      "cantoneseSentence": "我很開心見到你。",
       "imageName": ["happy0.png", "happy1.png"]
     },
     {
       "englishWord": "angry",
       "cantoneseWord": "嬲",
       "englishSentence": "I am angry that you stepped on my favourite potato chips.",
-      "cantoneseSentence": "我為你踩到我最喜歡的薯片感到很嬲。",
+      "cantoneseSentence": "我很嬲因為你踩到我最喜歡的薯片。",
       "imageName": ["angry0.png", "angry1.png"]
     },
     {
       "englishWord": "tired",
       "cantoneseWord": "攰",
       "englishSentence": "I am tired from a productive day of eating snacks.",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "吃零食的一天讓我很累。",
       "imageName": ["tired0.png", "tired1.png"]
     },
     {
       "englishWord": "scared",
       "cantoneseWord": "驚",
-      "englishSentence": "I am scared of the Cookie Monster.",
-      "cantoneseSentence": "",
+      "englishSentence": "The Cookie Monster makes me scared.",
+      "cantoneseSentence": "餅乾怪使我感到驚。",
       "imageName": ["scared0.png", "scared1.png"]
     },
     {
       "englishWord": "confused",
       "cantoneseWord": "迷茫",
       "englishSentence": "I am confused why this cake looks so much like me.",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "我很迷茫為什麼這個蛋糕看起來很像我。",
       "imageName": ["confused0.png", "confused1.png"]
     },
     {
       "englishWord": "energetic",
       "cantoneseWord": "有活力",
       "englishSentence": "I am energetic whenever I see a table full of food!",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "每當我看到裝滿食物的桌子時，我就會充滿活力！",
       "imageName": ["energetic0.png", "energetic1.png"]
     },
     {
       "englishWord": "jealous",
       "cantoneseWord": "妒忌",
       "englishSentence": "I am jealous that your lunch is bigger than mine.",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "我很妒忌你的午餐比我的大。",
       "imageName": ["jealous0.png", "jealous1.png"]
     },
     {
       "englishWord": "shocked",
       "cantoneseWord": "震驚",
       "englishSentence": "I am shocked that you don't know how delicious these marshmallows taste!",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "我很震驚您不知道這些棉花糖的味道",
       "imageName": ["shocked0.png", "shocked1.png"]
     },
     {
       "englishWord": "annoyed",
       "cantoneseWord": "忟",
       "englishSentence": "I am annoyed that these candies aren't on sale today",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "我很忟這些糖果今天不銷售",
       "imageName": ["annoyed0.png", "annoyed1.png"]
     },
     {
       "englishWord": "bored",
       "cantoneseWord": "悶",
       "englishSentence": "I am bored because my brother hid all my snacks away.",
-      "cantoneseSentence": "",
+      "cantoneseSentence": "我很悶因為我的兄弟把我所有的小吃都藏起來了。",
       "imageName": ["bored0.png", "bored1.png"]
     }
 
