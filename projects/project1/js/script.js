@@ -17,11 +17,17 @@ let vocabularyWord;
 let bgFill = {
   r: 255,
   g: 255,
-  b: 255
+  b: 255,
 };
 
 // Text font
 let font;
+
+// Mouse positions
+let mouse = {
+  x: undefined,
+  y: undefined,
+};
 
 // // Title rectangle
 // let titleRectangle;
@@ -31,16 +37,18 @@ let paperLine = {
   stroke: {
     r: 155,
     g: 236,
-    b: 255
+    b: 255,
   },
   strokeWeight: 1.5,
-  spacing: 30
+  spacing: 30,
 };
 
 // Introduction circles
 let introCircles = [];
 const NUM_INTRO_CIRCLES = 15;
 
+// Rectangular button for learning new words
+let rectButtonLearn = undefined;
 
 // preload()
 //
@@ -75,15 +83,22 @@ function setup() {
 
   // Create intro circles are store in array
   for (let i = 0; i < NUM_INTRO_CIRCLES; i++) {
-     let introCircle = new IntroCircle();
-     introCircles.push(introCircle);
+    let introCircle = new IntroCircle();
+    introCircles.push(introCircle);
   }
+
+  // Create a new rectangular button for "Learn"
+  rectButtonLearn = new RectButtonLearn(font);
 }
 
 // draw()
 //
 // Set background color and states of program
 function draw() {
+  // Set mouse x and y position
+  mouse.x = mouseX;
+  mouse.y = mouseY;
+
   // Set background color
   background(bgFill.r, bgFill.g, bgFill.b);
 
@@ -110,31 +125,32 @@ function intro() {
   drawHorizontalLines();
   drawVerticalLines();
 
+  //   // Test position of rectangles for lesson sets
+  //   push();
+  //   rectMode(CENTER);
+  //   fill(0, 0, 125);
+  //   let distFromEdge = 250;
+  //   let rectWidth = 290;
+  //   let rectHeight = 180;
+  //   // left rectangle
+  //   rect(distFromEdge, 460, rectWidth, rectHeight, 30);
+  //   // middle rectangle
+  //   rect(width / 2, 460, rectWidth, rectHeight, 30);
+  //   // right rectangle
+  //   rect(width - distFromEdge, 460, rectWidth, rectHeight, 30);
+  //   pop();
+  //
+  //   // Test position of text on rect button
+  //   push();
+  //   textAlign(CENTER, CENTER);
+  //   fill(255);
+  //   textSize(30);
+  //   text(`學習新單詞
+  // Learn New Words`, distFromEdge, 460);
+  //   pop();
 
-  // Test position of rectangles for lesson sets
-  push();
-  rectMode(CENTER);
-  fill(0, 0, 125);
-  let distFromEdge = 250;
-  let rectWidth = 290;
-  let rectHeight = 180;
-  // left rectangle
-  rect(distFromEdge, 460, rectWidth, rectHeight, 30);
-  // middle rectangle
-  rect(width / 2, 460, rectWidth, rectHeight, 30);
-  // right rectangle
-  rect(width - distFromEdge, 460, rectWidth, rectHeight, 30);
-  pop();
-
-  // Test position of text on rect button
-  push();
-  textAlign(CENTER, CENTER);
-  fill(255);
-  textSize(30);
-  text(`學習新單詞
-Learn New Words`, distFromEdge, 460);
-  pop();
-
+  // Display rectangular button for "learn"
+  rectButtonLearn.update(mouse);
 
   // Make intro circles move around randomly
   for (let i = 0; i < introCircles.length; i++) {
@@ -153,7 +169,7 @@ Learn New Words`, distFromEdge, 460);
     font: font,
     horizAlign: CENTER,
     vertAlign: CENTER,
-  }
+  };
   // Set parameters for English title
   let englishTitle = {
     string: `Learn How to Say Emotions in English`,
@@ -166,7 +182,7 @@ Learn New Words`, distFromEdge, 460);
     font: font,
     horizAlign: CENTER,
     vertAlign: CENTER,
-  }
+  };
   // Display Cantonese title
   displayText(cantoneseTitle);
   // Display English title underneath
@@ -183,7 +199,7 @@ function drawHorizontalLines() {
       x2: width,
       y1: i,
       y2: i,
-    }
+    };
     // Draw a vertical line
     drawALine(horizontalLine);
   }
@@ -199,14 +215,14 @@ function drawVerticalLines() {
       x2: i,
       y1: 0,
       y2: height,
-    }
+    };
     // Draw a vertical line
     drawALine(verticalLine);
   }
 }
 
 // Draws a single line with provided end points
-function drawALine({x1, y1, x2, y2}) {
+function drawALine({ x1, y1, x2, y2 }) {
   push();
   strokeWeight(paperLine.strokeWeight);
   stroke(paperLine.stroke.r, paperLine.stroke.g, paperLine.stroke.b);
@@ -215,7 +231,18 @@ function drawALine({x1, y1, x2, y2}) {
 }
 
 // Display text by providing parameters
-function displayText({string, x, y, r, g, b, size, font, horizAlign, vertAlign}) {
+function displayText({
+  string,
+  x,
+  y,
+  r,
+  g,
+  b,
+  size,
+  font,
+  horizAlign,
+  vertAlign,
+}) {
   push();
   textSize(size);
   textFont(font);
@@ -228,6 +255,4 @@ function displayText({string, x, y, r, g, b, size, font, horizAlign, vertAlign})
 // STATE: lesson()
 //
 //
-function lesson() {
-
-}
+function lesson() {}
