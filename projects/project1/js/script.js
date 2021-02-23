@@ -98,7 +98,7 @@ function setup() {
   setCurrentLessonWord();
 
   // Create new lesson text for `learn` state
-  lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence);
+  lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font);
 
   // // Create a new rectangle for title
   // let titleRectangleProperties  = {

@@ -2,17 +2,17 @@
 // I.e. English word, Cantonese word, English sentence, and Cantonese sentence
 
 class LessonText {
-  constructor(cantoneseWord, englishWord, cantoneseSentence, englishSentence) {
+  constructor(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font) {
     // position of center of canvas
     this.x = width / 2;
-    this.y = height / 2;
+    this.y = 0;
 
     // English word
     this.englishWord = {
       string: englishWord,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: -50,
+      yOffset: 310,
       // appearance information
       size: 90,
       font: font,
@@ -28,7 +28,7 @@ class LessonText {
       string: cantoneseWord,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: 65,
+      yOffset: 425,
       // appearance information
       size: 80,
       font: font,
@@ -44,7 +44,7 @@ class LessonText {
       string: englishSentence,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: 180,
+      yOffset: 540,
       // appearance information
       size: 40,
       font: font,
@@ -60,7 +60,7 @@ class LessonText {
       string: cantoneseSentence,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: 240,
+      yOffset: 600,
       // appearance information
       size: 40,
       font: font,
@@ -75,89 +75,85 @@ class LessonText {
 
   // Display English and Cantonese words and sentences
   displayAllText(subject) {
-    this.displayText(this.englishWord);
-    this.displayText(this.cantoneseWord);
-    this.displayText(this.englishSentence);
-    this.displayText(this.cantoneseSentence);
+    // this.displayText(this.englishWord);
+    // this.displayText(this.cantoneseWord);
+    // this.displayText(this.englishSentence);
+    // this.displayText(this.cantoneseSentence);
 
-    // this.obtainBoundingBox(this.englishWord);
-    // print(`${this.englishWord.boundingBox}`);
-    // this.obtainBoundingBox(this.cantoneseWord);
-    // this.obtainBoundingBox(this.englishSentence);
-    // this.obtainBoundingBox(this.cantoneseSentence);
+    this.mouseOverText(this.englishWord, subject);
+    // this.mouseOverText(this.cantoneseWord, subject);
+    // this.mouseOverText(this.englishSentence, subject);
+    // this.mouseOverText(this.cantoneseSentence, subject);
+  }
 
-    // this.overlapsWith(this.englishWord.boundingBox, subject);
-    // this.overlapsWith(this.cantoneseWord.boundingBox, subject);
-    // this.overlapsWith(this.englishSentence.boundingBox, subject);
-    // this.overlapsWith(this.cantoneseSentence.boundingBox, subject);
 
-    if (this.overlapsWith(this.englishWord, subject)) {
-      console.log(`hello`);
+  // mouseOverText(myText, mouse) {
+  //   //Check mouseover
+  //   push();
+  //   textAlign(CENTER, CENTER);
+  //   textFont(myText.font);
+  //   textSize(myText.size);
+  //
+  //   let w = textWidth(myText);
+  //   let h = textAscent(myText);
+  //
+  //
+  //   if (mouse.x > myText.xOffset + this.x - w / 2 &&
+  //     mouse.x < myText.xOffset + this.x + w / 2 &&
+  //     mouse.y > myText.yOffset + this.y - h / 2 &&
+  //     mouse.y < myText.yOffset + this.y + h / 2) {
+  //     background(255, 0, 0);
+  //   }
+  //
+  //   text(myText.string, this.x + myText.xOffset, this.y + myText.yOffset);
+  //   pop();
+  //   push();
+  //   fill(0, 255, 0, 50);
+  //   rectMode(CENTER, CENTER);
+  //   rect(myText.xOffset + this.x, myText.yOffset + this.y, w, h);
+  //   pop();
+  //
+  // }
+
+  mouseOverText(myText, mouse) {
+    //Check mouseover
+    push();
+    textAlign(CENTER);
+    textFont(myText.font);
+    textSize(myText.size);
+
+    text(myText.string, this.x + myText.xOffset, this.y + myText.yOffset);
+    pop();
+
+    let bbox = myText.font.textBounds(myText.string, this.x + myText.xOffset, this.y + myText.yOffset, myText.size);
+
+    if (mouse.x > myText.xOffset + this.x - (bbox.w / 2) &&
+      mouse.x < myText.xOffset + this.x + (bbox.w / 2) &&
+      mouse.y > myText.yOffset + this.y - (bbox.h / 2) &&
+      mouse.y < myText.yOffset + this.y + (bbox.h / 2)) {
+      fill(255, 0, 0);
+    } else {
+      fill(0);
     }
-    this.overlapsWith(this.cantoneseWord, subject);
-    this.overlapsWith(this.englishSentence, subject);
-    this.overlapsWith(this.cantoneseSentence, subject);
+
+    // Display green rectangle where bounding box is
+    push();
+    fill(0, 255, 0, 50);
+    rectMode(CENTER);
+    rect(bbox.x, bbox.y, bbox.w, bbox.h);
+    pop();
+
   }
 
   // Display text
-  displayText({ string, xOffset, yOffset, size, font, fillR, fillG, fillB }) {
-    push();
-    textAlign(CENTER, CENTER);
-    fill(fillR, fillG, fillB);
-    textFont(font);
-    textSize(size);
-    text(string, this.x + xOffset, this.y + yOffset);
-    pop();
-  }
-
-
-  // Return true if subject provided as argument is overlapping with button
-  overlapsWith({font, string, xOffset, yOffset, size}, subject) {
-    push();
-    rectMode(CENTER, CENTER);
-    let boundingBox = font.textBounds(string, this.x + xOffset, this.y + yOffset, size);
-
-    fill(255);
-  stroke(0);
-  rect(boundingBox.x, boundingBox.y + 50, boundingBox.w, boundingBox.h);
-    pop();
-
-    if (
-      subject.x > boundingBox.x - boundingBox.w / 2 &&
-      subject.x < boundingBox.x + boundingBox.w / 2 &&
-      subject.y > boundingBox.y - boundingBox.h / 2 &&
-      subject.y < boundingBox.y + boundingBox.h / 2
-    ) {
-      background(255,0,0);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-
-  // // Bounding box returns the textbox's x and y coordinates, width, and height
-  // // The rectangle object returned has properties: x, y, w, h
-  // obtainBoundingBox({boundingBox, font, string, x, y, size}) {
-  //   boundingBox = font.textBounds(string, x, y, size);
-  //   print(`${boundingBox}`);
-  // }
-  //
-  // // Return true if subject provided as argument is overlapping with button
-  // overlapsWith(boundingBox, subject) {
-  //   // this.obtainBoundingBox();
-  //
-  //   if (
-  //     subject.x > boundingBox.x - boundingBox.w / 2 &&
-  //     subject.x < boundingBox.x + boundingBox.w / 2 &&
-  //     subject.y > boundingBox.y - boundingBox.h / 2 &&
-  //     subject.y < boundingBox.y + boundingBox.h / 2
-  //   ) {
-  //     print(`true`);
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
+  // displayText({ string, xOffset, yOffset, size, font, fillR, fillG, fillB }) {
+  //   push();
+  //   textAlign(CENTER, CENTER);
+  //   fill(fillR, fillG, fillB);
+  //   textFont(font);
+  //   textSize(size);
+  //   text(string, this.x + xOffset, this.y + yOffset);
+  //   pop();
   // }
 
 }
