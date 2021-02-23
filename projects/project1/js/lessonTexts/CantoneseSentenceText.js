@@ -5,6 +5,8 @@ class CantoneseSentenceText extends LessonText {
     super(cantoneseSentence, font);
     // string to be displayed
     this.string = cantoneseSentence;
+    // language of string
+    this.language = `cantonese`;
     // position
     this.y = 600;
     // appearance information

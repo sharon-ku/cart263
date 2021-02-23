@@ -5,6 +5,8 @@ class EnglishSentenceText extends LessonText {
     super(englishSentence, font);
     // string to be displayed
     this.string = englishSentence;
+    // language of string
+    this.language = `english`;
     // position
     this.y = 540;
     // appearance information

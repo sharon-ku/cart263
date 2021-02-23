@@ -3,7 +3,10 @@
 
 class LessonText {
   constructor(string, font) {
+    // string to be displayed
     this.string = undefined;
+    // language of string
+    this.language = undefined;
     // position
     this.x = width / 2;
     this.y = undefined;
@@ -30,15 +33,15 @@ class LessonText {
         b: undefined,
       },
     };
-    // Area around textbox's outer bounds that is accepted when mouse hovers
+    // Area around textbox's outer bounds that is accepted when mouse hovers over textbox
     this.boxWidthOffset = 0;
     this.boxHeightOffset = 15;
   }
 
   // Update behaviour of text
-  update(mouse) {
+  update(updatedString, mouse) {
     // Display text
-    this.display();
+    this.display(updatedString);
     // If mouse overlaps with textbox, change color
     if (this.overlapsWith(mouse)) {
       this.changeColor();
@@ -95,7 +98,10 @@ class LessonText {
   }
 
   // Display text
-  display() {
+  display(updatedString) {
+    // Update string
+    this.string = updatedString;
+    // Display text
     push();
     textAlign(CENTER);
     textFont(this.font);
@@ -103,5 +109,32 @@ class LessonText {
     fill(this.fill.current.r, this.fill.current.g, this.fill.current.b);
     text(this.string, this.x, this.y);
     pop();
+  }
+
+  // When mouse is pressed and overlappin with string, have ResponsiveVoice say the string
+  mousePressed(mouse, englishSpeaker, cantoneseSpeaker) {
+    if (this.overlapsWith(mouse)) {
+      this.speak(englishSpeaker, cantoneseSpeaker);
+    }
+  }
+
+  // Have ResponsiveVoice say string out loud
+  speak(englishSpeaker, cantoneseSpeaker) {
+    // If language is English, set English voice
+    if (this.language === `english`) {
+      responsiveVoice.speak(
+        this.string,
+        englishSpeaker.voice,
+        englishSpeaker.voiceProperties
+      );
+    }
+    // Else if language is Cantonese, set Cantonese voice
+    else if (this.language === `cantonese`) {
+      responsiveVoice.speak(
+        this.string,
+        cantoneseSpeaker.voice,
+        cantoneseSpeaker.voiceProperties
+      );
+    }
   }
 }
