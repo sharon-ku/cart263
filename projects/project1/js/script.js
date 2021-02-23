@@ -20,13 +20,30 @@ let englishSentence = undefined;
 let cantoneseSentence = undefined;
 
 // Track which word user is at in the `learn` state
-let lessonWordIndex = 0;
+let lessonWordIndex = 1;
+
+// Text to be dislayed on canvas in `learn` state
+// Contains: English and Cantonese words and sentences
+let lessonText = undefined;
 
 // Background color
 let bgFill = {
   r: 255,
   g: 255,
   b: 255,
+};
+
+// English speaker's voice (for ResponsiveVoice)
+let englishVoice = `US English Male`;
+let englishVoiceProperties = {
+  pitch: 1.3,
+  rate: 0.9,
+};
+
+// Cantonese speaker's voice (for ResponsiveVoice)
+let cantoneseVoice = `Chinese (Hong Kong) Female`;
+let cantoneseVoiceProperties = {
+  pitch: 1.15,
 };
 
 // Text font
@@ -77,6 +94,12 @@ function setup() {
   createCanvas(1280, 720);
   noStroke();
 
+  // Set current word from the JSON file
+  setCurrentLessonWord();
+
+  // Create new lesson text for `learn` state
+  lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence);
+
   // // Create a new rectangle for title
   // let titleRectangleProperties  = {
   //   x: width / 2,
@@ -98,6 +121,8 @@ function setup() {
 
   // Create a new rectangular button for "Learn"
   rectButtonLearn = new RectButtonLearn(font);
+
+
 }
 
 // draw()
@@ -211,34 +236,36 @@ function mousePressed() {
     // }
   } else if (state === `learn`) {
     // Set current word from the JSON file
-    currentWord = vocabularyWord.lessonWords[lessonWordIndex];
-    // Get the English and Cantonese words and sentences at the current word
-    englishWord = currentWord.englishWord;
+    setCurrentLessonWord();
 
-    cantoneseWord = currentWord.cantoneseWord;
+    responsiveVoice.speak(
+      englishSentence,
+      englishVoice,
+      englishVoiceProperties
+    );
 
-    englishSentence = currentWord.englishSentence;
+    responsiveVoice.speak(
+      cantoneseSentence,
+      cantoneseVoice,
+      cantoneseVoiceProperties
+    );
 
-    cantoneseSentence = currentWord.cantoneseSentence;
-    responsiveVoice.speak(englishSentence, "US English Male", {
-      pitch: 1.3,
-      rate: 0.9,
-    });
-
-    // responsiveVoice.speak(englishSentence, "US English Female", {
-    //   pitch: 2,
-    //   rate: 0.9,
-    // });
-
-    // responsiveVoice.speak(englishSentence, "UK English Female", {
-    //   pitch: 1.5,
-    //   rate: 1,
-    // });
-
-    responsiveVoice.speak(cantoneseSentence, "Chinese (Hong Kong) Female", {
-      pitch: 1.2,
-    });
+    // // Create new lesson text for `learn` state
+    // lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence);
   }
+}
+
+function setCurrentLessonWord() {
+  // Set current word from the JSON file
+  currentWord = vocabularyWord.lessonWords[lessonWordIndex];
+  // Get the English and Cantonese words and sentences at the current word
+  englishWord = currentWord.englishWord;
+
+  cantoneseWord = currentWord.cantoneseWord;
+
+  englishSentence = currentWord.englishSentence;
+
+  cantoneseSentence = currentWord.cantoneseSentence;
 }
 
 // Draw horizontal lines across the page
@@ -307,4 +334,8 @@ function displayText({
 // STATE: learn()
 //
 //
-function learn() {}
+function learn() {
+
+  // Display lesson text
+  lessonText.displayAllText(mouse);
+}

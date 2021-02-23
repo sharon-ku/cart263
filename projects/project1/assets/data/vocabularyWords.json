@@ -53,15 +53,15 @@
     {
       "englishWord": "shocked",
       "cantoneseWord": "震驚",
-      "englishSentence": "I am shocked that you don't know how delicious these marshmallows taste!",
-      "cantoneseSentence": "我很震驚您不知道這些棉花糖的味道",
+      "englishSentence": "I am shocked by how delicious this pizza tastes!",
+      "cantoneseSentence": "這個比薩餅的味道真美味，我感到震驚！",
       "imageName": ["shocked0.png", "shocked1.png"]
     },
     {
       "englishWord": "annoyed",
       "cantoneseWord": "忟",
-      "englishSentence": "I am annoyed that these candies aren't on sale today",
-      "cantoneseSentence": "我很忟這些糖果今天不銷售",
+      "englishSentence": "I am annoyed that these candies aren't on sale today.",
+      "cantoneseSentence": "我很忟這些糖果今天不銷售。",
       "imageName": ["annoyed0.png", "annoyed1.png"]
     },
     {
