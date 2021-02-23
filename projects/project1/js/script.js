@@ -7,11 +7,20 @@ Here is a description of this template p5 project.
 "use strict";
 
 // States of program
-// Possible states: intro, lessons, game, end
-let state = `intro`;
+// Possible states: intro, learn, game, end
+let state = `learn`;
 
 // Vocabulary word
-let vocabularyWord;
+let vocabularyWord = undefined;
+
+let currentWord = undefined;
+let englishWord = undefined;
+let cantoneseWord = undefined;
+let englishSentence = undefined;
+let cantoneseSentence = undefined;
+
+// Track which word user is at in the `learn` state
+let lessonWordIndex = 0;
 
 // Background color
 let bgFill = {
@@ -105,8 +114,8 @@ function draw() {
   // Setting program states
   if (state === `intro`) {
     intro();
-  } else if (state === `lesson`) {
-    lesson();
+  } else if (state === `learn`) {
+    learn();
   } else if (state === `game`) {
     game();
   } else if (state === `end`) {
@@ -189,6 +198,49 @@ function intro() {
   displayText(englishTitle);
 }
 
+function mousePressed() {
+  if (state === `intro`) {
+    if (rectButtonLearn.overlapsWith(mouse)) {
+      state = `learn`;
+    }
+    // else if (rectButtonPractice1.overlapsWith(mouse)) {
+    //   state = `practice1`;
+    // }
+    // else if (rectButtonPractice2.overlapsWith(mouse)) {
+    //   state = `practice2`;
+    // }
+  } else if (state === `learn`) {
+    // Set current word from the JSON file
+    currentWord = vocabularyWord.lessonWords[lessonWordIndex];
+    // Get the English and Cantonese words and sentences at the current word
+    englishWord = currentWord.englishWord;
+
+    cantoneseWord = currentWord.cantoneseWord;
+
+    englishSentence = currentWord.englishSentence;
+
+    cantoneseSentence = currentWord.cantoneseSentence;
+    responsiveVoice.speak(englishSentence, "US English Male", {
+      pitch: 1.3,
+      rate: 0.9,
+    });
+
+    // responsiveVoice.speak(englishSentence, "US English Female", {
+    //   pitch: 2,
+    //   rate: 0.9,
+    // });
+
+    // responsiveVoice.speak(englishSentence, "UK English Female", {
+    //   pitch: 1.5,
+    //   rate: 1,
+    // });
+
+    responsiveVoice.speak(cantoneseSentence, "Chinese (Hong Kong) Female", {
+      pitch: 1.2,
+    });
+  }
+}
+
 // Draw horizontal lines across the page
 function drawHorizontalLines() {
   // Draw lines from top to bottom of page
@@ -252,7 +304,7 @@ function displayText({
   pop();
 }
 
-// STATE: lesson()
+// STATE: learn()
 //
 //
-function lesson() {}
+function learn() {}
