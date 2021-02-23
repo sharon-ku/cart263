@@ -26,6 +26,12 @@ let lessonWordIndex = 1;
 // Contains: English and Cantonese words and sentences
 let lessonText = undefined;
 
+// Text to be displayed in `learn` state
+let englishWordText = undefined;
+let cantoneseWordText = undefined;
+let englishSentenceText = undefined;
+let cantoneseSentenceText = undefined;
+
 // Background color
 let bgFill = {
   r: 255,
@@ -98,7 +104,11 @@ function setup() {
   setCurrentLessonWord();
 
   // Create new lesson text for `learn` state
-  lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font);
+  // lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font);
+
+  // Create new lesson text for `learn` state
+  englishWordText = new EnglishWordText(englishWord, font);
+  cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
 
   // // Create a new rectangle for title
   // let titleRectangleProperties  = {
@@ -337,5 +347,6 @@ function displayText({
 function learn() {
 
   // Display lesson text
-  lessonText.displayAllText(mouse);
+  englishWordText.update(mouse);
+  cantoneseWordText.update(mouse);
 }
