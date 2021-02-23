@@ -11,105 +11,97 @@ class LessonText {
     this.size = undefined;
     this.font = font;
     this.fill = {
-      r: undefined,
-      g: undefined,
-      b: undefined,
+      // current fill color
+      current: {
+        r: undefined,
+        g: undefined,
+        b: undefined,
+      },
+      // fill when mouse is not hovering over text
+      noHover: {
+        r: undefined,
+        g: undefined,
+        b: undefined,
+      },
+      // fill when mouse is hovering over text
+      hover: {
+        r: undefined,
+        g: undefined,
+        b: undefined,
+      },
     };
-
-  // constructor(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font) {
-  //   // English word
-  //   this.englishWord = {
-  //     string: englishWord,
-  //     // position offset from rectangle's center point
-  //     x: width / 2,
-  //     y: 310,
-  //     // appearance information
-  //     size: 90,
-  //     font: font,
-  //     fillR: 0,
-  //     fillG: 0,
-  //     fillB: 0,
-  //   };
-
-    // // Cantonese word
-    // this.cantoneseWord = {
-    //   string: cantoneseWord,
-    //   // position offset from rectangle's center point
-    //   x: width / 2,
-    //   y: 425,
-    //   // appearance information
-    //   size: 80,
-    //   font: font,
-    //   fillR: 0,
-    //   fillG: 0,
-    //   fillB: 0,
-    // };
-    //
-    // // English sentence
-    // this.englishSentence = {
-    //   string: englishSentence,
-    //   // position offset from rectangle's center point
-    //   x: width / 2,
-    //   y: 540,
-    //   // appearance information
-    //   size: 40,
-    //   font: font,
-    //   fillR: 0,
-    //   fillG: 0,
-    //   fillB: 0,
-    // };
-    //
-    // // Cantonese sentence
-    // this.cantoneseSentence = {
-    //   string: cantoneseSentence,
-    //   // position offset from rectangle's center point
-    //   x: width / 2,
-    //   y: 600,
-    //   // appearance information
-    //   size: 40,
-    //   font: font,
-    //   fillR: 0,
-    //   fillG: 0,
-    //   fillB: 0,
-    // };
-
+    // Area around textbox's outer bounds that is accepted when mouse hovers
+    this.boxWidthOffset = 0;
+    this.boxHeightOffset = 15;
   }
 
   // Update behaviour of text
-  update(subject) {
-    this.mouseOverText(subject);
+  update(mouse) {
+    // Display text
+    this.display();
+    // If mouse overlaps with textbox, change color
+    if (this.overlapsWith(mouse)) {
+      this.changeColor();
+    }
+    // Or else, keep normal color
+    else {
+      this.keepDefaultColor();
+    }
   }
 
-  //Check mouseover
-  mouseOverText(mouse) {
-    // Display text
-    push();
-    textAlign(CENTER);
-    textFont(this.font);
-    textSize(this.size);
-    text(this.string, this.x, this.y);
-    pop();
-
+  // Returns true if provided subject overlaps with text
+  overlapsWith(subject) {
     // Bounding box around text box
-    let bbox = this.font.textBounds(this.string, this.x, this.y, this.size);
+    let boundingBox = this.font.textBounds(
+      this.string,
+      this.x,
+      this.y,
+      this.size
+    );
 
     // Change text color if mouse hovers over bounding box
-    if (mouse.x > this.x - (bbox.w / 2) &&
-      mouse.x < this.x + (bbox.w / 2) &&
-      mouse.y > this.y - (bbox.h / 2) &&
-      mouse.y < this.y + (bbox.h / 2)) {
-      fill(255, 0, 0);
+    if (
+      subject.x > this.x - boundingBox.w / 2 - this.boxWidthOffset &&
+      subject.x < this.x + boundingBox.w / 2 + this.boxWidthOffset &&
+      subject.y > this.y - boundingBox.h / 2 - this.boxHeightOffset &&
+      subject.y < this.y + boundingBox.h / 2 + this.boxHeightOffset
+    ) {
+      return true;
     } else {
-      fill(0);
+      return false;
     }
 
     // Display green rectangle where bounding box is
     push();
     fill(0, 255, 0, 50);
+    stroke(0);
     rectMode(CENTER);
-    rect(bbox.x, bbox.y, bbox.w, bbox.h);
+    rect(boundingBox.x, boundingBox.y, boundingBox.w, boundingBox.h);
     pop();
-
   }
 
+  // Changes text fill to hover color
+  changeColor() {
+    this.fill.current.r = this.fill.hover.r;
+    this.fill.current.g = this.fill.hover.g;
+    this.fill.current.b = this.fill.hover.b;
+  }
+
+  // Set color to default
+  keepDefaultColor() {
+    this.fill.current.r = this.fill.noHover.r;
+    this.fill.current.g = this.fill.noHover.g;
+    this.fill.current.b = this.fill.noHover.b;
+  }
+
+  // Display text
+  display() {
+    push();
+    textAlign(CENTER);
+    textFont(this.font);
+    textSize(this.size);
+    fill(this.fill.current.r, this.fill.current.g, this.fill.current.b);
+    text(this.string, this.x, this.y);
+    pop();
+  }
 }

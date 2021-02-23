@@ -109,6 +109,8 @@ function setup() {
   // Create new lesson text for `learn` state
   englishWordText = new EnglishWordText(englishWord, font);
   cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
+  englishSentenceText = new EnglishSentenceText(englishSentence, font);
+  cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
 
   // // Create a new rectangle for title
   // let titleRectangleProperties  = {
@@ -131,8 +133,6 @@ function setup() {
 
   // Create a new rectangular button for "Learn"
   rectButtonLearn = new RectButtonLearn(font);
-
-
 }
 
 // draw()
@@ -345,8 +345,9 @@ function displayText({
 //
 //
 function learn() {
-
   // Display lesson text
   englishWordText.update(mouse);
   cantoneseWordText.update(mouse);
+  englishSentenceText.update(mouse);
+  cantoneseSentenceText.update(mouse);
 }

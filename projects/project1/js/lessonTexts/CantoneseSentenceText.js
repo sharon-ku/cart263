@@ -1,14 +1,14 @@
-// English word displayed in `learn` state
+// Cantonese sentence displayed in `learn` state
 
-class EnglishWordText extends LessonText {
-  constructor(englishWord, font) {
-    super(englishWord, font);
+class CantoneseSentenceText extends LessonText {
+  constructor(cantoneseSentence, font) {
+    super(cantoneseSentence, font);
     // string to be displayed
-    this.string = englishWord;
+    this.string = cantoneseSentence;
     // position
-    this.y = 310;
+    this.y = 600;
     // appearance information
-    this.size = 90;
+    this.size = 40;
     this.fill = {
       // current fill color
       current: {

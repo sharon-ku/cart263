@@ -1,14 +1,14 @@
-// English word displayed in `learn` state
+// English sentence displayed in `learn` state
 
-class EnglishWordText extends LessonText {
-  constructor(englishWord, font) {
-    super(englishWord, font);
+class EnglishSentenceText extends LessonText {
+  constructor(englishSentence, font) {
+    super(englishSentence, font);
     // string to be displayed
-    this.string = englishWord;
+    this.string = englishSentence;
     // position
-    this.y = 310;
+    this.y = 540;
     // appearance information
-    this.size = 90;
+    this.size = 40;
     this.fill = {
       // current fill color
       current: {
