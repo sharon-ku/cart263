@@ -22,20 +22,20 @@ class LessonText {
       },
       // fill when mouse is not hovering over text
       noHover: {
-        r: undefined,
-        g: undefined,
-        b: undefined,
+        r: 0,
+        g: 0,
+        b: 0,
       },
       // fill when mouse is hovering over text
       hover: {
-        r: undefined,
-        g: undefined,
-        b: undefined,
+        r: 126,
+        g: 68,
+        b: 194,
       },
     };
     // Area around textbox's outer bounds that is accepted when mouse hovers over textbox
     this.boxWidthOffset = 0;
-    this.boxHeightOffset = 15;
+    this.boxHeightOffset = 10;
   }
 
   // Update behaviour of text

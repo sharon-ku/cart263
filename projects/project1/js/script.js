@@ -1,5 +1,5 @@
 /**************************************************
-Project 1: Learn English
+Project 1: Learning English for Food Lovers
 Sharon Ku
 
 Here is a description of this template p5 project.
@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, end
-let state = `learn`;
+let state = `intro`;
 
 // Vocabulary word
 let vocabularyWord = undefined;
@@ -102,9 +102,11 @@ function preload() {
   font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
 }
 
+// =============================================================
 // setup()
 //
 // Description of setup() goes here.
+// =============================================================
 function setup() {
   // Create canvas, remove strokes
   createCanvas(1280, 720);
@@ -114,13 +116,7 @@ function setup() {
   setCurrentLessonWord();
 
   // Create new lesson text for `learn` state
-  // lessonText = new LessonText(cantoneseWord, englishWord, cantoneseSentence, englishSentence, font);
-
-  // Create new lesson text for `learn` state
-  englishWordText = new EnglishWordText(englishWord, font);
-  cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
-  englishSentenceText = new EnglishSentenceText(englishSentence, font);
-  cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
+  createLessonText();
 
   // // Create a new rectangle for title
   // let titleRectangleProperties  = {
@@ -145,9 +141,31 @@ function setup() {
   rectButtonLearn = new RectButtonLearn(font);
 }
 
+// Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
+function setCurrentLessonWord() {
+  // Set current word from the JSON file
+  currentWord = vocabularyWord.lessonWords[lessonWordIndex];
+
+  // Get the English and Cantonese words and sentences at the current word
+  englishWord = currentWord.englishWord;
+  cantoneseWord = currentWord.cantoneseWord;
+  englishSentence = currentWord.englishSentence;
+  cantoneseSentence = currentWord.cantoneseSentence;
+}
+
+// Create new lesson text for `learn` state
+function createLessonText() {
+  englishWordText = new EnglishWordText(englishWord, font);
+  cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
+  englishSentenceText = new EnglishSentenceText(englishSentence, font);
+  cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
+}
+
+// =============================================================
 // draw()
 //
-// Set background color and states of program
+// Set mouse positions, background color, and states of program
+// =============================================================
 function draw() {
   // Set mouse x and y position
   mouse.x = mouseX;
@@ -168,16 +186,44 @@ function draw() {
   }
 }
 
+// =============================================================
+// mousePressed()
+//
+// Behaviour for when mouse is pressed
+// =============================================================
+function mousePressed() {
+  // If it's the intro state and mouse pressed "Learn New Words" button, set state to `learn`
+  if (state === `intro`) {
+    if (rectButtonLearn.overlapsWith(mouse)) {
+      state = `learn`;
+    }
+    // else if (rectButtonPractice1.overlapsWith(mouse)) {
+    //   state = `practice1`;
+    // }
+    // else if (rectButtonPractice2.overlapsWith(mouse)) {
+    //   state = `practice2`;
+    // }
+  }
+  // If it's the learn state and mouse pressed on a string of text, execute mousePressed methods of each string
+  else if (state === `learn`) {
+    englishWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+    cantoneseWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+    englishSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+    cantoneseSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+  }
+}
+
+// =============================================================
 // STATE: intro()
 //
 // Show title page
+// =============================================================
 function intro() {
   // // Display title rectangle
   // titleRectangle.display();
 
-  // Draw horizontal and vertical lines across page
-  drawHorizontalLines();
-  drawVerticalLines();
+  // Draw page lines that resemble graph paper
+  drawPageLines();
 
   //   // Test position of rectangles for lesson sets
   //   push();
@@ -243,34 +289,11 @@ function intro() {
   displayText(englishTitle);
 }
 
-function mousePressed() {
-  if (state === `intro`) {
-    if (rectButtonLearn.overlapsWith(mouse)) {
-      state = `learn`;
-    }
-    // else if (rectButtonPractice1.overlapsWith(mouse)) {
-    //   state = `practice1`;
-    // }
-    // else if (rectButtonPractice2.overlapsWith(mouse)) {
-    //   state = `practice2`;
-    // }
-  } else if (state === `learn`) {
-    // Update lesson text that is displayed on canvas
-    englishWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    cantoneseWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    englishSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    cantoneseSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-  }
-}
-
-function setCurrentLessonWord() {
-  // Set current word from the JSON file
-  currentWord = vocabularyWord.lessonWords[lessonWordIndex];
-  // Get the English and Cantonese words and sentences at the current word
-  englishWord = currentWord.englishWord;
-  cantoneseWord = currentWord.cantoneseWord;
-  englishSentence = currentWord.englishSentence;
-  cantoneseSentence = currentWord.cantoneseSentence;
+// Draw page lines that resemble graph paper
+function drawPageLines() {
+  // Draw horizontal and vertical lines across the page
+  drawHorizontalLines();
+  drawVerticalLines();
 }
 
 // Draw horizontal lines across the page
@@ -336,14 +359,24 @@ function displayText({
   pop();
 }
 
+// =============================================================
 // STATE: learn()
 //
-//
+// Show a new vocabulary word at a time with its corresponding Cantonese word, English example sentence, and Cantonese example sentence; scrolling allows you to switch between pages
+// =============================================================
 function learn() {
-  // Set current word from the JSON file
+  // Draw page lines that resemble graph paper
+  drawPageLines();
+
+  // Set current lesson word
   setCurrentLessonWord();
 
   // Update lesson text that is displayed on canvas
+  updateLessonText();
+}
+
+// Update lesson text that is displayed on canvas
+function updateLessonText() {
   englishWordText.update(englishWord, mouse);
   cantoneseWordText.update(cantoneseWord, mouse);
   englishSentenceText.update(englishSentence, mouse);

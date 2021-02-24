@@ -11,25 +11,5 @@ class EnglishWordText extends LessonText {
     this.y = 310;
     // appearance information
     this.size = 90;
-    this.fill = {
-      // current fill color
-      current: {
-        r: undefined,
-        g: undefined,
-        b: undefined,
-      },
-      // fill when mouse is not hovering over text
-      noHover: {
-        r: 0,
-        g: 0,
-        b: 0,
-      },
-      // fill when mouse is hovering over text
-      hover: {
-        r: 255,
-        g: 0,
-        b: 0,
-      },
-    };
   }
 }
