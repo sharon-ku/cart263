@@ -222,8 +222,8 @@ function intro() {
   // // Display title rectangle
   // titleRectangle.display();
 
-  // Draw page lines that resemble graph paper
-  drawPageLines();
+  // // Draw page lines that resemble graph paper
+  // drawPageLines();
 
   //   // Test position of rectangles for lesson sets
   //   push();
@@ -262,9 +262,11 @@ function intro() {
     string: `學英語: 情緒`,
     x: width / 2,
     y: 113,
-    r: 0,
-    g: 0,
-    b: 0,
+    r: 255,
+    g: 255,
+    b: 255,
+    strokeFill: color(119, 198, 220),
+    strokeThickness: 8,
     size: 100,
     font: font,
     horizAlign: CENTER,
@@ -278,6 +280,8 @@ function intro() {
     r: 119,
     g: 198,
     b: 220,
+    strokeFill: 0,
+    strokeThickness: 0,
     size: 40,
     font: font,
     horizAlign: CENTER,
@@ -345,6 +349,8 @@ function displayText({
   r,
   g,
   b,
+  strokeFill,
+  strokeThickness,
   size,
   font,
   horizAlign,
@@ -353,6 +359,8 @@ function displayText({
   push();
   textSize(size);
   textFont(font);
+  stroke(strokeFill);
+  strokeWeight(strokeThickness);
   textAlign(horizAlign, vertAlign);
   fill(r, g, b);
   text(string, x, y);
