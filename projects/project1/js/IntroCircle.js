@@ -13,15 +13,15 @@ class IntroCircle {
     this.speedMin = 0.3;
     this.speedMax = 1;
     // size
-    this.sizeMin = 10;
-    this.sizeMax = 20;
+    this.sizeMin = 5;
+    this.sizeMax = 12;
     this.sizeCurrent = random(this.sizeMin, this.sizeMax);
     // color information
     this.fill = {
       r: random(125, 255),
       g: random(125, 255),
-      b: random(125, 255)
-    }
+      b: random(125, 255),
+    };
   }
 
   // Update all behaviour of circle
@@ -37,7 +37,13 @@ class IntroCircle {
   // Move circle randomly
   move() {
     // Map speed to size of circle (smaller circles are faster)
-    this.speedCurrent = map(this.sizeCurrent, this.sizeMax, this.sizeMin, this.speedMin, this.speedMax);
+    this.speedCurrent = map(
+      this.sizeCurrent,
+      this.sizeMax,
+      this.sizeMin,
+      this.speedMin,
+      this.speedMax
+    );
 
     // Change direction only a certain percentage of the time
     if (random() < 0.005) {

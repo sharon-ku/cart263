@@ -10,33 +10,27 @@ Here is a description of this template p5 project.
 // Possible states: intro, learn, game, end
 let state = `intro`;
 
-// Vocabulary word
-let vocabularyWord = undefined;
+// Text font
+let font;
 
-let currentWord = undefined;
-let englishWord = undefined;
-let cantoneseWord = undefined;
-let englishSentence = undefined;
-let cantoneseSentence = undefined;
+// Mouse positions
+let mouse = {
+  x: undefined,
+  y: undefined,
+};
 
-// Track which word user is at in the `learn` state
-let lessonWordIndex = 0;
-
-// Text to be dislayed on canvas in `learn` state
-// Contains: English and Cantonese words and sentences
-let lessonText = undefined;
-
-// Text to be displayed in `learn` state
-let englishWordText = undefined;
-let cantoneseWordText = undefined;
-let englishSentenceText = undefined;
-let cantoneseSentenceText = undefined;
-
-// Background color
+// Background color for different states
 let bgFill = {
-  r: 255,
-  g: 255,
-  b: 255,
+  current: {
+    r: 226,
+    g: 248,
+    b: 249,
+  },
+  learn: {
+    r: 250,
+    g: 250,
+    b: 250,
+  },
 };
 
 // English and Cantonese voices
@@ -62,15 +56,6 @@ let cantoneseSpeaker = {
   },
 };
 
-// Text font
-let font;
-
-// Mouse positions
-let mouse = {
-  x: undefined,
-  y: undefined,
-};
-
 // // Title rectangle
 // let titleRectangle;
 
@@ -89,17 +74,54 @@ let paperLine = {
 let introCircles = [];
 const NUM_INTRO_CIRCLES = 15;
 
+// Array that stores food images in intro state
+let foodImages = [];
+const NUM_FOOD_IMAGES = 10;
+
+// Store floating foods for intro state
+let floatingFoods = [];
+
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
+
+// Vocabulary word
+let vocabularyWord = undefined;
+
+let currentWord = undefined;
+let englishWord = undefined;
+let cantoneseWord = undefined;
+let englishSentence = undefined;
+let cantoneseSentence = undefined;
+
+// Track which word user is at in the `learn` state
+let lessonWordIndex = 0;
+
+// Text to be dislayed on canvas in `learn` state
+// Contains: English and Cantonese words and sentences
+let lessonText = undefined;
+
+// Text to be displayed in `learn` state
+let englishWordText = undefined;
+let cantoneseWordText = undefined;
+let englishSentenceText = undefined;
+let cantoneseSentenceText = undefined;
 
 // preload()
 //
 // Preload images, json files
 function preload() {
-  vocabularyWord = loadJSON("assets/data/vocabularyWords.json");
+  // Load JSON file containing vocabulary words
+  vocabularyWord = loadJSON(`assets/data/vocabularyWords.json`);
 
   // Load text font
+  // font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
   font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
+
+  // Load food images for intro state
+  for (let i = 0; i < NUM_FOOD_IMAGES; i++) {
+    let foodImage = loadImage(`assets/images/food/food${i}.png`);
+    foodImages.push(foodImage);
+  }
 }
 
 // =============================================================
@@ -139,6 +161,12 @@ function setup() {
 
   // Create a new rectangular button for "Learn"
   rectButtonLearn = new RectButtonLearn(font);
+
+  // Create new food items for intro state
+  for (let i = 0; i < foodImages.length; i++) {
+    let floatingFood = new FloatingFood(foodImages[i]);
+    floatingFoods.push(floatingFood);
+  }
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -172,7 +200,7 @@ function draw() {
   mouse.y = mouseY;
 
   // Set background color
-  background(bgFill.r, bgFill.g, bgFill.b);
+  background(bgFill.current.r, bgFill.current.g, bgFill.current.b);
 
   // Setting program states
   if (state === `intro`) {
@@ -222,8 +250,8 @@ function intro() {
   // // Display title rectangle
   // titleRectangle.display();
 
-  // // Draw page lines that resemble graph paper
-  // drawPageLines();
+  // Draw page lines that resemble graph paper
+  drawPageLines();
 
   //   // Test position of rectangles for lesson sets
   //   push();
@@ -249,12 +277,17 @@ function intro() {
   // Learn New Words`, distFromEdge, 460);
   //   pop();
 
-  // Display rectangular button for "learn"
-  rectButtonLearn.update(mouse);
-
   // Make intro circles move around randomly
   for (let i = 0; i < introCircles.length; i++) {
     introCircles[i].update();
+  }
+
+  // Display rectangular button for "learn"
+  rectButtonLearn.update(mouse);
+
+  // Make food float around randomly
+  for (let i = 0; i < floatingFoods.length; i++) {
+    floatingFoods[i].update();
   }
 
   // Set parameters for Cantonese title
@@ -280,8 +313,8 @@ function intro() {
     r: 119,
     g: 198,
     b: 220,
-    strokeFill: 0,
-    strokeThickness: 0,
+    strokeFill: 255,
+    strokeThickness: 5,
     size: 40,
     font: font,
     horizAlign: CENTER,
@@ -373,6 +406,11 @@ function displayText({
 // Show a new vocabulary word at a time with its corresponding Cantonese word, English example sentence, and Cantonese example sentence; scrolling allows you to switch between pages
 // =============================================================
 function learn() {
+  // Set background color
+  bgFill.current.r = bgFill.learn.r;
+  bgFill.current.g = bgFill.learn.g;
+  bgFill.current.b = bgFill.learn.b;
+
   // Draw page lines that resemble graph paper
   drawPageLines();
 

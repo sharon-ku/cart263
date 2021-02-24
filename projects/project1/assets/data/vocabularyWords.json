@@ -19,7 +19,7 @@
       "englishWord": "tired",
       "cantoneseWord": "攰",
       "englishSentence": "I am tired from a productive day of eating snacks.",
-      "cantoneseSentence": "吃零食的一天讓我很累。",
+      "cantoneseSentence": "吃零食的一天讓我很攰。",
       "imageName": ["tired0.png", "tired1.png"]
     },
     {
@@ -71,14 +71,7 @@
       "cantoneseSentence": "我很悶因為我的兄弟把我所有的小吃都藏起來了。",
       "imageName": ["bored0.png", "bored1.png"]
     }
-
-
   ],
-
-
-
-
-
 
   "set2": [
     {
@@ -95,7 +88,6 @@
       "cantoneseSentence": "",
       "imageName": ["happy0.png"]
     }
-
   ],
   "set3": [
     {
@@ -112,6 +104,5 @@
       "cantoneseSentence": "",
       "imageName": ["happy0.png"]
     }
-
   ]
 }

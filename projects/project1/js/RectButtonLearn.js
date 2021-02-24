@@ -31,9 +31,9 @@ class RectButtonLearn extends RectButton {
     };
     // stroke color
     this.strokeFill = {
-      r: 155,
-      g: 236,
-      b: 255,
+      r: 119, //155
+      g: 198, //236
+      b: 220, //255
     };
     // stroke weight
     this.strokeWeight = 5;
@@ -47,9 +47,9 @@ class RectButtonLearn extends RectButton {
       // appearance information
       size: 35,
       font: font,
-      fillR: 0,
-      fillG: 0,
-      fillB: 0,
+      fillR: 119,
+      fillG: 198,
+      fillB: 220,
     };
 
     // English text that goes inside button
@@ -61,9 +61,9 @@ class RectButtonLearn extends RectButton {
       // appearance information
       size: 25,
       font: font,
-      fillR: 0,
-      fillG: 0,
-      fillB: 0,
+      fillR: 119,
+      fillG: 198,
+      fillB: 220,
     };
   }
 }
