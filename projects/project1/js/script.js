@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, end
-let state = `intro`;
+let state = `learn`;
 
 // Text font
 let font;
@@ -106,6 +106,9 @@ let cantoneseWordText = undefined;
 let englishSentenceText = undefined;
 let cantoneseSentenceText = undefined;
 
+// Lesson progress bar in `learn` state
+let lessonProgressBar = undefined;
+
 // preload()
 //
 // Preload images, json files
@@ -167,6 +170,9 @@ function setup() {
     let floatingFood = new FloatingFood(foodImages[i]);
     floatingFoods.push(floatingFood);
   }
+
+  // Create lesson progress bar
+  lessonProgressBar = new LessonProgressBar();
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -419,6 +425,12 @@ function learn() {
 
   // Update lesson text that is displayed on canvas
   updateLessonText();
+
+  // Update lesson progress bar
+  lessonProgressBar.update(
+    lessonWordIndex,
+    vocabularyWord.lessonWords.length - 1
+  );
 }
 
 // Update lesson text that is displayed on canvas

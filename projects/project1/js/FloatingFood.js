@@ -1,4 +1,4 @@
-// Floating food in intro state
+// Floating and rotating food in intro state
 
 class FloatingFood {
   constructor(image) {
@@ -7,11 +7,17 @@ class FloatingFood {
     // position
     this.x = random(0, width);
     this.y = random(0, height);
-    // velocity
+    // linear velocity
     this.vx = 0;
     this.vy = 0;
-    // speed
+    // linear speed
     this.speedCurrent = random(0.3, 1);
+    // rotational angle
+    this.theta = 0;
+    // rotational speed
+    this.minAngularSpeed = PI / 1000;
+    this.maxAngularSpeed = PI / 500;
+    this.angularSpeed = random(this.minAngularSpeed, this.maxAngularSpeed);
     // size
     this.sizeMin = 10;
     this.sizeMax = 20;
@@ -24,7 +30,7 @@ class FloatingFood {
     this.move();
     // Constrain food to inside of canvas
     this.constrain();
-    // Display food image
+    // Display spinning food image
     this.display();
   }
 
@@ -47,13 +53,23 @@ class FloatingFood {
     this.y = constrain(this.y, 0, height);
   }
 
-  // Display food image
+  // Display spinning food image
   display() {
     push();
-    imageMode(CENTER, CENTER);
     translate(this.x, this.y);
+
+    // Spin floating food
+    this.spin();
+
+    imageMode(CENTER, CENTER);
     scale(0.7);
     image(this.image, 0, 0);
     pop();
+  }
+
+  // Spin floating food
+  spin() {
+    rotate(this.theta);
+    this.theta += this.angularSpeed;
   }
 }
