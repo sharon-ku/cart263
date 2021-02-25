@@ -116,6 +116,9 @@ let scrollArrowImage = undefined;
 // Scroll arrow in `learn` state
 let scrollArrow = undefined;
 
+// True if time to choose random word in `flashcards` state
+let timeToChooseRandomWord = true;
+
 // preload()
 //
 // Preload images, json files
@@ -249,6 +252,9 @@ function mousePressed() {
     if (rectButtonLearn.overlapsWith(mouse)) {
       state = `learn`;
     } else if (rectButtonFlashcards.overlapsWith(mouse)) {
+      // Time to choose random word from vocabulary words list
+      timeToChooseRandomWord = true;
+      // Update state
       state = `flashcards`;
     }
     // else if (rectButtonPractice2.overlapsWith(mouse)) {
@@ -482,4 +488,40 @@ function mouseWheel(event) {
 //
 // Show a Cantonese word on each flashcard and have user say corresponding English word out loud
 // =============================================================
-function flashcards() {}
+function flashcards() {
+  // Set background color
+  bgFill.current.r = bgFill.learn.r;
+  bgFill.current.g = bgFill.learn.g;
+  bgFill.current.b = bgFill.learn.b;
+
+  // Draw page lines that resemble graph paper
+  drawPageLines();
+
+  // If it's time to choose a random word, pick a random lessonWordIndex
+  chooseRandomWord();
+
+  // Set current lesson word
+  setCurrentLessonWord();
+
+  // Update Cantonese flashcard
+  updateCantoneseFlashcard();
+}
+
+// If it's time to choose a random word, pick a random lessonWordIndex
+function chooseRandomWord() {
+  if (timeToChooseRandomWord) {
+    // Get a random number within range of index numbers for lessonWords
+    // Note that since Math.floor (used in next step) rounds number DOWN to an integer, the last argument provided in random() is an integer higher than range of index numbers
+    let randomIndex = random(0, vocabularyWord.lessonWords.length);
+    // Since randomIndex can be a decimal number, use Math.floor to return biggest integer that is less than or equal to randomIndex
+    lessonWordIndex = Math.floor(randomIndex);
+    print(lessonWordIndex);
+    // It's no longer time to choose random word
+    timeToChooseRandomWord = false;
+  }
+}
+
+// Update lesson text that is displayed on canvas
+function updateCantoneseFlashcard() {
+  cantoneseWordText.update(cantoneseWord, mouse);
+}
