@@ -4,12 +4,14 @@ class RectButton {
   constructor(font) {
     // position of button
     this.x = undefined;
-    this.y = undefined;
+    this.y = 460;
+    // if button clicked, switch to this state
+    this.state = undefined;
     // size
-    this.width = undefined;
-    this.height = undefined;
+    this.width = 290;
+    this.height = 180;
     // radius of rounded corner
-    this.cornerRadius = undefined;
+    this.cornerRadius = 30;
     // current fill color
     this.fillCurrent = {
       r: undefined,
@@ -18,24 +20,24 @@ class RectButton {
     };
     // fill color when mouse is not hovering over button
     this.fillNoHover = {
-      r: undefined,
-      g: undefined,
-      b: undefined,
+      r: 245,
+      g: 245,
+      b: 245,
     };
     // fill color when mouse hovers over button
     this.fillHover = {
-      r: undefined,
-      g: undefined,
-      b: undefined,
+      r: 255,
+      g: 255,
+      b: 255,
     };
     // stroke color
     this.strokeFill = {
-      r: undefined,
-      g: undefined,
-      b: undefined,
+      r: 119,
+      g: 198,
+      b: 220,
     };
     // stroke weight
-    this.strokeWeight = undefined;
+    this.strokeWeight = 5;
 
     // Cantonese text that goes inside button
     this.cantoneseText = {
@@ -125,4 +127,12 @@ class RectButton {
       return false;
     }
   }
+
+  // // If mouse pressed on button, switch states
+  // mousePressed(mouse, state) {
+  //   if (this.overlapsWith(mouse)) {
+  //     state = this.state;
+  //     print(`true`);
+  //   }
+  // }
 }

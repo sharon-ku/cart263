@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, end
-let state = `learn`;
+let state = `intro`;
 
 // Text font
 let font;
@@ -83,6 +83,7 @@ let floatingFoods = [];
 
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
+let rectButtonFlashcards = undefined;
 
 // Vocabulary word
 let vocabularyWord = undefined;
@@ -109,6 +110,12 @@ let cantoneseSentenceText = undefined;
 // Lesson progress bar in `learn` state
 let lessonProgressBar = undefined;
 
+// Scroll arrow image
+let scrollArrowImage = undefined;
+
+// Scroll arrow in `learn` state
+let scrollArrow = undefined;
+
 // preload()
 //
 // Preload images, json files
@@ -125,6 +132,9 @@ function preload() {
     let foodImage = loadImage(`assets/images/food/food${i}.png`);
     foodImages.push(foodImage);
   }
+
+  // Load scroll arrow image
+  scrollArrowImage = loadImage(`assets/images/food/food6.png`);
 }
 
 // =============================================================
@@ -162,8 +172,11 @@ function setup() {
     introCircles.push(introCircle);
   }
 
-  // Create a new rectangular button for "Learn"
+  // Create a new rectangular button for "Learn New Words"
   rectButtonLearn = new RectButtonLearn(font);
+
+  // Create a new rectangular button for "Activity: Flashcards"
+  rectButtonFlashcards = new RectButtonFlashcards(font);
 
   // Create new food items for intro state
   for (let i = 0; i < foodImages.length; i++) {
@@ -173,6 +186,9 @@ function setup() {
 
   // Create lesson progress bar
   lessonProgressBar = new LessonProgressBar();
+
+  // Create new scroll arrow
+  scrollArrow = new ScrollArrow(scrollArrowImage);
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -213,8 +229,8 @@ function draw() {
     intro();
   } else if (state === `learn`) {
     learn();
-  } else if (state === `game`) {
-    game();
+  } else if (state === `flashcards`) {
+    flashcards();
   } else if (state === `end`) {
     end();
   }
@@ -228,12 +244,13 @@ function draw() {
 function mousePressed() {
   // If it's the intro state and mouse pressed "Learn New Words" button, set state to `learn`
   if (state === `intro`) {
+    // rectButtonLearn.mousePressed(mouse, state);
+    // rectButtonFlashcards.mousePressed(mouse, state);
     if (rectButtonLearn.overlapsWith(mouse)) {
       state = `learn`;
+    } else if (rectButtonFlashcards.overlapsWith(mouse)) {
+      state = `flashcards`;
     }
-    // else if (rectButtonPractice1.overlapsWith(mouse)) {
-    //   state = `practice1`;
-    // }
     // else if (rectButtonPractice2.overlapsWith(mouse)) {
     //   state = `practice2`;
     // }
@@ -288,8 +305,9 @@ function intro() {
     introCircles[i].update();
   }
 
-  // Display rectangular button for "learn"
+  // Update all rectangular buttons in `learn` state
   rectButtonLearn.update(mouse);
+  rectButtonFlashcards.update(mouse);
 
   // Make food float around randomly
   for (let i = 0; i < floatingFoods.length; i++) {
@@ -431,6 +449,9 @@ function learn() {
     lessonWordIndex,
     vocabularyWord.lessonWords.length - 1
   );
+
+  // Display scroll arrow image
+  scrollArrow.update();
 }
 
 // Update lesson text that is displayed on canvas
@@ -455,3 +476,10 @@ function mouseWheel(event) {
     lessonWordIndex -= 1;
   }
 }
+
+// =============================================================
+// STATE: flashcards()
+//
+// Show a Cantonese word on each flashcard and have user say corresponding English word out loud
+// =============================================================
+function flashcards() {}
