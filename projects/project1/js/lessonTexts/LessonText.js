@@ -85,16 +85,12 @@ class LessonText {
 
   // Changes text fill to hover color
   changeColor() {
-    this.fill.current.r = this.fill.hover.r;
-    this.fill.current.g = this.fill.hover.g;
-    this.fill.current.b = this.fill.hover.b;
+    this.fill.current = this.fill.hover;
   }
 
   // Set color to default
   keepDefaultColor() {
-    this.fill.current.r = this.fill.noHover.r;
-    this.fill.current.g = this.fill.noHover.g;
-    this.fill.current.b = this.fill.noHover.b;
+    this.fill.current = this.fill.noHover;
   }
 
   // Display text

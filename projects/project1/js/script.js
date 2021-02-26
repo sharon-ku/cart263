@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, end
-let state = `intro`;
+let state = `game`;
 
 // Text font
 let font;
@@ -22,6 +22,11 @@ let mouse = {
 // Background color for different states
 let bgFill = {
   current: {
+    r: undefined,
+    g: undefined,
+    b: undefined,
+  },
+  intro: {
     r: 226,
     g: 248,
     b: 249,
@@ -70,6 +75,13 @@ let paperLine = {
   spacing: 30,
 };
 
+// Logo that when clicked, brings user to homepage
+let logo = undefined;
+// Store logo images
+let logoImages = [];
+// Number of logo images
+let NUM_LOGO_IMAGES = 2;
+
 // Introduction circles
 let introCircles = [];
 const NUM_INTRO_CIRCLES = 15;
@@ -84,6 +96,10 @@ let floatingFoods = [];
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
 let rectButtonFlashcards = undefined;
+let rectButtonGame = undefined;
+
+// Store all rectangular buttons here
+let rectButtons = [];
 
 // Vocabulary word
 let vocabularyWord = undefined;
@@ -117,7 +133,27 @@ let scrollArrowImage = undefined;
 let scrollArrow = undefined;
 
 // True if time to choose random word in `flashcards` state
-let timeToChooseRandomWord = true;
+let timeToChooseRandomWord = false;
+
+// Finish line in `game` state
+let finishLine = undefined;
+
+// Hamburger
+let hamburger;
+// Hamburger image
+let hamburgerImage;
+
+// Fwoggy
+let fwoggy;
+// Fwoggy image
+let fwoggyImage;
+
+// Cat
+let cat;
+// Cat images
+let catImages = [];
+// Number of cat images
+const NUM_CAT_IMAGES = 2;
 
 // preload()
 //
@@ -130,6 +166,12 @@ function preload() {
   // font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
   font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
 
+  // Load logo images and push to logoImages array
+  for (let i = 0; i < NUM_LOGO_IMAGES; i++) {
+    let logoImage = loadImage(`assets/images/logo${i}.png`);
+    logoImages.push(logoImage);
+  }
+
   // Load food images for intro state
   for (let i = 0; i < NUM_FOOD_IMAGES; i++) {
     let foodImage = loadImage(`assets/images/food/food${i}.png`);
@@ -138,6 +180,18 @@ function preload() {
 
   // Load scroll arrow image
   scrollArrowImage = loadImage(`assets/images/food/food6.png`);
+
+  // Load hamburger image
+  hamburgerImage = loadImage(`assets/images/hamburger.png`);
+
+  // Load fwoggy image
+  fwoggyImage = loadImage(`assets/images/fwoggy.png`);
+
+  // Load cat images
+  for (let i = 0; i < NUM_CAT_IMAGES; i++) {
+    let catImage = loadImage(`assets/images/cat${i}.png`);
+    catImages.push(catImage);
+  }
 }
 
 // =============================================================
@@ -169,6 +223,9 @@ function setup() {
   // };
   // titleRectangle = new Rectangle(titleRectangleProperties);
 
+  // Create new logo
+  logo = new Logo(logoImages);
+
   // Create intro circles are store in array
   for (let i = 0; i < NUM_INTRO_CIRCLES; i++) {
     let introCircle = new IntroCircle();
@@ -177,9 +234,13 @@ function setup() {
 
   // Create a new rectangular button for "Learn New Words"
   rectButtonLearn = new RectButtonLearn(font);
-
   // Create a new rectangular button for "Activity: Flashcards"
   rectButtonFlashcards = new RectButtonFlashcards(font);
+  // Create a new rectangular button for "Game: Snack Time!"
+  rectButtonGame = new RectButtonGame(font);
+
+  // Push all created buttons to rectButtons array
+  rectButtons.push(rectButtonLearn, rectButtonFlashcards, rectButtonGame);
 
   // Create new food items for intro state
   for (let i = 0; i < foodImages.length; i++) {
@@ -192,6 +253,18 @@ function setup() {
 
   // Create new scroll arrow
   scrollArrow = new ScrollArrow(scrollArrowImage);
+
+  // Create new finish line
+  finishLine = new FinishLine();
+
+  // Create a new hamburger
+  hamburger = new Hamburger(hamburgerImage);
+
+  // Create a new fwoggy
+  fwoggy = new Fwoggy(fwoggyImage);
+
+  // Create a new cantoneseSentence
+  cat = new Cat(catImages);
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -234,6 +307,8 @@ function draw() {
     learn();
   } else if (state === `flashcards`) {
     flashcards();
+  } else if (state === `game`) {
+    game();
   } else if (state === `end`) {
     end();
   }
@@ -245,21 +320,14 @@ function draw() {
 // Behaviour for when mouse is pressed
 // =============================================================
 function mousePressed() {
-  // If it's the intro state and mouse pressed "Learn New Words" button, set state to `learn`
+  // Execute mousePressed method for logo
+  logo.mousePressed(mouse);
+
+  // If it's the intro state and mouse pressed on button, execute button's mousePressed method
   if (state === `intro`) {
-    // rectButtonLearn.mousePressed(mouse, state);
-    // rectButtonFlashcards.mousePressed(mouse, state);
-    if (rectButtonLearn.overlapsWith(mouse)) {
-      state = `learn`;
-    } else if (rectButtonFlashcards.overlapsWith(mouse)) {
-      // Time to choose random word from vocabulary words list
-      timeToChooseRandomWord = true;
-      // Update state
-      state = `flashcards`;
+    for (let i = 0; i < rectButtons.length; i++) {
+      rectButtons[i].mousePressed(mouse);
     }
-    // else if (rectButtonPractice2.overlapsWith(mouse)) {
-    //   state = `practice2`;
-    // }
   }
   // If it's the learn state and mouse pressed on a string of text, execute mousePressed methods of each string
   else if (state === `learn`) {
@@ -276,11 +344,17 @@ function mousePressed() {
 // Show title page
 // =============================================================
 function intro() {
+  // Set background color
+  bgFill.current = bgFill.intro;
+
   // // Display title rectangle
   // titleRectangle.display();
 
   // Draw page lines that resemble graph paper
   drawPageLines();
+
+  // Update logo behaviour
+  logo.update(mouse);
 
   //   // Test position of rectangles for lesson sets
   //   push();
@@ -314,6 +388,7 @@ function intro() {
   // Update all rectangular buttons in `learn` state
   rectButtonLearn.update(mouse);
   rectButtonFlashcards.update(mouse);
+  rectButtonGame.update(mouse);
 
   // Make food float around randomly
   for (let i = 0; i < floatingFoods.length; i++) {
@@ -437,12 +512,13 @@ function displayText({
 // =============================================================
 function learn() {
   // Set background color
-  bgFill.current.r = bgFill.learn.r;
-  bgFill.current.g = bgFill.learn.g;
-  bgFill.current.b = bgFill.learn.b;
+  bgFill.current = bgFill.learn;
 
   // Draw page lines that resemble graph paper
   drawPageLines();
+
+  // Update logo behaviour
+  logo.update(mouse);
 
   // Set current lesson word
   setCurrentLessonWord();
@@ -490,9 +566,7 @@ function mouseWheel(event) {
 // =============================================================
 function flashcards() {
   // Set background color
-  bgFill.current.r = bgFill.learn.r;
-  bgFill.current.g = bgFill.learn.g;
-  bgFill.current.b = bgFill.learn.b;
+  bgFill.current = bgFill.learn;
 
   // Draw page lines that resemble graph paper
   drawPageLines();
@@ -524,4 +598,29 @@ function chooseRandomWord() {
 // Update lesson text that is displayed on canvas
 function updateCantoneseFlashcard() {
   cantoneseWordText.update(cantoneseWord, mouse);
+}
+
+// =============================================================
+// STATE: game()
+//
+// Reveal Cantonese vocabulary words as food items and have user say its corresponding English word before the food crosses the finish line. User has 3 sandwich lives.
+// =============================================================
+function game() {
+  // Set background color
+  background(0);
+
+  // Update logo behaviour
+  logo.update(mouse);
+
+  // // Update finish line
+  // finishLine.update();
+
+  // Update hamburger
+  hamburger.update();
+
+  // Update fwoggy
+  fwoggy.update();
+
+  // Update cat
+  cat.update(hamburger);
 }

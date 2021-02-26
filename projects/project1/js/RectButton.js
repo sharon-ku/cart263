@@ -104,13 +104,9 @@ class RectButton {
   // Change fill color of rectangle depending on whether the mouse is hovering over it or not
   setFillColor({ x, y }) {
     if (this.overlapsWith({ x, y })) {
-      this.fillCurrent.r = this.fillHover.r;
-      this.fillCurrent.g = this.fillHover.g;
-      this.fillCurrent.b = this.fillHover.b;
+      this.fillCurrent = this.fillHover;
     } else {
-      this.fillCurrent.r = this.fillNoHover.r;
-      this.fillCurrent.g = this.fillNoHover.g;
-      this.fillCurrent.b = this.fillNoHover.b;
+      this.fillCurrent = this.fillNoHover;
     }
   }
 
@@ -128,11 +124,10 @@ class RectButton {
     }
   }
 
-  // // If mouse pressed on button, switch states
-  // mousePressed(mouse, state) {
-  //   if (this.overlapsWith(mouse)) {
-  //     state = this.state;
-  //     print(`true`);
-  //   }
-  // }
+  // If mouse pressed on button, switch states
+  mousePressed(mouse) {
+    if (this.overlapsWith(mouse)) {
+      state = this.state;
+    }
+  }
 }

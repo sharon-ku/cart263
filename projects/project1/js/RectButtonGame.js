@@ -1,15 +1,16 @@
-// Rectangular button for "Activity: Flashcards" in intro state
+// Rectangular button for "Game" in intro state
 
-class RectButtonFlashcards extends RectButton {
+class RectButtonGame extends RectButton {
   constructor(font) {
     super(font);
     // position of button
-    this.x = width / 2;
+    this.x = width - 250;
     // if button clicked, switch to this state
-    this.state = `flashcards`;
+    this.state = `game`;
+
     // Cantonese text that goes inside button
     this.cantoneseText = {
-      string: `活動: 抽認卡`,
+      string: `遊戲: 零食時間!`,
       // position offset from rectangle's center point
       xOffset: 0,
       yOffset: -20,
@@ -23,7 +24,7 @@ class RectButtonFlashcards extends RectButton {
 
     // English text that goes inside button
     this.englishText = {
-      string: `Activity: Flashcards`,
+      string: `Game: Snack Time!`,
       // position offset from rectangle's center point
       xOffset: 0,
       yOffset: 20,
@@ -34,16 +35,5 @@ class RectButtonFlashcards extends RectButton {
       fillG: 198,
       fillB: 220,
     };
-  }
-
-  // If mouse pressed on button, switch states and set time to choose random word
-  // OVERRIDE parent's method
-  mousePressed(mouse) {
-    if (this.overlapsWith(mouse)) {
-      // Time to choose random word from vocabulary words list
-      timeToChooseRandomWord = true;
-      // Update state
-      state = this.state;
-    }
   }
 }
