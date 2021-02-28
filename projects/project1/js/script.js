@@ -148,8 +148,10 @@ let fwoggy;
 // Fwoggy image
 let fwoggyImage;
 
-// Cat
-let cat;
+// Store all cats
+let cats = [];
+// Number of cats
+let numCats = 2;
 // Cat images
 let catImages = [];
 // Number of cat images
@@ -262,9 +264,6 @@ function setup() {
 
   // Create a new fwoggy
   fwoggy = new Fwoggy(fwoggyImage);
-
-  // Create a new cantoneseSentence
-  cat = new Cat(catImages);
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -355,30 +354,6 @@ function intro() {
 
   // Update logo behaviour
   logo.update(mouse);
-
-  //   // Test position of rectangles for lesson sets
-  //   push();
-  //   rectMode(CENTER);
-  //   fill(0, 0, 125);
-  //   let distFromEdge = 250;
-  //   let rectWidth = 290;
-  //   let rectHeight = 180;
-  //   // left rectangle
-  //   rect(distFromEdge, 460, rectWidth, rectHeight, 30);
-  //   // middle rectangle
-  //   rect(width / 2, 460, rectWidth, rectHeight, 30);
-  //   // right rectangle
-  //   rect(width - distFromEdge, 460, rectWidth, rectHeight, 30);
-  //   pop();
-  //
-  //   // Test position of text on rect button
-  //   push();
-  //   textAlign(CENTER, CENTER);
-  //   fill(255);
-  //   textSize(30);
-  //   text(`學習新單詞
-  // Learn New Words`, distFromEdge, 460);
-  //   pop();
 
   // Make intro circles move around randomly
   for (let i = 0; i < introCircles.length; i++) {
@@ -621,6 +596,34 @@ function game() {
   // Update fwoggy
   fwoggy.update();
 
-  // Update cat
-  cat.update(hamburger);
+  // Create a new cat
+  if (cats.length < numCats) {
+    // Set x position of cat
+    let x;
+    // Half the time, cat will appear on right side of canvas, the other half on left side
+    if (random() < 0.5) {
+      x = width + 100;
+    } else {
+      x = -100;
+    }
+    // Set y position of cat
+    let y = random(0, height);
+
+    // Set current word from the JSON file
+    currentWord = random(vocabularyWord.lessonWords);
+
+    // Get the English and Cantonese words and sentences at the current word
+    cantoneseWord = currentWord.cantoneseWord;
+    englishWord = currentWord.englishWord;
+
+    // Create new cat
+    let cat = new Cat(x, y, catImages, font, cantoneseWord, englishWord);
+
+    cats.push(cat);
+  }
+
+  // Update cats
+  for (let i = 0; i < cats.length; i++) {
+    cats[i].update(hamburger);
+  }
 }

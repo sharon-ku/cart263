@@ -1,35 +1,56 @@
 // Evil cat
 
 class Cat {
-  constructor(images) {
+  constructor(x, y, images, font, cantoneseWord, englishWord) {
     // images
     this.images = images;
     // image index
     this.imageIndex = 0;
     // position
-    this.x = width + 100;
-    this.y = height - 100;
+    this.x = x;
+    this.y = y;
 
-    // rectangle word
+    // rectangle card
     this.rectangle = {
       xOffset: 0,
       yOffset: -16,
       width: 100,
       height: 32,
     };
+
+    // word
+    this.word = {
+      string: cantoneseWord,
+      size: 32,
+      font: font,
+      fill: 255,
+    };
   }
 
   // Update all behaviour
   update(hamburger) {
-    // Display image
-    this.display();
+    // Display cat
+    this.displayCat();
+
+    // Display card that cat is holding
+    this.displayCard();
 
     // Move towards hamburger
     this.move(hamburger);
   }
 
-  // Display image
-  display() {
+  // Display cat
+  displayCat() {
+    // Display image
+    push();
+    imageMode(CENTER);
+    image(this.images[this.imageIndex], this.x, this.y);
+    pop();
+  }
+
+  // Display card that cat is holding
+  displayCard() {
+    // Display rectangle
     push();
     fill(255, 0, 0);
     rectMode(CENTER);
@@ -41,9 +62,13 @@ class Cat {
     );
     pop();
 
+    // Display text
     push();
-    imageMode(CENTER);
-    image(this.images[this.imageIndex], this.x, this.y);
+    textAlign(CENTER);
+    textFont(this.word.font);
+    textSize(this.word.size);
+    fill(this.word.fill);
+    text(this.word.string, this.x, this.y);
     pop();
   }
 
@@ -51,7 +76,14 @@ class Cat {
   move(hamburger) {
     if (this.x > hamburger.x) {
       this.x -= hamburger.x / 1000;
+    } else if (this.x < hamburger.x) {
+      this.x += hamburger.x / 1000;
+    }
+
+    if (this.y > hamburger.y) {
       this.y -= hamburger.y / 1000;
+    } else if (this.y < hamburger.y) {
+      this.y += hamburger.y / 1000;
     }
   }
 }
