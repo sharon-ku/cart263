@@ -264,6 +264,18 @@ function setup() {
 
   // Create a new fwoggy
   fwoggy = new Fwoggy(fwoggyImage);
+
+  // Check if annyang is available
+  if (annyang) {
+    // Create commands
+    let commands = {
+      // If the user responds, set the current answer to the animal guessed
+      "*guess": guessEnglishWord,
+    };
+    // Add the commands and start annyang
+    annyang.addCommands(commands);
+    annyang.start();
+  }
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -343,6 +355,9 @@ function mousePressed() {
 // Show title page
 // =============================================================
 function intro() {
+  // Abort annyang
+  annyang.abort();
+
   // Set background color
   bgFill.current = bgFill.intro;
 
@@ -581,6 +596,9 @@ function updateCantoneseFlashcard() {
 // Reveal Cantonese vocabulary words as food items and have user say its corresponding English word before the food crosses the finish line. User has 3 sandwich lives.
 // =============================================================
 function game() {
+  // Resume annyang
+  annyang.resume();
+
   // Set background color
   background(0);
 
@@ -626,4 +644,9 @@ function game() {
   for (let i = 0; i < cats.length; i++) {
     cats[i].update(hamburger);
   }
+}
+
+// Guess the English word
+function guessEnglishWord(guess) {
+  console.log(guess);
 }
