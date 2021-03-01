@@ -157,6 +157,20 @@ let catImages = [];
 // Number of cat images
 const NUM_CAT_IMAGES = 2;
 
+// True if it's time to check if answer is correct
+let timeToCheckIfAnswerCorrect = false;
+
+// True if it's time to update number of correct answers
+let timeToUpdateNumCorrectAnswers = false;
+
+// True if it's victory time
+let victoryTime = false;
+// True if it's defeat time
+let defeatTime = false;
+
+// Store current answer
+let currentAnswer = undefined;
+
 // preload()
 //
 // Preload images, json files
@@ -614,6 +628,15 @@ function game() {
   // Update fwoggy
   fwoggy.update();
 
+  // Check if answer is correct
+  checkIfAnswerIsCorrect();
+
+  // React to user's answer based on whether it is correct or not
+  reactToAnswer();
+
+  // Display current answer on screen and change its color depending on whether it was right or wrong
+  displayGuess();
+
   // Create a new cat
   if (cats.length < numCats) {
     // Set x position of cat
@@ -648,5 +671,64 @@ function game() {
 
 // Guess the English word
 function guessEnglishWord(guess) {
-  console.log(guess);
+  // Sets currentAnswer to the guess that user just said
+  // And convert answer to all lowercase
+  currentAnswer = guess.toLowerCase();
+  // Set that it's time to check if answer is correct
+  timeToCheckIfAnswerCorrect = true;
+}
+
+// Check if the answer is correct and react to it
+function checkIfAnswerIsCorrect() {
+  // If it's time to check if answer is correct
+  if (timeToCheckIfAnswerCorrect) {
+    // If user's guess is correct
+    if (englishWord === currentAnswer) {
+      // It's time for computer to say something nice
+      victoryTime = true;
+    }
+    // If incorrect
+    else {
+      // Have computer say something mean and discouraging so that the user will know to do better next time
+      defeatTime = true;
+    }
+    timeToCheckIfAnswerCorrect = false;
+  }
+}
+
+// React to user's answer based on whether it is correct or not
+function reactToAnswer() {
+  // If it's victory time (user got right answer)
+  if (victoryTime) {
+    // // Have computer say some nice words of encouragement
+    // computerSaysNiceMessage();
+    // Update numCorrectAnswers counter
+    timeToUpdateNumCorrectAnswers = true;
+  }
+  // Else if it's defeat time (user got wrong answer)
+  else if (defeatTime) {
+    // // Have computer say some mean words
+    // computerSaysMeanMessage();
+  }
+}
+
+// Display current answer on screen and change its color depending on whether it was right or wrong
+function displayGuess() {
+  push();
+  // If answer is correct:
+  if (englishWord === currentAnswer) {
+    // Set guess color to green
+    fill(0, 255, 0);
+  }
+  // Else if answer is wrong:
+  else {
+    // Set guess color to red
+    fill(255, 0, 0);
+  }
+
+  // Display text showing user's guess
+  textAlign(CENTER);
+  textSize(60);
+  text(currentAnswer, width / 2, height - 100);
+  pop();
 }

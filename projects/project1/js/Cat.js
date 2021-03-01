@@ -14,14 +14,17 @@ class Cat {
     this.rectangle = {
       xOffset: 0,
       yOffset: -16,
-      width: 100,
-      height: 32,
+      width: 150,
+      height: 48,
+      stroke: 255,
+      strokeWeight: 3,
+      fill: 0,
     };
 
     // word
     this.word = {
       string: cantoneseWord,
-      size: 32,
+      size: 35,
       font: font,
       fill: 255,
     };
@@ -29,11 +32,11 @@ class Cat {
 
   // Update all behaviour
   update(hamburger) {
-    // Display cat
-    this.displayCat();
-
     // Display card that cat is holding
     this.displayCard();
+
+    // Display cat
+    this.displayCat();
 
     // Move towards hamburger
     this.move(hamburger);
@@ -52,7 +55,9 @@ class Cat {
   displayCard() {
     // Display rectangle
     push();
-    fill(255, 0, 0);
+    fill(this.rectangle.fill);
+    stroke(this.rectangle.stroke);
+    strokeWeight(this.rectangle.strokeWeight);
     rectMode(CENTER);
     rect(
       this.x + this.rectangle.xOffset,
