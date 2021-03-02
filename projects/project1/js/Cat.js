@@ -14,7 +14,7 @@ class Cat {
     this.vy = 0;
     this.speed = 1.5; //0.5
 
-    // acceptable hamburger overlap buffer
+    // acceptable distance to be from hamburger
     this.buffer = {
       x: 100,
       y: 50,
@@ -49,7 +49,7 @@ class Cat {
     this.displayCat();
 
     // Move towards hamburger
-    this.move(hamburger);
+    this.moveTo(hamburger);
   }
 
   // Display cat
@@ -88,7 +88,7 @@ class Cat {
   }
 
   // Move towards hamburger
-  move(hamburger) {
+  moveTo(hamburger) {
     this.vx = this.speed;
     this.vy = this.speed;
 

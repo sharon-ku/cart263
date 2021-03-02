@@ -131,8 +131,9 @@ let lessonProgressBar = undefined;
 // Scroll arrow image
 let scrollArrowImage = undefined;
 
-// Scroll arrow in `learn` state
-let scrollArrow = undefined;
+// Scroll arrows
+let topArrow;
+let bottomArrow;
 
 // FOR GAME STATE ------------------------------
 // Level of game
@@ -206,7 +207,7 @@ function preload() {
   }
 
   // Load scroll arrow image
-  scrollArrowImage = loadImage(`assets/images/food/food6.png`);
+  scrollArrowImage = loadImage(`assets/images/arrow.png`);
 
   // Load hamburger image
   hamburgerImage = loadImage(`assets/images/hamburger.png`);
@@ -301,8 +302,8 @@ function prepareLesson() {
   // Create lesson progress bar
   lessonProgressBar = new LessonProgressBar();
 
-  // Create new scroll arrow
-  scrollArrow = new ScrollArrow(scrollArrowImage);
+  // Create top and bottoms scroll arrows
+  createScrollArrows();
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -323,6 +324,29 @@ function createLessonText() {
   cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
   englishSentenceText = new EnglishSentenceText(englishSentence, font);
   cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
+}
+
+// Create top and bottoms scroll arrows
+function createScrollArrows() {
+  // Create top scroll arrow
+  let topArrowProperties = {
+    image: scrollArrowImage,
+    y: 50,
+    yMax: 60,
+    yMin: 50,
+    scaleY: -1,
+  };
+  topArrow = new ScrollArrow(topArrowProperties);
+
+  // Create bottom scroll arrow
+  let bottomArrowProperties = {
+    image: scrollArrowImage,
+    y: height - 50,
+    yMax: height - 50,
+    yMin: height - 60,
+    scaleY: 1,
+  };
+  bottomArrow = new ScrollArrow(bottomArrowProperties);
 }
 
 // Setup for `game` state
@@ -558,8 +582,8 @@ function learn() {
     vocabularyWord.lessonWords.length - 1
   );
 
-  // Display scroll arrow image
-  scrollArrow.update();
+  // Depending on the word user is at, show bottom and top arrow
+  showScrollArrow();
 }
 
 // Update lesson text that is displayed on canvas
@@ -582,6 +606,26 @@ function mouseWheel(event) {
   // Else if scrolling up, go to previous word
   else if (event.delta < 0 && lessonWordIndex > 0) {
     lessonWordIndex -= 1;
+  }
+}
+
+// Depending on the word user is at, show bottom and top arrow
+function showScrollArrow() {
+  // If user is at the first word, only show bottom arrow
+  if (lessonWordIndex === 0) {
+    bottomArrow.update();
+  }
+  // If user is anywhere between first and last word, show both top and bottom arrows
+  else if (
+    lessonWordIndex > 0 &&
+    lessonWordIndex < vocabularyWord.lessonWords.length - 1
+  ) {
+    topArrow.update();
+    bottomArrow.update();
+  }
+  // If user is at the last word, only show top arrow
+  else if (lessonWordIndex === vocabularyWord.lessonWords.length - 1) {
+    topArrow.update();
   }
 }
 
@@ -647,7 +691,9 @@ function game() {
   hamburger.update();
 
   // Update fwoggy
-  fwoggy.update();
+  for (let i = 0; i < cats.length; i++) {
+    fwoggy.update(cats[i]);
+  }
 
   // Check if answer is correct
   checkIfAnswerIsCorrect();
@@ -739,6 +785,7 @@ function checkIfAnswerIsCorrect() {
   if (timeToCheckIfAnswerCorrect) {
     // If user's guess is correct
     if (englishWord === currentAnswer) {
+      fwoggy.task = `moveToCat`;
       // It's time for computer to say something nice
       victoryTime = true;
     }
