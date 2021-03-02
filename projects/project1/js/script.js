@@ -144,9 +144,6 @@ let numLives = 5;
 // True if time to choose random word in `flashcards` state
 let timeToChooseRandomWord = false;
 
-// Finish line in `game` state
-let finishLine = undefined;
-
 // Hamburger
 let hamburger;
 // Hamburger image
@@ -180,9 +177,6 @@ let currentAnswer = undefined;
 
 // Info on cats for each level
 let levelCat = undefined;
-
-// True if time to switch level in game
-let switchLevel = false;
 
 // =============================================================
 // preload()
@@ -237,12 +231,6 @@ function setup() {
   createCanvas(1280, 720);
   noStroke();
 
-  // Set current word from the JSON file
-  setCurrentLessonWord();
-
-  // Create new lesson text for `learn` state
-  createLessonText();
-
   // // Create a new rectangle for title
   // let titleRectangleProperties = {
   //   x: width / 2,
@@ -256,6 +244,26 @@ function setup() {
   // };
   // titleRectangle = new Rectangle(titleRectangleProperties);
 
+  // Prepare all elements for `intro`, `lesson`, and `game` states
+  prepareIntro();
+  prepareLesson();
+  prepareGame();
+
+  // Check if annyang is available
+  if (annyang) {
+    // Create commands
+    let commands = {
+      // If the user responds, set the current answer to the animal guessed
+      "*guess": guessEnglishWord,
+    };
+    // Add the commands and start annyang
+    annyang.addCommands(commands);
+    annyang.start();
+  }
+}
+
+// Setup for `intro` state
+function prepareIntro() {
   // Create new logo
   logo = new Logo(logoImages);
 
@@ -280,33 +288,21 @@ function setup() {
     let floatingFood = new FloatingFood(foodImages[i]);
     floatingFoods.push(floatingFood);
   }
+}
+
+// Setup for `lesson` state
+function prepareLesson() {
+  // Set current word from the vocabularyWords.json
+  setCurrentLessonWord();
+
+  // Create new lesson text
+  createLessonText();
 
   // Create lesson progress bar
   lessonProgressBar = new LessonProgressBar();
 
   // Create new scroll arrow
   scrollArrow = new ScrollArrow(scrollArrowImage);
-
-  // Create new finish line
-  finishLine = new FinishLine();
-
-  // Create a new hamburger
-  hamburger = new Hamburger(hamburgerImage);
-
-  // Create a new fwoggy
-  fwoggy = new Fwoggy(fwoggyImage);
-
-  // Check if annyang is available
-  if (annyang) {
-    // Create commands
-    let commands = {
-      // If the user responds, set the current answer to the animal guessed
-      "*guess": guessEnglishWord,
-    };
-    // Add the commands and start annyang
-    annyang.addCommands(commands);
-    annyang.start();
-  }
 }
 
 // Get the current vocabulary word from JSON file and grab its English and Cantonese words and sentences
@@ -327,6 +323,15 @@ function createLessonText() {
   cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
   englishSentenceText = new EnglishSentenceText(englishSentence, font);
   cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
+}
+
+// Setup for `game` state
+function prepareGame() {
+  // Create a new hamburger
+  hamburger = new Hamburger(hamburgerImage);
+
+  // Create a new fwoggy
+  fwoggy = new Fwoggy(fwoggyImage);
 }
 
 // =============================================================
@@ -407,9 +412,9 @@ function intro() {
   }
 
   // Update all rectangular buttons in `learn` state
-  rectButtonLearn.update(mouse);
-  rectButtonFlashcards.update(mouse);
-  rectButtonGame.update(mouse);
+  for (let i = 0; i < rectButtons.length; i++) {
+    rectButtons[i].update(mouse);
+  }
 
   // Make food float around randomly
   for (let i = 0; i < floatingFoods.length; i++) {
@@ -470,7 +475,7 @@ function drawHorizontalLines() {
       y1: i,
       y2: i,
     };
-    // Draw a vertical line
+    // Draw a horizontal line
     drawALine(horizontalLine);
   }
 }
@@ -624,7 +629,7 @@ function updateCantoneseFlashcard() {
 // =============================================================
 // STATE: game()
 //
-// Reveal Cantonese vocabulary words as food items and have user say its corresponding English word before the food crosses the finish line. User has 3 sandwich lives.
+// User must say the correct English word before the cat reaches the hamburger.
 // =============================================================
 function game() {
   // // Resume annyang
@@ -637,9 +642,6 @@ function game() {
 
   // Update logo behaviour
   logo.update(mouse);
-
-  // // Update finish line
-  // finishLine.update();
 
   // Update hamburger
   hamburger.update();
@@ -656,64 +658,21 @@ function game() {
   // Display current answer on screen and change its color depending on whether it was right or wrong
   displayGuess();
 
+  // If no more cats left, swith to next level
   if (cats.length === 0) {
-    switchLevel = true;
-  }
-
-  if (switchLevel) {
+    // Add 1 to level
     level++;
 
     // Create cats
     createCats(level);
-    switchLevel = false;
   }
 
+  // If cat overlaps with hamburger, remove cat from cats array
   for (let i = 0; i < cats.length; i++) {
-    let cat = cats[i];
-
-    if (cat.x === hamburger.x && cat.y === hamburger.y) {
+    if (cats[i].x === hamburger.x && cats[i].y === hamburger.y) {
       cats.splice(i, 1);
     }
   }
-
-  // let levelCat = {
-  //   level1: [
-  //     {
-  //       x: width + 120,
-  //       y: 50
-  //     },
-  //     {
-  //       x: -200,
-  //       y: 180
-  //     }
-  //   ]
-  // }
-
-  // // Create a new cat
-  // if (cats.length < numCats[level]) {
-  //   // Set x position of cat
-  //   let x;
-  //   // Half the time, cat will appear on right side of canvas, the other half on left side
-  //   if (random() < 0.5) {
-  //     x = width + random(100,150);
-  //   } else {
-  //     x = -random(50, 100);
-  //   }
-  //   // Set y position of cat
-  //   let y = random(0, height);
-  //
-  //   // Set current word from the JSON file
-  //   currentWord = random(vocabularyWord.lessonWords);
-  //
-  //   // Get the English and Cantonese words and sentences at the current word
-  //   cantoneseWord = currentWord.cantoneseWord;
-  //   englishWord = currentWord.englishWord;
-  //
-  //   // Create new cat
-  //   let cat = new Cat(x, y, catImages, font, cantoneseWord, englishWord);
-  //
-  //   cats.push(cat);
-  // }
 
   console.log(numLives);
 
