@@ -80,7 +80,7 @@ let logo = undefined;
 // Store logo images
 let logoImages = [];
 // Number of logo images
-let NUM_LOGO_IMAGES = 2;
+const NUM_LOGO_IMAGES = 2;
 
 // FOR INTRO STATE ------------------------------
 // Introduction circles
@@ -140,7 +140,12 @@ let bottomArrow;
 let level = -1;
 
 // Number of lives
-let numLives = 5;
+let numLives = 10;
+
+// Hamburger hearts symbolizing number of lives
+let hearts = [];
+// Heart image
+let heartImage = undefined;
 
 // True if time to choose random word in `flashcards` state
 let timeToChooseRandomWord = false;
@@ -220,6 +225,9 @@ function preload() {
     let catImage = loadImage(`assets/images/cat${i}.png`);
     catImages.push(catImage);
   }
+
+  // Load hamburger heart image
+  heartImage = loadImage(`assets/images/heart.png`);
 }
 
 // =============================================================
@@ -356,6 +364,33 @@ function prepareGame() {
 
   // Create a new fwoggy
   fwoggy = new Fwoggy(fwoggyImage);
+
+  // Create hearts
+  createHearts();
+}
+
+// Create hearts that represent lives
+function createHearts() {
+  for (let i = 0; i < numLives; i++) {
+    // Set the x position of the last heart in row of hearts
+    let lastXPositionOfHeart = width - 70;
+    let distBtwHearts = 60;
+
+    // Calculate x position of heart
+    let calculatedXPosition = lastXPositionOfHeart - i * distBtwHearts;
+
+    // Set heart properties
+    let heartProperties = {
+      image: heartImage,
+      x: calculatedXPosition,
+      y: 60,
+    };
+    // Create hearts with those properties
+    let heart = new Heart(heartProperties);
+
+    // Push new beating heart into hearts array
+    hearts.push(heart);
+  }
 }
 
 // =============================================================
@@ -690,6 +725,11 @@ function game() {
   // Update hamburger
   hamburger.update();
 
+  // Update hearts
+  for (let i = 0; i < hearts.length; i++) {
+    hearts[i].update();
+  }
+
   // Update fwoggy
   for (let i = 0; i < cats.length; i++) {
     fwoggy.update(cats[i]);
@@ -725,8 +765,12 @@ function game() {
   // If cat overlaps with hamburger, player loses a life
   for (let i = 0; i < cats.length; i++) {
     if (cats[i].overlapsWith(hamburger)) {
+      // Remove a life
       numLives--;
+      // Remove cat
       cats.splice(i, 1);
+      // Remove a heart
+      hearts.splice(hearts.length - 1, 1);
     }
   }
 
