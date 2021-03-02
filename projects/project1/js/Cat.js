@@ -9,6 +9,16 @@ class Cat {
     // position
     this.x = x;
     this.y = y;
+    // velocity
+    this.vx = 0;
+    this.vy = 0;
+    this.speed = 1.5; //0.5
+
+    // acceptable hamburger overlap buffer
+    this.buffer = {
+      x: 100,
+      y: 50,
+    };
 
     // rectangle card
     this.rectangle = {
@@ -79,16 +89,33 @@ class Cat {
 
   // Move towards hamburger
   move(hamburger) {
-    if (this.x > hamburger.x) {
-      this.x -= hamburger.x / 1000;
-    } else if (this.x < hamburger.x) {
-      this.x += hamburger.x / 1000;
+    this.vx = this.speed;
+    this.vy = this.speed;
+
+    if (this.x > hamburger.x + this.buffer.x) {
+      this.x -= this.vx;
+    } else if (this.x < hamburger.x - this.buffer.x) {
+      this.x += this.vx;
     }
 
-    if (this.y > hamburger.y) {
-      this.y -= hamburger.y / 1000;
-    } else if (this.y < hamburger.y) {
-      this.y += hamburger.y / 1000;
+    if (this.y > hamburger.y + this.buffer.y) {
+      this.y -= this.vy;
+    } else if (this.y < hamburger.y - this.buffer.y) {
+      this.y += this.vy;
+    }
+  }
+
+  // Return true if cat overlaps with subject provided as argument
+  overlapsWith(subject) {
+    if (
+      this.x > subject.x - subject.width / 2 &&
+      this.x < subject.x + subject.width / 2 &&
+      this.y > subject.y - subject.height / 2 &&
+      this.y < subject.y + subject.height / 2
+    ) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

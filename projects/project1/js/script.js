@@ -82,6 +82,7 @@ let logoImages = [];
 // Number of logo images
 let NUM_LOGO_IMAGES = 2;
 
+// FOR INTRO STATE ------------------------------
 // Introduction circles
 let introCircles = [];
 const NUM_INTRO_CIRCLES = 15;
@@ -101,6 +102,7 @@ let rectButtonGame = undefined;
 // Store all rectangular buttons here
 let rectButtons = [];
 
+// FOR LEARN STATE ------------------------------
 // Vocabulary word
 let vocabularyWord = undefined;
 
@@ -132,6 +134,13 @@ let scrollArrowImage = undefined;
 // Scroll arrow in `learn` state
 let scrollArrow = undefined;
 
+// FOR GAME STATE ------------------------------
+// Level of game
+let level = -1;
+
+// Number of lives
+let numLives = 5;
+
 // True if time to choose random word in `flashcards` state
 let timeToChooseRandomWord = false;
 
@@ -150,8 +159,6 @@ let fwoggyImage;
 
 // Store all cats
 let cats = [];
-// Number of cats
-let numCats = 2;
 // Cat images
 let catImages = [];
 // Number of cat images
@@ -171,15 +178,25 @@ let defeatTime = false;
 // Store current answer
 let currentAnswer = undefined;
 
+// Info on cats for each level
+let levelCat = undefined;
+
+// True if time to switch level in game
+let switchLevel = false;
+
+// =============================================================
 // preload()
 //
-// Preload images, json files
+// Preload images, json files, sounds
+// =============================================================
 function preload() {
   // Load JSON file containing vocabulary words
   vocabularyWord = loadJSON(`assets/data/vocabularyWords.json`);
 
+  // Load JSON file containing info on cats for each level
+  levelCat = loadJSON(`assets/data/levelCats.json`);
+
   // Load text font
-  // font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
   font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
 
   // Load logo images and push to logoImages array
@@ -227,7 +244,7 @@ function setup() {
   createLessonText();
 
   // // Create a new rectangle for title
-  // let titleRectangleProperties  = {
+  // let titleRectangleProperties = {
   //   x: width / 2,
   //   y: height / 2,
   //   width: width - 50,
@@ -610,8 +627,10 @@ function updateCantoneseFlashcard() {
 // Reveal Cantonese vocabulary words as food items and have user say its corresponding English word before the food crosses the finish line. User has 3 sandwich lives.
 // =============================================================
 function game() {
-  // Resume annyang
-  annyang.resume();
+  // // Resume annyang
+  // annyang.resume();
+  // Abort annyang
+  annyang.abort();
 
   // Set background color
   background(0);
@@ -637,35 +656,112 @@ function game() {
   // Display current answer on screen and change its color depending on whether it was right or wrong
   displayGuess();
 
-  // Create a new cat
-  if (cats.length < numCats) {
-    // Set x position of cat
-    let x;
-    // Half the time, cat will appear on right side of canvas, the other half on left side
-    if (random() < 0.5) {
-      x = width + 100;
-    } else {
-      x = -100;
+  if (cats.length === 0) {
+    switchLevel = true;
+  }
+
+  if (switchLevel) {
+    level++;
+
+    // Create cats
+    createCats(level);
+    switchLevel = false;
+  }
+
+  for (let i = 0; i < cats.length; i++) {
+    let cat = cats[i];
+
+    if (cat.x === hamburger.x && cat.y === hamburger.y) {
+      cats.splice(i, 1);
     }
-    // Set y position of cat
-    let y = random(0, height);
+  }
 
-    // Set current word from the JSON file
-    currentWord = random(vocabularyWord.lessonWords);
+  // let levelCat = {
+  //   level1: [
+  //     {
+  //       x: width + 120,
+  //       y: 50
+  //     },
+  //     {
+  //       x: -200,
+  //       y: 180
+  //     }
+  //   ]
+  // }
 
-    // Get the English and Cantonese words and sentences at the current word
-    cantoneseWord = currentWord.cantoneseWord;
-    englishWord = currentWord.englishWord;
+  // // Create a new cat
+  // if (cats.length < numCats[level]) {
+  //   // Set x position of cat
+  //   let x;
+  //   // Half the time, cat will appear on right side of canvas, the other half on left side
+  //   if (random() < 0.5) {
+  //     x = width + random(100,150);
+  //   } else {
+  //     x = -random(50, 100);
+  //   }
+  //   // Set y position of cat
+  //   let y = random(0, height);
+  //
+  //   // Set current word from the JSON file
+  //   currentWord = random(vocabularyWord.lessonWords);
+  //
+  //   // Get the English and Cantonese words and sentences at the current word
+  //   cantoneseWord = currentWord.cantoneseWord;
+  //   englishWord = currentWord.englishWord;
+  //
+  //   // Create new cat
+  //   let cat = new Cat(x, y, catImages, font, cantoneseWord, englishWord);
+  //
+  //   cats.push(cat);
+  // }
 
-    // Create new cat
-    let cat = new Cat(x, y, catImages, font, cantoneseWord, englishWord);
+  console.log(numLives);
 
-    cats.push(cat);
+  // If cat overlaps with hamburger, player loses a life
+  for (let i = 0; i < cats.length; i++) {
+    if (cats[i].overlapsWith(hamburger)) {
+      numLives--;
+      cats.splice(i, 1);
+    }
   }
 
   // Update cats
   for (let i = 0; i < cats.length; i++) {
     cats[i].update(hamburger);
+  }
+}
+
+// Create cats
+function createCats(level) {
+  // Get the number of cats at the current level from levelCats.json
+  let numCats = levelCat.levelCats[level].positions.length;
+
+  // Create many cats
+  if (cats.length < numCats) {
+    for (let i = 0; i < levelCat.levelCats[level].positions.length; i++) {
+      // Get x and y position of cat from levelCats.json
+      let catPosition = levelCat.levelCats[level].positions[i];
+
+      // Set random word from vocabularyWords.json
+      currentWord = random(vocabularyWord.lessonWords);
+
+      // Get the English and Cantonese words at the current word
+      cantoneseWord = currentWord.cantoneseWord;
+      englishWord = currentWord.englishWord;
+
+      // Create new cat that will hold a card containing the random Cantonese word
+      let cat = new Cat(
+        catPosition.x,
+        catPosition.y,
+        catImages,
+        font,
+        cantoneseWord,
+        englishWord
+      );
+
+      // Add cat to cats array (it's a happy cat family!)
+      cats.push(cat);
+    }
   }
 }
 

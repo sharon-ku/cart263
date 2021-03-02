@@ -1,0 +1,35 @@
+{
+  "description": "position of evil cats for each level",
+  "levelCats": [
+    {
+      "level": 0,
+      "positions": [
+        {
+          "x": 1290,
+          "y": 50
+        },
+        {
+          "x": -200,
+          "y": 180
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "positions": [
+        {
+          "x": 900,
+          "y": 50
+        },
+        {
+          "x": 1500,
+          "y": 20
+        },
+        {
+          "x": 800,
+          "y": 90
+        }
+      ]
+    }
+  ]
+}

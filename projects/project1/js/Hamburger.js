@@ -7,6 +7,9 @@ class Hamburger {
     // position
     this.x = width / 2;
     this.y = height / 2;
+    // size
+    this.width = 325;
+    this.height = 291;
   }
 
   // Update all behaviour of hamburger
