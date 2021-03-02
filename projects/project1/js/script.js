@@ -7,7 +7,7 @@ Here is a description of this template p5 project.
 "use strict";
 
 // States of program
-// Possible states: intro, learn, game, end
+// Possible states: intro, learn, game, defeat, victory
 let state = `game`;
 
 // Text font
@@ -64,7 +64,7 @@ let cantoneseSpeaker = {
 // // Title rectangle
 // let titleRectangle;
 
-// Properties for the paper line (for intro state)
+// Properties for the paper line
 let paperLine = {
   stroke: {
     r: 155,
@@ -87,11 +87,11 @@ const NUM_LOGO_IMAGES = 2;
 let introCircles = [];
 const NUM_INTRO_CIRCLES = 15;
 
-// Array that stores food images in intro state
+// Array that stores food images
 let foodImages = [];
 const NUM_FOOD_IMAGES = 10;
 
-// Store floating foods for intro state
+// Store floating foods
 let floatingFoods = [];
 
 // Rectangular button for learning new words
@@ -112,20 +112,20 @@ let cantoneseWord = undefined;
 let englishSentence = undefined;
 let cantoneseSentence = undefined;
 
-// Track which word user is at in the `learn` state
+// Track which word user is at
 let lessonWordIndex = 0;
 
-// Text to be dislayed on canvas in `learn` state
+// Text to be dislayed on canvas
 // Contains: English and Cantonese words and sentences
 let lessonText = undefined;
 
-// Text to be displayed in `learn` state
+// Text to be displayed
 let englishWordText = undefined;
 let cantoneseWordText = undefined;
 let englishSentenceText = undefined;
 let cantoneseSentenceText = undefined;
 
-// Lesson progress bar in `learn` state
+// Lesson progress bar
 let lessonProgressBar = undefined;
 
 // Scroll arrow image
@@ -292,7 +292,7 @@ function prepareIntro() {
   // Push all created buttons to rectButtons array
   rectButtons.push(rectButtonLearn, rectButtonFlashcards, rectButtonGame);
 
-  // Create new food items for intro state
+  // Create new food items
   for (let i = 0; i < foodImages.length; i++) {
     let floatingFood = new FloatingFood(foodImages[i]);
     floatingFoods.push(floatingFood);
@@ -365,7 +365,7 @@ function prepareGame() {
   // Create a new fwoggy
   fwoggy = new Fwoggy(fwoggyImage);
 
-  // Create hearts
+  // Create hearts that represent lives
   createHearts();
 }
 
@@ -415,8 +415,10 @@ function draw() {
     flashcards();
   } else if (state === `game`) {
     game();
-  } else if (state === `end`) {
-    end();
+  } else if (state === `defeat`) {
+    defeat();
+  } else if (state === `victory`) {
+    victory();
   }
 }
 
@@ -744,13 +746,20 @@ function game() {
   // Display current answer on screen and change its color depending on whether it was right or wrong
   displayGuess();
 
-  // If no more cats left, swith to next level
+  // If no more cats left, swith to next level or set to victory state
   if (cats.length === 0) {
     // Add 1 to level
     level++;
 
-    // Create cats
-    createCats(level);
+    // If user hasn't reached last level yet
+    if (level < levelCat.levelCats.length - 1) {
+      // Create new level cats
+      createCats(level);
+    }
+    // Or else, user won! Set to victory state
+    else {
+      state = `victory`;
+    }
   }
 
   // If cat overlaps with hamburger, remove cat from cats array
@@ -760,7 +769,10 @@ function game() {
     }
   }
 
-  console.log(numLives);
+  console.log(state);
+  // console.log(numLives);
+  // console.log(level);
+  // console.log(levelCat.levelCats.length - 1);
 
   // If cat overlaps with hamburger, player loses a life
   for (let i = 0; i < cats.length; i++) {
@@ -772,6 +784,11 @@ function game() {
       // Remove a heart
       hearts.splice(hearts.length - 1, 1);
     }
+  }
+
+  // If user has zero lives, loser lost
+  if (numLives <= 0) {
+    state = `defeat`;
   }
 
   // Update cats
@@ -877,4 +894,24 @@ function displayGuess() {
   textSize(60);
   text(currentAnswer, width / 2, height - 100);
   pop();
+}
+
+// =============================================================
+// STATE: defeat()
+//
+// Display image of Fwoggy in utter sadness over death of hamburger lives.
+// =============================================================
+function defeat() {
+  background(50);
+
+  console.log(state);
+}
+
+// =============================================================
+// STATE: victory()
+//
+// Display extremely happy Fwoggy.
+// =============================================================
+function victory() {
+  background(255, 0, 0);
 }
