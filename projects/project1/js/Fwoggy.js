@@ -16,7 +16,7 @@ class Fwoggy {
     // velocity
     this.vx = 0;
     this.vy = 0;
-    this.speed = 0.4;
+    this.speed = 5;
     // image scale
     this.scale = {
       x: 1,
@@ -29,7 +29,7 @@ class Fwoggy {
 
     // acceptable distance to be from cat (for whacking purposes)
     this.buffer = {
-      x: 50,
+      x: 10,
       y: 50,
     };
   }
@@ -41,7 +41,7 @@ class Fwoggy {
       // Stay still in front of burger with arms protecting it
       this.protectBurger();
     } else if (this.task === `moveToCat`) {
-      this.moveTo(cat);
+      // this.moveTo(cat);
     }
 
     // Display image

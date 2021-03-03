@@ -165,7 +165,14 @@ let cats = [];
 // Cat images
 let catImages = [];
 // Number of cat images
-const NUM_CAT_IMAGES = 2;
+const NUM_CAT_IMAGES = 4;
+
+// Store all cat shiver lines
+let shivers = [];
+// Shiver images
+let shiverImages = [];
+// Number of shiver images
+const NUM_SHIVER_IMAGES = 4;
 
 // True if it's time to check if answer is correct
 let timeToCheckIfAnswerCorrect = false;
@@ -222,8 +229,14 @@ function preload() {
 
   // Load cat images
   for (let i = 0; i < NUM_CAT_IMAGES; i++) {
-    let catImage = loadImage(`assets/images/cat${i}.png`);
+    let catImage = loadImage(`assets/images/cat/cat${i}.png`);
     catImages.push(catImage);
+  }
+
+  // Load shiver images
+  for (let i = 0; i < NUM_SHIVER_IMAGES; i++) {
+    let shiverImage = loadImage(`assets/images/cat/shiver${i}.png`);
+    shiverImages.push(shiverImage);
   }
 
   // Load hamburger heart image
@@ -436,6 +449,11 @@ function mousePressed() {
     for (let i = 0; i < rectButtons.length; i++) {
       rectButtons[i].mousePressed(mouse);
     }
+
+    if (rectButtonGame.overlapsWith(mouse)) {
+      // Reset game variables
+      resetGame();
+    }
   }
   // If it's the learn state and mouse pressed on a string of text, execute mousePressed methods of each string
   else if (state === `learn`) {
@@ -444,6 +462,33 @@ function mousePressed() {
     englishSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
     cantoneseSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
   }
+}
+
+// Reset all game variables
+function resetGame() {
+  // Delete all cats
+  cats = [];
+
+  // Level of game
+  level = -1;
+
+  // Number of lives
+  numLives = 10;
+
+  // True if it's time to check if answer is correct
+  timeToCheckIfAnswerCorrect = false;
+
+  // True if it's time to update number of correct answers
+  timeToUpdateNumCorrectAnswers = false;
+
+  // True if it's victory time
+  victoryTime = false;
+
+  // True if it's defeat time
+  defeatTime = false;
+
+  // Reset currentAnswer
+  currentAnswer = undefined;
 }
 
 // =============================================================
@@ -713,10 +758,10 @@ function updateCantoneseFlashcard() {
 // User must say the correct English word before the cat reaches the hamburger.
 // =============================================================
 function game() {
-  // // Resume annyang
-  // annyang.resume();
-  // Abort annyang
-  annyang.abort();
+  // Resume annyang
+  annyang.resume();
+  // // Abort annyang
+  // annyang.abort();
 
   // Set background color
   background(0);
@@ -740,14 +785,17 @@ function game() {
   // Check if answer is correct
   checkIfAnswerIsCorrect();
 
-  // React to user's answer based on whether it is correct or not
-  reactToAnswer();
+  // // React to user's answer based on whether it is correct or not
+  // reactToAnswer();
 
   // Display current answer on screen and change its color depending on whether it was right or wrong
   displayGuess();
 
   // If no more cats left, swith to next level or set to victory state
   if (cats.length === 0) {
+    // Reset currentAnswer
+    currentAnswer = undefined;
+
     // Add 1 to level
     level++;
 
@@ -769,10 +817,7 @@ function game() {
     }
   }
 
-  console.log(state);
-  // console.log(numLives);
-  // console.log(level);
-  // console.log(levelCat.levelCats.length - 1);
+  // console.log(state);
 
   // If cat overlaps with hamburger, player loses a life
   for (let i = 0; i < cats.length; i++) {
@@ -786,14 +831,26 @@ function game() {
     }
   }
 
-  // If user has zero lives, loser lost
+  // If user has zero lives or less, user lost
   if (numLives <= 0) {
     state = `defeat`;
   }
 
   // Update cats
   for (let i = 0; i < cats.length; i++) {
-    cats[i].update(hamburger);
+    cats[i].update(hamburger, fwoggy);
+
+    // If cat flees off canvas, remove it
+    if (
+      cats[i].feeling === `scared` &&
+      (cats[i].x > width ||
+        cats[i].x < 0 ||
+        cats[i].y > height ||
+        cats[i].y < 0)
+    ) {
+      // Remove cat
+      cats.splice(i, 1);
+    }
   }
 }
 
@@ -844,52 +901,67 @@ function guessEnglishWord(guess) {
 function checkIfAnswerIsCorrect() {
   // If it's time to check if answer is correct
   if (timeToCheckIfAnswerCorrect) {
-    // If user's guess is correct
-    if (englishWord === currentAnswer) {
-      fwoggy.task = `moveToCat`;
-      // It's time for computer to say something nice
-      victoryTime = true;
+    for (let i = 0; i < cats.length; i++) {
+      // If user's guess is correct
+      if (cats[i].englishWord === currentAnswer) {
+        // fwoggy.task = `moveToCat`;
+        // fwoggy.moveTo(cats[i]);
+
+        // // It's time for computer to say something nice
+        // victoryTime = true;
+
+        // If Fwoggy successfully whacks the cat, remove cat
+        if (cats[i].overlapsWith(fwoggy)) {
+          cats.splice(i, 1);
+        }
+      }
+      // If incorrect
+      else {
+        // // Have computer say something mean and discouraging so that the user will know to do better next time
+        // defeatTime = true;
+      }
+      timeToCheckIfAnswerCorrect = false;
     }
-    // If incorrect
-    else {
-      // Have computer say something mean and discouraging so that the user will know to do better next time
-      defeatTime = true;
-    }
-    timeToCheckIfAnswerCorrect = false;
   }
 }
 
-// React to user's answer based on whether it is correct or not
-function reactToAnswer() {
-  // If it's victory time (user got right answer)
-  if (victoryTime) {
-    // // Have computer say some nice words of encouragement
-    // computerSaysNiceMessage();
-    // Update numCorrectAnswers counter
-    timeToUpdateNumCorrectAnswers = true;
-  }
-  // Else if it's defeat time (user got wrong answer)
-  else if (defeatTime) {
-    // // Have computer say some mean words
-    // computerSaysMeanMessage();
-  }
-}
+// // React to user's answer based on whether it is correct or not
+// function reactToAnswer() {
+//   // If it's victory time (user got right answer)
+//   if (victoryTime) {
+//     // // Have computer say some nice words of encouragement
+//     // computerSaysNiceMessage();
+//     // Update numCorrectAnswers counter
+//     timeToUpdateNumCorrectAnswers = true;
+//   }
+//   // Else if it's defeat time (user got wrong answer)
+//   else if (defeatTime) {
+//     // // Have computer say some mean words
+//     // computerSaysMeanMessage();
+//   }
+// }
 
 // Display current answer on screen and change its color depending on whether it was right or wrong
 function displayGuess() {
-  push();
-  // If answer is correct:
-  if (englishWord === currentAnswer) {
-    // Set guess color to green
-    fill(0, 255, 0);
-  }
-  // Else if answer is wrong:
-  else {
-    // Set guess color to red
-    fill(255, 0, 0);
+  for (let i = 0; i < cats.length; i++) {
+    let cat = cats[i];
+    if (cat.x > 0 && cat.x < width && cat.y > 0 && cat.y < height) {
+      // If answer is correct:
+      if (cat.englishWord === currentAnswer) {
+        // Set cat to feeling scared
+        cat.feeling = `scared`;
+        // cats.splice(i, 1);
+      }
+      // Else if answer is wrong:
+      else {
+      }
+      console.log(cat.englishWord);
+    }
   }
 
   // Display text showing user's guess
+  push();
+  fill(255);
   textAlign(CENTER);
   textSize(60);
   text(currentAnswer, width / 2, height - 100);
@@ -904,7 +976,10 @@ function displayGuess() {
 function defeat() {
   background(50);
 
-  console.log(state);
+  // Update logo behaviour
+  logo.update(mouse);
+
+  // console.log(state);
 }
 
 // =============================================================
@@ -914,4 +989,7 @@ function defeat() {
 // =============================================================
 function victory() {
   background(255, 0, 0);
+
+  // Update logo behaviour
+  logo.update(mouse);
 }
