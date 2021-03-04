@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `game`;
+let state = `defeat`;
 
 // Text font
 let font;
@@ -140,7 +140,7 @@ let bottomArrow;
 let level = -1;
 
 // Number of lives
-let numLives = 10;
+let numLives = 2;
 
 // Hamburger hearts symbolizing number of lives
 let hearts = [];
@@ -150,10 +150,15 @@ let heartImage = undefined;
 // True if time to choose random word in `flashcards` state
 let timeToChooseRandomWord = false;
 
-// Hamburger
+// Big hamburger that Fwoggy protects
 let hamburger;
-// Hamburger image
-let hamburgerImage;
+// Hamburger images
+let hamburgerImages = [];
+// Number of hamburger images
+const NUM_HAMBURGER_IMAGES = 5;
+
+// Defeat hamburger
+let defeatHamburger;
 
 // Fwoggy
 let fwoggy;
@@ -191,6 +196,24 @@ let currentAnswer = undefined;
 // Info on cats for each level
 let levelCat = undefined;
 
+// Guess text string
+let guessText = {
+  size: 80,
+  stroke: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  fill: {
+    r: 75,
+    g: 161,
+    b: 88,
+  },
+  strokeWeight: 5,
+  x: undefined,
+  y: undefined,
+};
+
 // =============================================================
 // preload()
 //
@@ -204,7 +227,9 @@ function preload() {
   levelCat = loadJSON(`assets/data/levelCats.json`);
 
   // Load text font
-  font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
+  // font = loadFont(`assets/fonts/MYuenHK-SemiBold.otf`);
+  font = loadFont(`assets/fonts/Interesting glue pudding.ttf`);
+  // font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
 
   // Load logo images and push to logoImages array
   for (let i = 0; i < NUM_LOGO_IMAGES; i++) {
@@ -222,7 +247,10 @@ function preload() {
   scrollArrowImage = loadImage(`assets/images/arrow.png`);
 
   // Load hamburger image
-  hamburgerImage = loadImage(`assets/images/hamburger.png`);
+  for (let i = 0; i < NUM_HAMBURGER_IMAGES; i++) {
+    let hamburgerImage = loadImage(`assets/images/hamburger/hamburger${i}.png`);
+    hamburgerImages.push(hamburgerImage);
+  }
 
   // Load fwoggy image
   fwoggyImage = loadImage(`assets/images/fwoggy.png`);
@@ -266,10 +294,12 @@ function setup() {
   // };
   // titleRectangle = new Rectangle(titleRectangleProperties);
 
-  // Prepare all elements for `intro`, `lesson`, and `game` states
+  // Prepare all elements for `intro`, `lesson`, `game`, `defeat`, `victory` states
   prepareIntro();
   prepareLesson();
   prepareGame();
+  prepareDefeat();
+  prepareVictory();
 
   // Check if annyang is available
   if (annyang) {
@@ -373,7 +403,7 @@ function createScrollArrows() {
 // Setup for `game` state
 function prepareGame() {
   // Create a new hamburger
-  hamburger = new Hamburger(hamburgerImage);
+  hamburger = new Hamburger(hamburgerImages[0]);
 
   // Create a new fwoggy
   fwoggy = new Fwoggy(fwoggyImage);
@@ -405,6 +435,15 @@ function createHearts() {
     hearts.push(heart);
   }
 }
+
+// Setup for `defeat` state
+function prepareDefeat() {
+  // Create new defeat hamburgers
+  defeatHamburger = new DefeatHamburger(hamburgerImages);
+}
+
+// Setup for `victory` state
+function prepareVictory() {}
 
 // =============================================================
 // draw()
@@ -472,8 +511,14 @@ function resetGame() {
   // Level of game
   level = -1;
 
+  // Empty hearts array
+  hearts = [];
+
   // Number of lives
   numLives = 10;
+
+  // Create hearts that represent lives
+  createHearts();
 
   // True if it's time to check if answer is correct
   timeToCheckIfAnswerCorrect = false;
@@ -764,7 +809,12 @@ function game() {
   // annyang.abort();
 
   // Set background color
-  background(0);
+  bgFill.current = bgFill.intro;
+
+  // Make intro circles move around randomly
+  for (let i = 0; i < introCircles.length; i++) {
+    introCircles[i].update();
+  }
 
   // Update logo behaviour
   logo.update(mouse);
@@ -800,7 +850,7 @@ function game() {
     level++;
 
     // If user hasn't reached last level yet
-    if (level < levelCat.levelCats.length - 1) {
+    if (level < levelCat.levelCats.length) {
       // Create new level cats
       createCats(level);
     }
@@ -959,12 +1009,19 @@ function displayGuess() {
     }
   }
 
+  // Setting x and y positions of guess text
+  guessText.x = width / 2;
+  guessText.y = height - 70;
+
   // Display text showing user's guess
   push();
-  fill(255);
+  strokeWeight(guessText.strokeWeight);
+  textFont(font);
+  stroke(guessText.stroke.r, guessText.stroke.g, guessText.stroke.b);
+  fill(guessText.fill.r, guessText.fill.g, guessText.fill.b);
   textAlign(CENTER);
-  textSize(60);
-  text(currentAnswer, width / 2, height - 100);
+  textSize(guessText.size);
+  text(currentAnswer, guessText.x, guessText.y);
   pop();
 }
 
@@ -979,7 +1036,8 @@ function defeat() {
   // Update logo behaviour
   logo.update(mouse);
 
-  // console.log(state);
+  // Update defeat hamburger
+  defeatHamburger.update();
 }
 
 // =============================================================

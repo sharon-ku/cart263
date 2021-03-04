@@ -28,13 +28,28 @@ class Cat {
 
     // rectangle card
     this.rectangle = {
+      // offset distance from this.x and this.y
       xOffset: 0,
       yOffset: -16,
-      width: 150,
+      // size
+      width: 130,
       height: 48,
-      stroke: 255,
+      // stroke color
+      stroke: {
+        r: 255,
+        g: 255,
+        b: 255,
+      },
+      // stroke weight
       strokeWeight: 3,
-      fill: 0,
+      // fill color
+      fill: {
+        r: 75,
+        g: 161,
+        b: 88,
+      },
+      // radius of rounded corner
+      roundedCorner: 5,
     };
 
     // Cantonese word on card
@@ -48,6 +63,9 @@ class Cat {
       size: 35,
       font: font,
       fill: 255,
+      // Offset from this.x and this.y position
+      xOffset: 0,
+      yOffset: -3,
     };
 
     // cat's feeling
@@ -108,15 +126,20 @@ class Cat {
   displayCard() {
     // Display rectangle
     push();
-    fill(this.rectangle.fill);
-    stroke(this.rectangle.stroke);
+    fill(this.rectangle.fill.r, this.rectangle.fill.g, this.rectangle.fill.b);
+    stroke(
+      this.rectangle.stroke.r,
+      this.rectangle.stroke.g,
+      this.rectangle.stroke.b
+    );
     strokeWeight(this.rectangle.strokeWeight);
     rectMode(CENTER);
     rect(
       this.x + this.rectangle.xOffset,
       this.y + this.rectangle.yOffset,
       this.rectangle.width,
-      this.rectangle.height
+      this.rectangle.height,
+      this.rectangle.roundedCorner
     );
     pop();
 
@@ -126,7 +149,11 @@ class Cat {
     textFont(this.cardText.font);
     textSize(this.cardText.size);
     fill(this.cardText.fill);
-    text(this.cantoneseWord, this.x, this.y);
+    text(
+      this.cantoneseWord,
+      this.x + this.cardText.xOffset,
+      this.y + this.cardText.yOffset
+    );
     pop();
   }
 

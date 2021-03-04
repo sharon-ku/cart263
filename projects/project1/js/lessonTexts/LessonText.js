@@ -28,9 +28,9 @@ class LessonText {
       },
       // fill when mouse is hovering over text
       hover: {
-        r: 126,
-        g: 68,
-        b: 194,
+        r: 75,
+        g: 161,
+        b: 88,
       },
     };
     // Area around textbox's outer bounds that is accepted when mouse hovers over textbox
