@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `defeat`;
+let state = `game`;
 
 // Text font
 let font;
@@ -60,9 +60,6 @@ let cantoneseSpeaker = {
     pitch: 1.15,
   },
 };
-
-// // Title rectangle
-// let titleRectangle;
 
 // Properties for the paper line
 let paperLine = {
@@ -140,7 +137,7 @@ let bottomArrow;
 let level = -1;
 
 // Number of lives
-let numLives = 2;
+let numLives = 10;
 
 // Hamburger hearts symbolizing number of lives
 let hearts = [];
@@ -288,19 +285,6 @@ function setup() {
   // Create canvas, remove strokes
   createCanvas(1280, 720);
   noStroke();
-
-  // // Create a new rectangle for title
-  // let titleRectangleProperties = {
-  //   x: width / 2,
-  //   y: height / 2,
-  //   width: width - 50,
-  //   height: height - 50,
-  //   cornerRadius: 20,
-  //   fillR: 70,
-  //   fillG: 197,
-  //   fillB: 149,
-  // };
-  // titleRectangle = new Rectangle(titleRectangleProperties);
 
   // Prepare all elements for `intro`, `lesson`, `game`, `defeat`, `victory` states
   prepareIntro();
@@ -562,9 +546,6 @@ function intro() {
 
   // Set background color
   bgFill.current = bgFill.intro;
-
-  // // Display title rectangle
-  // titleRectangle.display();
 
   // Draw page lines that resemble graph paper
   drawPageLines();
@@ -858,9 +839,6 @@ function game() {
 
   // If no more cats left, swith to next level or set to victory state
   if (cats.length === 0) {
-    // Reset currentAnswer
-    currentAnswer = undefined;
-
     // Add 1 to level
     level++;
 
@@ -965,6 +943,11 @@ function guessEnglishWord(guess) {
   currentAnswer = guess.toLowerCase();
   // Set that it's time to check if answer is correct
   timeToCheckIfAnswerCorrect = true;
+
+  // If user has not said another guess after 3 seconds, remove current answer
+  setTimeout(() => {
+    currentAnswer = undefined;
+  }, 3000);
 }
 
 // Check if the answer is correct and react to it
