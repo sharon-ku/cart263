@@ -16,7 +16,7 @@ class Cat {
     this.vx = 0;
     this.vy = 0;
     this.speed = {
-      toHamburger: 0.5, //0.5
+      toHamburger: 0.4, //0.5
       fleeing: 2,
     };
 

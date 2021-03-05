@@ -1,6 +1,6 @@
-// Introduction circles that move around canvas
+// Circles that float around canvas
 
-class IntroCircle {
+class FloatingCircle {
   constructor() {
     // position
     this.x = random(0, width);

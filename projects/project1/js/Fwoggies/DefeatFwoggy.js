@@ -1,11 +1,12 @@
-// Fwoggy in end state (either defeated or victory state)
+// Defeat Fwoggy that falls down out of desperation
 
-class EndFwoggy {
-  constructor({ images, imageIndex }) {
+class DefeatFwoggy extends EndFwoggy {
+  constructor(images) {
+    super(images);
     // images array
     this.images = images;
     // index of images array
-    this.imageIndex = imageIndex;
+    this.imageIndex = 5;
     // position
     this.x = 500;
     this.y = height / 2;
@@ -40,7 +41,6 @@ class EndFwoggy {
     push();
     translate(this.x - 50, this.y + this.height / 2);
     rotate(this.theta.current);
-    // this.fallsDown();
     imageMode(CENTER);
     image(this.images[this.imageIndex], 50, -this.height / 2);
     pop();
@@ -49,8 +49,6 @@ class EndFwoggy {
   // Fall down with angular velocity and acceleration
   // When rotating, pivot about left foot
   fallsDown() {
-    // translate(this.x - 50, this.y + this.height / 2);
-    // rotate(this.theta.current);
     if (this.theta.current > this.theta.min) {
       this.angularVelocity += this.angularAcceleration;
       this.theta.current += this.angularVelocity;

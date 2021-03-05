@@ -53,6 +53,16 @@ let bgFill = {
     g: 250,
     b: 250,
   },
+  defeat: {
+    r: 50,
+    g: 50,
+    b: 50,
+  },
+  victory: {
+    r: 244,
+    g: 208,
+    b: 220,
+  },
 };
 
 // English and Cantonese voices
@@ -96,10 +106,11 @@ let logoImages = [];
 // Number of logo images
 const NUM_LOGO_IMAGES = 2;
 
+// Floating circles
+let floatingCircles = [];
+const NUM_FLOATING_CIRCLES = 15;
+
 // FOR INTRO STATE ------------------------------
-// Introduction circles
-let introCircles = [];
-const NUM_INTRO_CIRCLES = 15;
 
 // Array that stores food images
 let foodImages = [];
@@ -164,24 +175,34 @@ let heartImage = undefined;
 // let timeToChooseRandomWord = false;
 
 // Big hamburger that Fwoggy protects
-let hamburger;
+let hamburger = undefined;
 // Hamburger images
 let hamburgerImages = [];
 // Number of hamburger images
 const NUM_HAMBURGER_IMAGES = 5;
 
 // Defeat hamburger
-let defeatHamburger;
+let defeatHamburger = undefined;
+
+// Victory hamburger
+let victoryHamburger = undefined;
 
 // Fwoggy
-let fwoggy;
+let fwoggy = undefined;
 // Store Fwoggy images
 let fwoggyImages = [];
 // Number of fwoggy images
-const NUM_FWOGGY_IMAGES = 5;
+const NUM_FWOGGY_IMAGES = 6;
 
 // Defeat Fwoggy
-let defeatFwoggy;
+let defeatFwoggy = undefined;
+
+// Victory Fwoggy
+let victoryFwoggy = undefined;
+// Victory Fwoggy's mouth images
+let mouthImages = [];
+// Number of mouth images
+const NUM_MOUTH_IMAGES = 3;
 
 // Store all cats
 let cats = [];
@@ -290,6 +311,12 @@ function preload() {
 
   // Load hamburger heart image
   heartImage = loadImage(`assets/images/heart.png`);
+
+  // Load Fwoggy mouth images
+  for (let i = 0; i < NUM_MOUTH_IMAGES; i++) {
+    let mouthImage = loadImage(`assets/images/fwoggy/mouth${i}.png`);
+    mouthImages.push(mouthImage);
+  }
 }
 
 // =============================================================
@@ -327,10 +354,10 @@ function prepareIntro() {
   // Create new logo
   logo = new Logo(logoImages);
 
-  // Create intro circles are store in array
-  for (let i = 0; i < NUM_INTRO_CIRCLES; i++) {
-    let introCircle = new IntroCircle();
-    introCircles.push(introCircle);
+  // Create floating circles are store in array
+  for (let i = 0; i < NUM_FLOATING_CIRCLES; i++) {
+    let floatingCircle = new FloatingCircle();
+    floatingCircles.push(floatingCircle);
   }
 
   // Create a new rectangular button for "Learn New Words"
@@ -444,19 +471,21 @@ function createHearts() {
 
 // Setup for `defeat` state
 function prepareDefeat() {
-  // Create new defeat hamburgers
+  // Create new defeat hamburger
   defeatHamburger = new DefeatHamburger(hamburgerImages);
 
   // Create a new defeatFwoggy
-  let defeatFwoggyProperties = {
-    images: fwoggyImages,
-    imageIndex: 4,
-  };
-  defeatFwoggy = new EndFwoggy(defeatFwoggyProperties);
+  defeatFwoggy = new DefeatFwoggy(fwoggyImages);
 }
 
 // Setup for `victory` state
-function prepareVictory() {}
+function prepareVictory() {
+  // Create new victory hamburger
+  victoryHamburger = new VictoryHamburger(hamburgerImages);
+
+  // Create a new victoryFwoggy
+  victoryFwoggy = new VictoryFwoggy(fwoggyImages, mouthImages);
+}
 
 // =============================================================
 // draw()
@@ -565,10 +594,8 @@ function intro() {
   // Update logo behaviour
   logo.update(mouse);
 
-  // Make intro circles move around randomly
-  for (let i = 0; i < introCircles.length; i++) {
-    introCircles[i].update();
-  }
+  // Make floating circles move around randomly
+  addFloatingCircles();
 
   // Update all rectangular buttons in `learn` state
   for (let i = 0; i < rectButtons.length; i++) {
@@ -688,6 +715,13 @@ function displayText({
   fill(r, g, b);
   text(string, x, y);
   pop();
+}
+
+// Make floating circles move around randomly
+function addFloatingCircles() {
+  for (let i = 0; i < floatingCircles.length; i++) {
+    floatingCircles[i].update();
+  }
 }
 
 // =============================================================
@@ -819,10 +853,8 @@ function game() {
   // Set background color
   bgFill.current = bgFill.intro;
 
-  // Make intro circles move around randomly
-  for (let i = 0; i < introCircles.length; i++) {
-    introCircles[i].update();
-  }
+  // Make floating circles move around randomly
+  addFloatingCircles();
 
   // Update logo behaviour
   logo.update(mouse);
@@ -867,6 +899,9 @@ function game() {
     }
     // Or else, user won! Set to victory state
     else {
+      // Reset the variables for victoryHamburger
+      victoryHamburger.reset();
+
       state = `victory`;
     }
   }
@@ -1051,7 +1086,8 @@ function displayGuess() {
 // Display image of Fwoggy in utter sadness over death of hamburger lives.
 // =============================================================
 function defeat() {
-  background(50);
+  // Set background color
+  bgFill.current = bgFill.defeat;
 
   // Update logo behaviour
   logo.update(mouse);
@@ -1074,8 +1110,15 @@ function defeat() {
 // Display extremely happy Fwoggy.
 // =============================================================
 function victory() {
-  background(255, 0, 0);
+  // Set background color
+  bgFill.current = bgFill.victory;
 
   // Update logo behaviour
   logo.update(mouse);
+
+  // Update victory Fwoggy
+  victoryFwoggy.update();
+
+  // Update victory hamburger
+  victoryHamburger.update();
 }
