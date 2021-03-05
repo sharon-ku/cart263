@@ -216,4 +216,10 @@ class Cat {
       return false;
     }
   }
+
+  // // Calculate distance from object provided as argument to cat
+  // calculateDistTo({x,y}) {
+  //   let distance = dist(this.x, this.y, x, y);
+  //   return distance;
+  // }
 }

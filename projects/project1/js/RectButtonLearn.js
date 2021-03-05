@@ -4,7 +4,7 @@ class RectButtonLearn extends RectButton {
   constructor(font) {
     super(font);
     // position of button
-    this.x = 250;
+    this.x = 350;
     // if button clicked, switch to this state
     this.state = `learn`;
 
@@ -13,9 +13,9 @@ class RectButtonLearn extends RectButton {
       string: `學習新單詞`,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: -20,
+      yOffset: -30,
       // appearance information
-      size: 35,
+      size: 45,
       font: font,
       fillR: 119,
       fillG: 198,
@@ -27,9 +27,9 @@ class RectButtonLearn extends RectButton {
       string: `Learn New Words`,
       // position offset from rectangle's center point
       xOffset: 0,
-      yOffset: 20,
+      yOffset: 25,
       // appearance information
-      size: 25,
+      size: 45,
       font: font,
       fillR: 119,
       fillG: 198,

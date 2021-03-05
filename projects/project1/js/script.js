@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `game`;
+let state = `intro`;
 
 // Text font
 let font;
@@ -93,7 +93,6 @@ let floatingFoods = [];
 
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
-let rectButtonFlashcards = undefined;
 let rectButtonGame = undefined;
 
 // Store all rectangular buttons here
@@ -144,8 +143,8 @@ let hearts = [];
 // Heart image
 let heartImage = undefined;
 
-// True if time to choose random word in `flashcards` state
-let timeToChooseRandomWord = false;
+// // True if time to choose random word in `flashcards` state
+// let timeToChooseRandomWord = false;
 
 // Big hamburger that Fwoggy protects
 let hamburger;
@@ -162,7 +161,7 @@ let fwoggy;
 // Store Fwoggy images
 let fwoggyImages = [];
 // Number of fwoggy images
-const NUM_FWOGGY_IMAGES = 3;
+const NUM_FWOGGY_IMAGES = 5;
 
 // Defeat Fwoggy
 let defeatFwoggy;
@@ -319,13 +318,11 @@ function prepareIntro() {
 
   // Create a new rectangular button for "Learn New Words"
   rectButtonLearn = new RectButtonLearn(font);
-  // Create a new rectangular button for "Activity: Flashcards"
-  rectButtonFlashcards = new RectButtonFlashcards(font);
   // Create a new rectangular button for "Game: Snack Time!"
   rectButtonGame = new RectButtonGame(font);
 
   // Push all created buttons to rectButtons array
-  rectButtons.push(rectButtonLearn, rectButtonFlashcards, rectButtonGame);
+  rectButtons.push(rectButtonLearn, rectButtonGame);
 
   // Create new food items
   for (let i = 0; i < foodImages.length; i++) {
@@ -398,7 +395,7 @@ function prepareGame() {
   hamburger = new Hamburger(hamburgerImages[0]);
 
   // Create a new fwoggy
-  fwoggy = new Fwoggy(fwoggyImages[0]);
+  fwoggy = new Fwoggy(fwoggyImages);
 
   // Create hearts that represent lives
   createHearts();
@@ -436,7 +433,7 @@ function prepareDefeat() {
   // Create a new defeatFwoggy
   let defeatFwoggyProperties = {
     images: fwoggyImages,
-    imageIndex: 2,
+    imageIndex: 4,
   };
   defeatFwoggy = new EndFwoggy(defeatFwoggyProperties);
 }
@@ -462,8 +459,6 @@ function draw() {
     intro();
   } else if (state === `learn`) {
     learn();
-  } else if (state === `flashcards`) {
-    flashcards();
   } else if (state === `game`) {
     game();
   } else if (state === `defeat`) {
@@ -572,13 +567,13 @@ function intro() {
   let cantoneseTitle = {
     string: `學英語: 情緒`,
     x: width / 2,
-    y: 113,
+    y: 163,
     r: 255,
     g: 255,
     b: 255,
     strokeFill: color(119, 198, 220),
     strokeThickness: 8,
-    size: 100,
+    size: 110,
     font: font,
     horizAlign: CENTER,
     vertAlign: CENTER,
@@ -587,13 +582,13 @@ function intro() {
   let englishTitle = {
     string: `Learn How to Say Emotions in English`,
     x: width / 2,
-    y: 217,
+    y: 267,
     r: 119,
     g: 198,
     b: 220,
     strokeFill: 255,
     strokeThickness: 5,
-    size: 40,
+    size: 50,
     font: font,
     horizAlign: CENTER,
     vertAlign: CENTER,
@@ -752,27 +747,27 @@ function showScrollArrow() {
   }
 }
 
-// =============================================================
-// STATE: flashcards()
+// // =============================================================
+// // STATE: flashcards()
+// //
+// // Show a Cantonese word on each flashcard and have user say corresponding English word out loud
+// // =============================================================
+// function flashcards() {
+//   // Set background color
+//   bgFill.current = bgFill.learn;
 //
-// Show a Cantonese word on each flashcard and have user say corresponding English word out loud
-// =============================================================
-function flashcards() {
-  // Set background color
-  bgFill.current = bgFill.learn;
-
-  // Draw page lines that resemble graph paper
-  drawPageLines();
-
-  // If it's time to choose a random word, pick a random lessonWordIndex
-  chooseRandomWord();
-
-  // Set current lesson word
-  setCurrentLessonWord();
-
-  // Update Cantonese flashcard
-  updateCantoneseFlashcard();
-}
+//   // Draw page lines that resemble graph paper
+//   drawPageLines();
+//
+//   // If it's time to choose a random word, pick a random lessonWordIndex
+//   chooseRandomWord();
+//
+//   // Set current lesson word
+//   setCurrentLessonWord();
+//
+//   // Update Cantonese flashcard
+//   updateCantoneseFlashcard();
+// }
 
 // If it's time to choose a random word, pick a random lessonWordIndex
 function chooseRandomWord() {
@@ -824,9 +819,15 @@ function game() {
   }
 
   // Update fwoggy
-  for (let i = 0; i < cats.length; i++) {
-    fwoggy.update(cats[i]);
-  }
+  // for (let i = 0; i < cats.length; i++) {
+  //   fwoggy.update(cats[i]);
+  // }
+
+  // Update fwoggy
+  fwoggy.update();
+
+  // Calculate distance from object
+  // for (let i = 0; i < cats.length; i++) {
 
   // Check if answer is correct
   checkIfAnswerIsCorrect();

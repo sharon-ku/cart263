@@ -1,12 +1,14 @@
 // Fwoggy in `game state`
 
 class Fwoggy {
-  constructor(image) {
+  constructor(images) {
     // frames elapsed for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 50;
-    // image
-    this.image = image;
+    // images
+    this.images = images;
+    // image index
+    this.imageIndex = 0;
     // image size
     this.width = 285;
     this.height = 212;
@@ -35,14 +37,15 @@ class Fwoggy {
   }
 
   // Update all behaviour of fwoggy
-  update(cat) {
+  update() {
     // Change animation depending on task
     if (this.task === `protectBurger`) {
       // Stay still in front of burger with arms protecting it
       this.protectBurger();
-    } else if (this.task === `moveToCat`) {
-      // this.moveTo(cat);
     }
+    // else if (this.task === `moveToCat`) {
+    //   // this.moveTo(cat);
+    // }
 
     // Display image
     this.display();
@@ -54,12 +57,13 @@ class Fwoggy {
     translate(this.x, this.y);
     imageMode(CENTER);
     scale(this.scale.x, this.scale.y);
-    image(this.image, 0, 0);
+    image(this.images[this.imageIndex], 0, 0);
     pop();
   }
 
   // Protect burger
   protectBurger() {
+    this.imageIndex = 0;
     this.framesElapsed++;
     if (this.framesElapsed === this.framesBtwEachImage) {
       if (this.scale.x === 1) {
@@ -71,21 +75,21 @@ class Fwoggy {
     }
   }
 
-  // Walk to cat
-  moveTo(cat) {
-    this.vx = this.speed;
-    this.vy = this.speed;
-
-    if (this.x > cat.x + this.buffer.x) {
-      this.x -= this.vx;
-    } else if (this.x < cat.x - this.buffer.x) {
-      this.x += this.vx;
-    }
-
-    if (this.y > cat.y + this.buffer.y) {
-      this.y -= this.vy;
-    } else if (this.y < cat.y - this.buffer.y) {
-      this.y += this.vy;
-    }
-  }
+  // // Walk to cat
+  // moveTo(cat) {
+  //   this.vx = this.speed;
+  //   this.vy = this.speed;
+  //
+  //   if (this.x > cat.x + this.buffer.x) {
+  //     this.x -= this.vx;
+  //   } else if (this.x < cat.x - this.buffer.x) {
+  //     this.x += this.vx;
+  //   }
+  //
+  //   if (this.y > cat.y + this.buffer.y) {
+  //     this.y -= this.vy;
+  //   } else if (this.y < cat.y - this.buffer.y) {
+  //     this.y += this.vy;
+  //   }
+  // }
 }

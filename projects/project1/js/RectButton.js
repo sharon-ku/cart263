@@ -4,12 +4,12 @@ class RectButton {
   constructor(font) {
     // position of button
     this.x = undefined;
-    this.y = 460;
+    this.y = 500;
     // if button clicked, switch to this state
     this.state = undefined;
     // size
-    this.width = 290;
-    this.height = 180;
+    this.width = 400;
+    this.height = 220;
     // radius of rounded corner
     this.cornerRadius = 30;
     // current fill color
