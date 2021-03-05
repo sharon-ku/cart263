@@ -2,13 +2,30 @@
 Project 1: Learning English for Food Lovers
 Sharon Ku
 
-Here is a description of this template p5 project.
+Goal: Teach Cantonese speakers how to pronounce 10 English words related to emotions
+
+LEARN STATE:
+Learn all the new English vocabulary words.
+Click on the English word, Cantonese word, or example sentences to hear how to pronounce them.
+Scroll up and down with mouse to go from one word to another.
+
+GAME STATE:
+Fwoggy must protect the hamburger from the evil cats!
+To scare the cats away, say the English word that corresponds to the Chinese word that the cat is holding.
+Fwoggy has 10 hamburger lives.
+
+If lose --> defeat state
+Hamburger flies off to Hamburger heaven.
+Fwoggy faints from shock.
+
+If win --> victory state
+Fwoggy celebrates!
 **************************************************/
 "use strict";
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `learn`;
+let state = `game`;
 
 // Text font
 let font;
