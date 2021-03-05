@@ -20,12 +20,13 @@ Fwoggy faints from shock.
 
 If win --> victory state
 Fwoggy celebrates!
+Feed the hamburger to Fwoggy by hovering over her to open her mouth on queue
 **************************************************/
 "use strict";
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `game`;
+let state = `victory`;
 
 // Text font
 let font;
@@ -1117,7 +1118,7 @@ function victory() {
   logo.update(mouse);
 
   // Update victory Fwoggy
-  victoryFwoggy.update();
+  victoryFwoggy.update(mouse, victoryHamburger);
 
   // Update victory hamburger
   victoryHamburger.update();

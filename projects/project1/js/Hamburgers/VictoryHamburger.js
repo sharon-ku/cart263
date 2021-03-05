@@ -6,6 +6,13 @@ class VictoryHamburger {
     this.images = images;
     // current image index
     this.imageIndex = 1;
+    // image scale
+    this.scale = {
+      current: 1,
+      min: 0.1,
+      shrinkSpeed: 0.01,
+      shrinkAcceleration: 0.001,
+    };
     // frames elapsed for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 10;
@@ -19,25 +26,37 @@ class VictoryHamburger {
     // image size
     this.width = 214;
     this.height = 149;
+    // true if hamburger is eaten
+    this.isEaten = false;
   }
 
   // Update all behaviour of hamburger
   update() {
     // Display image
-    this.display();
-
-    // Fly off to hamburger heaven
-    this.fly();
+    if (this.scale.current > this.scale.min) {
+      this.display();
+    }
 
     // Wing flapping animation
     this.flapWings();
+
+    // If hamburger is eaten, make it shrink into victoryFwoggy's mouth
+    if (this.isEaten) {
+      this.shrink();
+    }
+    // Or else, make it fly
+    else {
+      this.fly();
+    }
   }
 
   // Display image
   display() {
     push();
+    translate(this.x, this.y);
     imageMode(CENTER);
-    image(this.images[this.imageIndex], this.x, this.y);
+    scale(this.scale.current);
+    image(this.images[this.imageIndex], 0, 0);
     pop();
   }
 
@@ -66,15 +85,30 @@ class VictoryHamburger {
   // Returns true if hamburger is inside user's mouth
   isInHamburgerHeaven() {
     if (this.y + this.height / 2 < 0) {
-      console.log(true);
       return true;
     } else {
       return false;
     }
   }
 
+  // If hamburger is eaten, make it shrink into victoryFwoggy's mouth
+  shrink() {
+    if (this.scale.current > this.scale.min) {
+      // accelerate shrink speed
+      this.scale.shrinkSpeed += this.scale.shrinkAcceleration;
+
+      // decrease scale with shrink speed
+      this.scale.current -= this.scale.shrinkSpeed;
+    }
+  }
+
   // Reset defeatHamburger's variables
   reset() {
+    console.log(true);
+    // true if hamburger is eaten
+    this.isEaten = false;
+    // scale
+    this.scale.current = 1;
     // position
     this.x = 900;
     this.y = height - 300;
