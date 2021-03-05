@@ -604,9 +604,7 @@ function intro() {
   }
 
   // Make food float around randomly
-  for (let i = 0; i < floatingFoods.length; i++) {
-    floatingFoods[i].update();
-  }
+  addFloatingFood();
 
   // Set parameters for Cantonese title
   let cantoneseTitle = {
@@ -722,6 +720,13 @@ function displayText({
 function addFloatingCircles() {
   for (let i = 0; i < floatingCircles.length; i++) {
     floatingCircles[i].update();
+  }
+}
+
+// Make food float around randomly
+function addFloatingFood() {
+  for (let i = 0; i < floatingFoods.length; i++) {
+    floatingFoods[i].update();
   }
 }
 
@@ -1113,6 +1118,10 @@ function defeat() {
 function victory() {
   // Set background color
   bgFill.current = bgFill.victory;
+
+  // Make circles and food float around
+  addFloatingCircles();
+  addFloatingFood();
 
   // Update logo behaviour
   logo.update(mouse);
