@@ -162,8 +162,13 @@ let defeatHamburger;
 
 // Fwoggy
 let fwoggy;
-// Fwoggy image
-let fwoggyImage;
+// Store Fwoggy images
+let fwoggyImages = [];
+// Number of fwoggy images
+const NUM_FWOGGY_IMAGES = 3;
+
+// Defeat Fwoggy
+let defeatFwoggy;
 
 // Store all cats
 let cats = [];
@@ -252,8 +257,11 @@ function preload() {
     hamburgerImages.push(hamburgerImage);
   }
 
-  // Load fwoggy image
-  fwoggyImage = loadImage(`assets/images/fwoggy.png`);
+  // Load fwoggy images
+  for (let i = 0; i < NUM_FWOGGY_IMAGES; i++) {
+    let fwoggyImage = loadImage(`assets/images/fwoggy/fwoggy${i}.png`);
+    fwoggyImages.push(fwoggyImage);
+  }
 
   // Load cat images
   for (let i = 0; i < NUM_CAT_IMAGES; i++) {
@@ -406,7 +414,7 @@ function prepareGame() {
   hamburger = new Hamburger(hamburgerImages[0]);
 
   // Create a new fwoggy
-  fwoggy = new Fwoggy(fwoggyImage);
+  fwoggy = new Fwoggy(fwoggyImages[0]);
 
   // Create hearts that represent lives
   createHearts();
@@ -440,6 +448,13 @@ function createHearts() {
 function prepareDefeat() {
   // Create new defeat hamburgers
   defeatHamburger = new DefeatHamburger(hamburgerImages);
+
+  // Create a new defeatFwoggy
+  let defeatFwoggyProperties = {
+    images: fwoggyImages,
+    imageIndex: 2,
+  };
+  defeatFwoggy = new EndFwoggy(defeatFwoggyProperties);
 }
 
 // Setup for `victory` state
@@ -883,6 +898,11 @@ function game() {
 
   // If user has zero lives or less, user lost
   if (numLives <= 0) {
+    // Reset the variables for defeatFwoggy and defeatHamburger
+    defeatFwoggy.reset();
+    defeatHamburger.reset();
+
+    // Set to defeat state
     state = `defeat`;
   }
 
@@ -998,9 +1018,8 @@ function displayGuess() {
     if (cat.x > 0 && cat.x < width && cat.y > 0 && cat.y < height) {
       // If answer is correct:
       if (cat.englishWord === currentAnswer) {
-        // Set cat to feeling scared
+        // Set cat feeling to scared
         cat.feeling = `scared`;
-        // cats.splice(i, 1);
       }
       // Else if answer is wrong:
       else {
@@ -1038,6 +1057,14 @@ function defeat() {
 
   // Update defeat hamburger
   defeatHamburger.update();
+
+  // Update defeat Fwoggy
+  defeatFwoggy.update();
+
+  // If hamburger reaches top of canvas, Fwoggy falls down out of desperation
+  if (defeatHamburger.isInHamburgerHeaven()) {
+    defeatFwoggy.fallsDown();
+  }
 }
 
 // =============================================================

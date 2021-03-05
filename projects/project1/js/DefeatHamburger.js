@@ -8,14 +8,17 @@ class DefeatHamburger {
     this.imageIndex = 3;
     // frames elapsed for image animation
     this.framesElapsed = 0;
-    this.framesBtwEachImage = 30;
+    this.framesBtwEachImage = 10;
     // position
-    this.x = width - 500;
+    this.x = 900;
     this.y = height - 300;
     // velocity
     this.vx = 0;
     this.vy = 0;
-    this.speed = 0.3;
+    this.speed = 1;
+    // image size
+    this.width = 213;
+    this.height = 199;
   }
 
   // Update all behaviour of hamburger
@@ -58,5 +61,25 @@ class DefeatHamburger {
       }
       this.framesElapsed = 0;
     }
+  }
+
+  // Returns true if hamburger flew to top of canvas (aka hamburger heaven)
+  isInHamburgerHeaven() {
+    if (this.y + this.height / 2 < 0) {
+      console.log(true);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Reset defeatHamburger's variables
+  reset() {
+    // position
+    this.x = 900;
+    this.y = height - 300;
+    // initial velocity
+    this.vx = 0;
+    this.vy = 0;
   }
 }
