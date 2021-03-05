@@ -8,8 +8,8 @@ class EnglishWordText extends LessonText {
     // language of string
     this.language = `english`;
     // position
-    this.y = 310;
+    this.y = 215;
     // appearance information
-    this.size = 90;
+    this.size = 120;
   }
 }

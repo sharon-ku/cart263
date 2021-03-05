@@ -8,7 +8,7 @@ Here is a description of this template p5 project.
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `intro`;
+let state = `learn`;
 
 // Text font
 let font;

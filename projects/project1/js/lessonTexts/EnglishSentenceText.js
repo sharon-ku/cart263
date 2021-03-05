@@ -8,7 +8,7 @@ class EnglishSentenceText extends LessonText {
     // language of string
     this.language = `english`;
     // position
-    this.y = 540;
+    this.y = 480;
     // appearance information
     this.size = 40;
   }

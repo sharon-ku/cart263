@@ -8,8 +8,8 @@ class CantoneseSentenceText extends LessonText {
     // language of string
     this.language = `cantonese`;
     // position
-    this.y = 600;
+    this.y = 570;
     // appearance information
-    this.size = 40;
+    this.size = 45;
   }
 }

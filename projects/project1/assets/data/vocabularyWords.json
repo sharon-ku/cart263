@@ -67,8 +67,8 @@
     {
       "englishWord": "bored",
       "cantoneseWord": "悶",
-      "englishSentence": "I am bored because my brother hid all my snacks away.",
-      "cantoneseSentence": "我很悶因為我的兄弟把我所有的小吃都藏起來了。",
+      "englishSentence": "I am bored because I have no snacks to eat.",
+      "cantoneseSentence": "我很悶因為我沒有零食吃。",
       "imageName": ["bored0.png", "bored1.png"]
     }
   ],
