@@ -1,4 +1,4 @@
-// Victory hamburger that flies around and that Fwoggy will eat
+// Victory hamburger that flies left and right and that Fwoggy will eat
 
 class VictoryHamburger {
   constructor(images) {
@@ -16,13 +16,16 @@ class VictoryHamburger {
     // frames elapsed for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 10;
-    // position
-    this.x = 900;
+    // min and max x positions
+    this.xMin = 150;
+    this.xMax = width - 150;
+    // current x and y positions
+    this.x = this.xMax;
     this.y = height - 300;
     // velocity
     this.vx = 0;
     this.vy = 0;
-    this.speed = 1;
+    this.speed = 5;
     // image size
     this.width = 214;
     this.height = 149;
@@ -60,10 +63,16 @@ class VictoryHamburger {
     pop();
   }
 
-  // Fly off to hamburger heaven
+  // Fly left and right
   fly() {
-    // Update x velocity
-    this.vx = -this.speed;
+    // Update vx
+    if (this.x <= this.xMin) {
+      // Fly right
+      this.vx = this.speed;
+    } else if (this.x >= this.xMax) {
+      // Fly left
+      this.vx = -this.speed;
+    }
     // Update x and y positions with velocity
     this.x += this.vx;
     this.y += this.vy;
@@ -104,13 +113,12 @@ class VictoryHamburger {
 
   // Reset defeatHamburger's variables
   reset() {
-    console.log(true);
     // true if hamburger is eaten
     this.isEaten = false;
     // scale
     this.scale.current = 1;
     // position
-    this.x = 900;
+    this.x = this.xMax;
     this.y = height - 300;
     // initial velocity
     this.vx = 0;
