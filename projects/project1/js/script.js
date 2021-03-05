@@ -1,5 +1,5 @@
 /**************************************************
-Project 1: Learning English for Food Lovers
+Project 1: Learn English for Food Lovers
 Sharon Ku
 
 Goal: Teach Cantonese speakers how to pronounce 10 English words related to emotions
@@ -15,7 +15,7 @@ To scare the cats away, say the English word that corresponds to the Chinese wor
 Fwoggy has 10 hamburger lives.
 
 If lose --> defeat state
-Hamburger flies off to Hamburger heaven.
+Hamburger flies off to Hamburger Heaven.
 Fwoggy faints from shock.
 
 If win --> victory state
