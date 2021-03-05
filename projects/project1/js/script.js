@@ -26,7 +26,7 @@ Feed the hamburger to Fwoggy by hovering over her to open her mouth on queue
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
-let state = `victory`;
+let state = `intro`;
 
 // Text font
 let font;
