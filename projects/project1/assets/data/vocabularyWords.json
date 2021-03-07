@@ -16,10 +16,17 @@
       "imageName": ["angry0.png", "angry1.png"]
     },
     {
+      "englishWord": "sad",
+      "cantoneseWord": "傷心",
+      "englishSentence": "I am sad that I finished the cake.",
+      "cantoneseSentence": "我很傷心因為我吃完了蛋糕。",
+      "imageName": ["shocked0.png", "shocked1.png"]
+    },
+    {
       "englishWord": "tired",
-      "cantoneseWord": "攰",
-      "englishSentence": "I am tired after a productive day of eating snacks.",
-      "cantoneseSentence": "吃零食的一天讓我很攰。",
+      "cantoneseWord": "累",
+      "englishSentence": "I am tired after eating lots of snacks.",
+      "cantoneseSentence": "吃了很多零食後我很累。",
       "imageName": ["tired0.png", "tired1.png"]
     },
     {
@@ -28,13 +35,6 @@
       "englishSentence": "The Cookie Monster makes me scared.",
       "cantoneseSentence": "餅乾怪使我感到驚。",
       "imageName": ["scared0.png", "scared1.png"]
-    },
-    {
-      "englishWord": "confused",
-      "cantoneseWord": "迷茫",
-      "englishSentence": "I am confused why this cake looks so much like me.",
-      "cantoneseSentence": "我很迷茫為什麼這個蛋糕看起來很像我。",
-      "imageName": ["confused0.png", "confused1.png"]
     },
     {
       "englishWord": "energetic",
@@ -51,13 +51,6 @@
       "imageName": ["jealous0.png", "jealous1.png"]
     },
     {
-      "englishWord": "shocked",
-      "cantoneseWord": "震驚",
-      "englishSentence": "I am shocked by how delicious this pizza tastes!",
-      "cantoneseSentence": "這個比薩餅的味道真美味，我感到震驚！",
-      "imageName": ["shocked0.png", "shocked1.png"]
-    },
-    {
       "englishWord": "annoyed",
       "cantoneseWord": "忟",
       "englishSentence": "I am annoyed that these candies aren't on sale today.",
@@ -65,44 +58,18 @@
       "imageName": ["annoyed0.png", "annoyed1.png"]
     },
     {
+      "englishWord": "confused",
+      "cantoneseWord": "迷茫",
+      "englishSentence": "I am confused why this cake looks so much like me.",
+      "cantoneseSentence": "我很迷茫為什麼這個蛋糕看起來很像我。",
+      "imageName": ["confused0.png", "confused1.png"]
+    },
+    {
       "englishWord": "bored",
       "cantoneseWord": "悶",
       "englishSentence": "I am bored because I have no snacks to eat.",
       "cantoneseSentence": "我很悶因為我沒有零食吃。",
       "imageName": ["bored0.png", "bored1.png"]
-    }
-  ],
-
-  "set2": [
-    {
-      "englishWord": "happy",
-      "cantoneseWord": "開心",
-      "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "",
-      "imageName": ["happy0.png"]
-    },
-    {
-      "englishWord": "angry",
-      "cantoneseWord": "嬲",
-      "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "",
-      "imageName": ["happy0.png"]
-    }
-  ],
-  "set3": [
-    {
-      "englishWord": "happy",
-      "cantoneseWord": "開心",
-      "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "",
-      "imageName": ["happy0.png"]
-    },
-    {
-      "englishWord": "angry",
-      "cantoneseWord": "嬲",
-      "englishSentence": "I am happy to see you",
-      "cantoneseSentence": "",
-      "imageName": ["happy0.png"]
     }
   ]
 }

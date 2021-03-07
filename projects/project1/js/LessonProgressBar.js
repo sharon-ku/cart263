@@ -9,8 +9,8 @@ class LessonProgressBar {
       x: width - 50,
       y: height / 2,
       // size
-      width: 18,
-      height: 600,
+      width: 10,
+      height: 400,
       // fill color
       fill: {
         current: {
@@ -38,8 +38,8 @@ class LessonProgressBar {
       x: this.fullBar.x,
       y: 0,
       // size
-      width: 18,
-      height: 60,
+      width: this.fullBar.width,
+      height: this.fullBar.height / 10,
       // stroke fill
       strokeFill: {
         r: 255,

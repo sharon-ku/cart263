@@ -21,12 +21,35 @@ Fwoggy faints from shock.
 If win --> victory state
 Fwoggy celebrates!
 Feed the hamburger to Fwoggy by hovering over her to open her mouth on queue
+
+***
+
+Background music:
+"The Lounge" by David Renda
+https://www.fesliyanstudios.com/royalty-free-music/download/the-lounge/348
+
 **************************************************/
 "use strict";
 
 // States of program
 // Possible states: intro, learn, game, defeat, victory
 let state = `intro`;
+
+// SOUND-RELATED VARIABLES -------------------
+// Background music and volume
+let backgroundMusic = undefined;
+let backgroundMusicVolume = {
+  current: 0.05,
+  max: 0.05,
+  min: 0,
+};
+
+// Volume button
+let volumeButton = undefined;
+// Volume button images
+let volumeButtonImages = [];
+// Number of volume button images
+const NUM_VOLUME_BUTTON_IMAGES = 2;
 
 // Text font
 let font;
@@ -277,6 +300,12 @@ function preload() {
     logoImages.push(logoImage);
   }
 
+  // Load volume button images and push to volumeButtonImages array
+  for (let i = 0; i < NUM_VOLUME_BUTTON_IMAGES; i++) {
+    let volumeButtonImage = loadImage(`assets/images/volume${i}.png`);
+    volumeButtonImages.push(volumeButtonImage);
+  }
+
   // Load food images for intro state
   for (let i = 0; i < NUM_FOOD_IMAGES; i++) {
     let foodImage = loadImage(`assets/images/food/food${i}.png`);
@@ -318,6 +347,9 @@ function preload() {
     let mouthImage = loadImage(`assets/images/fwoggy/mouth${i}.png`);
     mouthImages.push(mouthImage);
   }
+
+  // Load background music
+  backgroundMusic = loadSound(`assets/sounds/the-lounge.mp3`);
 }
 
 // =============================================================
@@ -352,6 +384,9 @@ function setup() {
 
 // Setup for `intro` state
 function prepareIntro() {
+  // Create a new volume button
+  volumeButton = new VolumeButton(volumeButtonImages);
+
   // Create new logo
   logo = new Logo(logoImages);
 
@@ -460,7 +495,7 @@ function createHearts() {
     let heartProperties = {
       image: heartImage,
       x: calculatedXPosition,
-      y: 60,
+      y: height - 60,
     };
     // Create hearts with those properties
     let heart = new Heart(heartProperties);
@@ -494,6 +529,9 @@ function prepareVictory() {
 // Set mouse positions, background color, and states of program
 // =============================================================
 function draw() {
+  // Set volume of background music
+  backgroundMusic.setVolume(backgroundMusicVolume.current);
+
   // Set mouse x and y position
   mouse.x = mouseX;
   mouse.y = mouseY;
@@ -515,14 +553,27 @@ function draw() {
   }
 }
 
+// Play background music and loop it
+function tryMusic() {
+  if (!backgroundMusic.isPlaying()) {
+    backgroundMusic.loop();
+  }
+}
+
 // =============================================================
 // mousePressed()
 //
 // Behaviour for when mouse is pressed
 // =============================================================
 function mousePressed() {
+  // Play background music and loop it
+  tryMusic();
+
   // Execute mousePressed method for logo
   logo.mousePressed(mouse);
+
+  // Execute mousePressed method for volume button
+  volumeButton.mousePressed(mouse);
 
   // If it's the intro state and mouse pressed on button, execute button's mousePressed method
   if (state === `intro`) {
@@ -605,6 +656,9 @@ function intro() {
 
   // Make food float around randomly
   addFloatingFood();
+
+  // Update volume button behaviour
+  volumeButton.update(mouse);
 
   // Set parameters for Cantonese title
   let cantoneseTitle = {
@@ -745,6 +799,9 @@ function learn() {
   // Update logo behaviour
   logo.update(mouse);
 
+  // Update volume button behaviour
+  volumeButton.update(mouse);
+
   // Set current lesson word
   setCurrentLessonWord();
 
@@ -880,6 +937,9 @@ function game() {
 
   // Update fwoggy
   fwoggy.update();
+
+  // Update volume button behaviour
+  volumeButton.update(mouse);
 
   // Calculate distance from object
   // for (let i = 0; i < cats.length; i++) {
@@ -1098,6 +1158,9 @@ function defeat() {
   // Update logo behaviour
   logo.update(mouse);
 
+  // Update volume button behaviour
+  volumeButton.update(mouse);
+
   // Update defeat hamburger
   defeatHamburger.update();
 
@@ -1125,6 +1188,9 @@ function victory() {
 
   // Update logo behaviour
   logo.update(mouse);
+
+  // Update volume button behaviour
+  volumeButton.update(mouse);
 
   // Update victory Fwoggy
   victoryFwoggy.update(mouse, victoryHamburger);
