@@ -1,4 +1,5 @@
 // Fwoggy in end state (either defeated or victory state)
+// Superclass of DefeatFwoggy.js and VictoryFwoggy.js
 
 class EndFwoggy {
   constructor({ images, imageIndex }) {
