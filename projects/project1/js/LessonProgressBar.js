@@ -125,9 +125,8 @@ class LessonProgressBar {
     );
   }
 
-  // Update tracker color
+  // Update tracker color by mapping tracker's color to current lessonWordIndex
   updateTrackerColor(lessonWordIndex, numLessonWords) {
-    // Map tracker's color to current lessonWordIndex
     // update red value:
     this.tracker.fill.current.r = map(
       lessonWordIndex,

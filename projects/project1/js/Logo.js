@@ -1,7 +1,8 @@
 // Logo image that, when clicked, brings user to intro state
 
-class Logo {
+class Logo extends Button {
   constructor(images) {
+    super();
     // array of images
     this.images = images;
     // image index in array
@@ -45,20 +46,6 @@ class Logo {
     imageMode(CENTER);
     image(this.images[this.imageIndex.current], this.x, this.y);
     pop();
-  }
-
-  // Return true if subject provided as argument is overlapping with button
-  overlapsWith({ x, y }) {
-    if (
-      x > this.x - this.width / 2 &&
-      x < this.x + this.width / 2 &&
-      y > this.y - this.height / 2 &&
-      y < this.y + this.height / 2
-    ) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   // If logo is clicked on, change to `intro` state

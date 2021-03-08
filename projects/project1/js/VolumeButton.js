@@ -1,7 +1,8 @@
 // Volume button that, when clicked, mutes background music
 
-class VolumeButton {
+class VolumeButton extends Button {
   constructor(images) {
+    super();
     // array of images
     this.images = images;
     // image index in array
@@ -30,20 +31,6 @@ class VolumeButton {
     imageMode(CENTER);
     image(this.images[this.imageIndex.current], this.x, this.y);
     pop();
-  }
-
-  // Return true if subject provided as argument is overlapping with button
-  overlapsWith({ x, y }) {
-    if (
-      x > this.x - this.width / 2 &&
-      x < this.x + this.width / 2 &&
-      y > this.y - this.height / 2 &&
-      y < this.y + this.height / 2
-    ) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   // If volume button clicked, toggle between volume on and off

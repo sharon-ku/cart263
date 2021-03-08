@@ -1,7 +1,9 @@
 // Rectangular button that contains text and can be clicked on
+// Superclass of RectButtonLearn.js and RectButtonGame.js
 
-class RectButton {
+class RectButton extends Button {
   constructor(font) {
+    super();
     // position of button
     this.x = undefined;
     this.y = 500;
@@ -72,8 +74,10 @@ class RectButton {
   update(mouse) {
     // Change button color when mouse hovers over rectangle
     this.setFillColor(mouse);
+
     // Display rectangular button
     this.displayRect();
+
     // Display Cantonese and English text that go on top of button
     this.displayText(this.cantoneseText);
     this.displayText(this.englishText);
@@ -102,25 +106,11 @@ class RectButton {
   }
 
   // Change fill color of rectangle depending on whether the mouse is hovering over it or not
-  setFillColor({ x, y }) {
-    if (this.overlapsWith({ x, y })) {
+  setFillColor(mouse) {
+    if (this.overlapsWith(mouse)) {
       this.fillCurrent = this.fillHover;
     } else {
       this.fillCurrent = this.fillNoHover;
-    }
-  }
-
-  // Return true if subject provided as argument is overlapping with button
-  overlapsWith({ x, y }) {
-    if (
-      x > this.x - this.width / 2 &&
-      x < this.x + this.width / 2 &&
-      y > this.y - this.height / 2 &&
-      y < this.y + this.height / 2
-    ) {
-      return true;
-    } else {
-      return false;
     }
   }
 
