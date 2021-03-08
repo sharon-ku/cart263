@@ -873,6 +873,8 @@ function checkIfGuessIsCorrect() {
       if (cats[i].englishWord === currentAnswer) {
         cats[i].feeling = `scared`;
       }
+
+      // Display answer in console in case user needs a bit of assistance starting out
       console.log(cats[i].englishWord);
     }
   }
