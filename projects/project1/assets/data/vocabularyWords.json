@@ -4,8 +4,8 @@
     {
       "englishWord": "happy",
       "cantoneseWord": "開心",
-      "englishSentence": "I am happy to see you.",
-      "cantoneseSentence": "我很開心見到你。",
+      "englishSentence": "I am happy to see candy.",
+      "cantoneseSentence": "我很開心見到糖果。",
       "imageName": ["happy0.png", "happy1.png"]
     },
     {
@@ -20,7 +20,7 @@
       "cantoneseWord": "傷心",
       "englishSentence": "I am sad that I finished the cake.",
       "cantoneseSentence": "我很傷心因為我吃完了蛋糕。",
-      "imageName": ["shocked0.png", "shocked1.png"]
+      "imageName": ["sadd0.png", "sad1.png"]
     },
     {
       "englishWord": "tired",

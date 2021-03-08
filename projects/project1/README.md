@@ -2,11 +2,13 @@
 
 ## Sharon Ku
 
+The goal of this game is to teach Cantonese speakers how to pronounce 10 English words related to emotions.
+
 My game is inspired by Charmy from the anime Black Clover. She professes her love for food day and night and always ensures that not a single crumb goes to waste. Whenever a foe puts her food in harm’s way, she quickly assumes the role of the food’s guardian. Given her adorable yet spunky personality, I thought it would be interesting to place someone like her in a teaching position and use her love for food as a motivational force in the game.
 
 Thus, I created Fwoggy, an avid foodie born from Charmy’s characteristics. Her arch-nemesis, Kit Kat, accompanies her to her lessons and adds a layer of competitiveness to the learning experience.
 
-My original intention was to make a simple flashcard game. However, combining Fwoggy’s character with the game's narrative opened up the opportunity to make the learning process feel more playful. I expanded the flashcard game to be a battle against Kit Kat to see who can eat the hamburger. The player must use the English vocabulary words to defend Fwoggy’s right to that juicy burger.
+My original intention was to make a simple flashcard game. However, combining Fwoggy’s character with the game's narrative opened up the opportunity to make the learning process feel more playful. I expanded the flashcard game to be a battle against Kit Kat to see who can eat the hamburger. The player must use the English vocabulary words to defend Fwoggy’s right to that juicy burger. I also created example sentences in the learn state based on food.
 
 For the game, I was inspired by this scene in particular, where Charmy summons a gargantuan sheep to smash the witch because Charmy thought the witch wanted to steal her cake:
 https://www.youtube.com/watch?v=FRMS7LErs98&ab_channel=CrunchyrollCollection
