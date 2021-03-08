@@ -20,7 +20,7 @@ Fwoggy faints from shock.
 
 If win --> victory state
 Fwoggy celebrates!
-Feed the hamburger to Fwoggy by hovering over her to open her mouth on queue
+Feed the hamburger to Fwoggy by hovering over her to open her mouth.
 
 ***
 
@@ -50,6 +50,30 @@ let volumeButton = undefined;
 let volumeButtonImages = [];
 // Number of volume button images
 const NUM_VOLUME_BUTTON_IMAGES = 2;
+
+// English and Cantonese voices
+let voice = {
+  english: `US English Female`,
+  cantonese: `Chinese (Hong Kong) Female`,
+};
+
+// English speaker
+let englishSpeaker = {
+  voice: `US English Female`,
+  voiceProperties: {
+    pitch: 2,
+    rate: 0.9,
+  },
+};
+
+// Cantonese speaker
+let cantoneseSpeaker = {
+  voice: `Chinese (Hong Kong) Female`,
+  voiceProperties: {
+    pitch: 1.15,
+  },
+};
+// --------------------------------------------
 
 // Text font
 let font;
@@ -89,29 +113,6 @@ let bgFill = {
   },
 };
 
-// English and Cantonese voices
-let voice = {
-  english: `US English Female`,
-  cantonese: `Chinese (Hong Kong) Female`,
-};
-
-// English speaker
-let englishSpeaker = {
-  voice: `US English Female`,
-  voiceProperties: {
-    pitch: 2,
-    rate: 0.9,
-  },
-};
-
-// Cantonese speaker
-let cantoneseSpeaker = {
-  voice: `Chinese (Hong Kong) Female`,
-  voiceProperties: {
-    pitch: 1.15,
-  },
-};
-
 // Properties for the paper line
 let paperLine = {
   stroke: {
@@ -134,8 +135,6 @@ const NUM_LOGO_IMAGES = 2;
 let floatingCircles = [];
 const NUM_FLOATING_CIRCLES = 15;
 
-// FOR INTRO STATE ------------------------------
-
 // Array that stores food images
 let foodImages = [];
 const NUM_FOOD_IMAGES = 10;
@@ -143,18 +142,23 @@ const NUM_FOOD_IMAGES = 10;
 // Store floating foods
 let floatingFoods = [];
 
+// FOR INTRO STATE ------------------------------
+
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
+// Rectangular button for the game
 let rectButtonGame = undefined;
 
 // Store all rectangular buttons here
 let rectButtons = [];
 
 // FOR LEARN STATE ------------------------------
-// Vocabulary word
+// Vocabulary word (store JSON file containing vocabulary words)
 let vocabularyWord = undefined;
 
+// Set current lesson word to this
 let currentWord = undefined;
+// At the current lesson word, store the English word, Cantonese word, English sentence, and Cantonese sentence into these variables
 let englishWord = undefined;
 let cantoneseWord = undefined;
 let englishSentence = undefined;
@@ -180,8 +184,8 @@ let lessonProgressBar = undefined;
 let scrollArrowImage = undefined;
 
 // Scroll arrows
-let topArrow;
-let bottomArrow;
+let topArrow = undefined;
+let bottomArrow = undefined;
 
 // FOR GAME STATE ------------------------------
 // Level of game
@@ -195,21 +199,12 @@ let hearts = [];
 // Heart image
 let heartImage = undefined;
 
-// // True if time to choose random word in `flashcards` state
-// let timeToChooseRandomWord = false;
-
 // Big hamburger that Fwoggy protects
 let hamburger = undefined;
 // Hamburger images
 let hamburgerImages = [];
 // Number of hamburger images
 const NUM_HAMBURGER_IMAGES = 5;
-
-// Defeat hamburger
-let defeatHamburger = undefined;
-
-// Victory hamburger
-let victoryHamburger = undefined;
 
 // Fwoggy
 let fwoggy = undefined;
@@ -218,16 +213,6 @@ let fwoggyImages = [];
 // Number of fwoggy images
 const NUM_FWOGGY_IMAGES = 6;
 
-// Defeat Fwoggy
-let defeatFwoggy = undefined;
-
-// Victory Fwoggy
-let victoryFwoggy = undefined;
-// Victory Fwoggy's mouth images
-let mouthImages = [];
-// Number of mouth images
-const NUM_MOUTH_IMAGES = 3;
-
 // Store all cats
 let cats = [];
 // Cat images
@@ -235,12 +220,8 @@ let catImages = [];
 // Number of cat images
 const NUM_CAT_IMAGES = 4;
 
-// Store all cat shiver lines
-let shivers = [];
-// Shiver images
-let shiverImages = [];
-// Number of shiver images
-const NUM_SHIVER_IMAGES = 4;
+// Info on cats for each level
+let levelCat = undefined;
 
 // True if it's time to check if answer is correct
 let timeToCheckIfAnswerCorrect = false;
@@ -255,9 +236,6 @@ let defeatTime = false;
 
 // Store current answer
 let currentAnswer = undefined;
-
-// Info on cats for each level
-let levelCat = undefined;
 
 // Guess text string
 let guessText = {
@@ -277,23 +255,40 @@ let guessText = {
   y: undefined,
 };
 
+// FOR DEFEAT STATE ------------------------------
+// Defeat hamburger
+let defeatHamburger = undefined;
+// Defeat Fwoggy
+let defeatFwoggy = undefined;
+
+// FOR VICTORY STATE ------------------------------
+// Victory hamburger
+let victoryHamburger = undefined;
+// Victory Fwoggy
+let victoryFwoggy = undefined;
+// Victory Fwoggy's mouth images
+let mouthImages = [];
+// Number of mouth images
+const NUM_MOUTH_IMAGES = 3;
+
 // =============================================================
 // preload()
 //
-// Preload images, json files, sounds
+// Preload images, json files, sounds, and fonts
 // =============================================================
 function preload() {
+  // LOAD JSON FILES ------------------------------
   // Load JSON file containing vocabulary words
   vocabularyWord = loadJSON(`assets/data/vocabularyWords.json`);
 
   // Load JSON file containing info on cats for each level
   levelCat = loadJSON(`assets/data/levelCats.json`);
 
+  // LOAD FONTS ------------------------------
   // Load text font
-  // font = loadFont(`assets/fonts/MYuenHK-SemiBold.otf`);
   font = loadFont(`assets/fonts/Interesting glue pudding.ttf`);
-  // font = loadFont(`assets/fonts/NotoSansSC-Medium.otf`);
 
+  // LOAD IMAGES ------------------------------
   // Load logo images and push to logoImages array
   for (let i = 0; i < NUM_LOGO_IMAGES; i++) {
     let logoImage = loadImage(`assets/images/logo${i}.png`);
@@ -333,12 +328,6 @@ function preload() {
     catImages.push(catImage);
   }
 
-  // Load shiver images
-  for (let i = 0; i < NUM_SHIVER_IMAGES; i++) {
-    let shiverImage = loadImage(`assets/images/cat/shiver${i}.png`);
-    shiverImages.push(shiverImage);
-  }
-
   // Load hamburger heart image
   heartImage = loadImage(`assets/images/heart.png`);
 
@@ -348,6 +337,7 @@ function preload() {
     mouthImages.push(mouthImage);
   }
 
+  // LOAD SOUND ------------------------------
   // Load background music
   backgroundMusic = loadSound(`assets/sounds/the-lounge.mp3`);
 }
@@ -355,12 +345,18 @@ function preload() {
 // =============================================================
 // setup()
 //
-// Description of setup() goes here.
+// Create canvas, remove strokes, prepare all state elements, set up annyang
 // =============================================================
 function setup() {
   // Create canvas, remove strokes
   createCanvas(1280, 720);
   noStroke();
+
+  // Prep audio
+  userStartAudio();
+
+  // Set up anyang
+  setUpAnnyang();
 
   // Prepare all elements for `intro`, `lesson`, `game`, `defeat`, `victory` states
   prepareIntro();
@@ -368,7 +364,10 @@ function setup() {
   prepareGame();
   prepareDefeat();
   prepareVictory();
+}
 
+// Set up annyang
+function setUpAnnyang() {
   // Check if annyang is available
   if (annyang) {
     // Create commands
@@ -400,7 +399,6 @@ function prepareIntro() {
   rectButtonLearn = new RectButtonLearn(font);
   // Create a new rectangular button for "Game: Snack Time!"
   rectButtonGame = new RectButtonGame(font);
-
   // Push all created buttons to rectButtons array
   rectButtons.push(rectButtonLearn, rectButtonGame);
 
@@ -486,9 +484,10 @@ function createHearts() {
   for (let i = 0; i < numLives; i++) {
     // Set the x position of the last heart in row of hearts
     let lastXPositionOfHeart = width - 70;
+    // Set horizontal distance between each heart
     let distBtwHearts = 60;
 
-    // Calculate x position of heart
+    // Calculate x position of heart based on its index
     let calculatedXPosition = lastXPositionOfHeart - i * distBtwHearts;
 
     // Set heart properties
@@ -526,7 +525,7 @@ function prepareVictory() {
 // =============================================================
 // draw()
 //
-// Set mouse positions, background color, and states of program
+// Set mouse positions, background color and music, and states of program
 // =============================================================
 function draw() {
   // Set volume of background music
@@ -550,13 +549,6 @@ function draw() {
     defeat();
   } else if (state === `victory`) {
     victory();
-  }
-}
-
-// Play background music and loop it
-function tryMusic() {
-  if (!backgroundMusic.isPlaying()) {
-    backgroundMusic.loop();
   }
 }
 
@@ -592,6 +584,13 @@ function mousePressed() {
     cantoneseWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
     englishSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
     cantoneseSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+  }
+}
+
+// Play background music and loop it
+function tryMusic() {
+  if (!backgroundMusic.isPlaying()) {
+    backgroundMusic.loop();
   }
 }
 
@@ -1132,7 +1131,7 @@ function displayGuess() {
 
   // Setting x and y positions of guess text
   guessText.x = width / 2;
-  guessText.y = height - 70;
+  guessText.y = 150;
 
   // Display text showing user's guess
   push();
