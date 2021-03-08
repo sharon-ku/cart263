@@ -1,8 +1,8 @@
 // Cantonese word displayed in `learn` state
 
 class CantoneseWordText extends LessonText {
-  constructor(cantoneseWord, font) {
-    super(cantoneseWord, font);
+  constructor(cantoneseWord, font, englishSpeaker, cantoneseSpeaker) {
+    super(cantoneseWord, font, englishSpeaker, cantoneseSpeaker);
     // string to be displayed
     this.string = cantoneseWord;
     // language of string

@@ -2,7 +2,7 @@
 // I.e. English word, Cantonese word, English sentence, and Cantonese sentence
 
 class LessonText {
-  constructor(string, font) {
+  constructor(string, font, englishSpeaker, cantoneseSpeaker) {
     // string to be displayed
     this.string = undefined;
     // language of string
@@ -36,6 +36,9 @@ class LessonText {
     // Area around textbox's outer bounds that is accepted when mouse hovers over textbox
     this.boxWidthOffset = 0;
     this.boxHeightOffset = 10;
+    // English and Cantonese speaker for ResponsiveVoice
+    this.englishSpeaker = englishSpeaker;
+    this.cantoneseSpeaker = cantoneseSpeaker;
   }
 
   // Update behaviour of text
@@ -108,28 +111,28 @@ class LessonText {
   }
 
   // When mouse is pressed and overlappin with string, have ResponsiveVoice say the string
-  mousePressed(mouse, englishSpeaker, cantoneseSpeaker) {
+  mousePressed(mouse) {
     if (this.overlapsWith(mouse)) {
-      this.speak(englishSpeaker, cantoneseSpeaker);
+      this.speak(this.englishSpeaker, this.cantoneseSpeaker);
     }
   }
 
   // Have ResponsiveVoice say string out loud
-  speak(englishSpeaker, cantoneseSpeaker) {
+  speak() {
     // If language is English, set English voice
     if (this.language === `english`) {
       responsiveVoice.speak(
         this.string,
-        englishSpeaker.voice,
-        englishSpeaker.voiceProperties
+        this.englishSpeaker.voice,
+        this.englishSpeaker.voiceProperties
       );
     }
     // Else if language is Cantonese, set Cantonese voice
     else if (this.language === `cantonese`) {
       responsiveVoice.speak(
         this.string,
-        cantoneseSpeaker.voice,
-        cantoneseSpeaker.voiceProperties
+        this.cantoneseSpeaker.voice,
+        this.cantoneseSpeaker.voiceProperties
       );
     }
   }

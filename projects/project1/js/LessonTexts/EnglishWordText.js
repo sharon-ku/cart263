@@ -1,8 +1,8 @@
 // English word displayed in `learn` state
 
 class EnglishWordText extends LessonText {
-  constructor(englishWord, font) {
-    super(englishWord, font);
+  constructor(englishWord, font, englishSpeaker, cantoneseSpeaker) {
+    super(englishWord, font, englishSpeaker, cantoneseSpeaker);
     // string to be displayed
     this.string = englishWord;
     // language of string

@@ -143,6 +143,8 @@ const NUM_FOOD_IMAGES = 10;
 let floatingFoods = [];
 
 // FOR INTRO STATE ------------------------------
+// Store Cantonese and English titles
+let titles = [];
 
 // Rectangular button for learning new words
 let rectButtonLearn = undefined;
@@ -389,6 +391,11 @@ function prepareIntro() {
   // Create new logo
   logo = new Logo(logoImages);
 
+  // Create new Cantonese and English titles and stores in titles array
+  let cantoneseTitle = new CantoneseTitle(font);
+  let englishTitle = new EnglishTitle(font);
+  titles.push(cantoneseTitle, englishTitle);
+
   // Create floating circles are store in array
   for (let i = 0; i < NUM_FLOATING_CIRCLES; i++) {
     let floatingCircle = new FloatingCircle();
@@ -438,10 +445,30 @@ function setCurrentLessonWord() {
 
 // Create new lesson text for `learn` state
 function createLessonText() {
-  englishWordText = new EnglishWordText(englishWord, font);
-  cantoneseWordText = new CantoneseWordText(cantoneseWord, font);
-  englishSentenceText = new EnglishSentenceText(englishSentence, font);
-  cantoneseSentenceText = new CantoneseSentenceText(cantoneseSentence, font);
+  englishWordText = new EnglishWordText(
+    englishWord,
+    font,
+    englishSpeaker,
+    cantoneseSpeaker
+  );
+  cantoneseWordText = new CantoneseWordText(
+    cantoneseWord,
+    font,
+    englishSpeaker,
+    cantoneseSpeaker
+  );
+  englishSentenceText = new EnglishSentenceText(
+    englishSentence,
+    font,
+    englishSpeaker,
+    cantoneseSpeaker
+  );
+  cantoneseSentenceText = new CantoneseSentenceText(
+    cantoneseSentence,
+    font,
+    englishSpeaker,
+    cantoneseSpeaker
+  );
 }
 
 // Create top and bottoms scroll arrows
@@ -573,17 +600,17 @@ function mousePressed() {
       rectButtons[i].mousePressed(mouse);
     }
 
+    // If game button is pressed, reset game variables
     if (rectButtonGame.overlapsWith(mouse)) {
-      // Reset game variables
       resetGame();
     }
   }
-  // If it's the learn state and mouse pressed on a string of text, execute mousePressed methods of each string
+  // Else, if it's the learn state and mouse pressed on a string of text, execute mousePressed methods of each string
   else if (state === `learn`) {
-    englishWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    cantoneseWordText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    englishSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
-    cantoneseSentenceText.mousePressed(mouse, englishSpeaker, cantoneseSpeaker);
+    englishWordText.mousePressed(mouse);
+    cantoneseWordText.mousePressed(mouse);
+    englishSentenceText.mousePressed(mouse);
+    cantoneseSentenceText.mousePressed(mouse);
   }
 }
 
@@ -599,28 +626,28 @@ function resetGame() {
   // Delete all cats
   cats = [];
 
-  // Level of game
+  // Reset level of game
   level = -1;
 
   // Empty hearts array
   hearts = [];
 
-  // Number of lives
+  // Reset number of lives
   numLives = 10;
 
   // Create hearts that represent lives
   createHearts();
 
-  // True if it's time to check if answer is correct
+  // Set time to check if answer is correct to false
   timeToCheckIfAnswerCorrect = false;
 
-  // True if it's time to update number of correct answers
+  // Set time to update number of correct answers to false
   timeToUpdateNumCorrectAnswers = false;
 
-  // True if it's victory time
+  // Set victory time to false
   victoryTime = false;
 
-  // True if it's defeat time
+  // Set defeat time to false
   defeatTime = false;
 
   // Reset currentAnswer
@@ -630,7 +657,8 @@ function resetGame() {
 // =============================================================
 // STATE: intro()
 //
-// Show title page
+// Show title page: user has two main button options: to learn the new words or to proceed to the game
+// Circles and food float in the background
 // =============================================================
 function intro() {
   // Abort annyang
@@ -659,40 +687,10 @@ function intro() {
   // Update volume button behaviour
   volumeButton.update(mouse);
 
-  // Set parameters for Cantonese title
-  let cantoneseTitle = {
-    string: `學英語: 情緒`,
-    x: width / 2,
-    y: 163,
-    r: 255,
-    g: 255,
-    b: 255,
-    strokeFill: color(119, 198, 220),
-    strokeThickness: 8,
-    size: 110,
-    font: font,
-    horizAlign: CENTER,
-    vertAlign: CENTER,
-  };
-  // Set parameters for English title
-  let englishTitle = {
-    string: `Learn How to Say Emotions in English`,
-    x: width / 2,
-    y: 267,
-    r: 119,
-    g: 198,
-    b: 220,
-    strokeFill: 255,
-    strokeThickness: 5,
-    size: 50,
-    font: font,
-    horizAlign: CENTER,
-    vertAlign: CENTER,
-  };
-  // Display Cantonese title
-  displayText(cantoneseTitle);
-  // Display English title underneath
-  displayText(englishTitle);
+  // Update title behaviour
+  for (let i = 0; i < titles.length; i++) {
+    titles[i].update();
+  }
 }
 
 // Draw page lines that resemble graph paper
@@ -740,32 +738,6 @@ function drawALine({ x1, y1, x2, y2 }) {
   strokeWeight(paperLine.strokeWeight);
   stroke(paperLine.stroke.r, paperLine.stroke.g, paperLine.stroke.b);
   line(x1, y1, x2, y2);
-  pop();
-}
-
-// Display text by providing parameters
-function displayText({
-  string,
-  x,
-  y,
-  r,
-  g,
-  b,
-  strokeFill,
-  strokeThickness,
-  size,
-  font,
-  horizAlign,
-  vertAlign,
-}) {
-  push();
-  textSize(size);
-  textFont(font);
-  stroke(strokeFill);
-  strokeWeight(strokeThickness);
-  textAlign(horizAlign, vertAlign);
-  fill(r, g, b);
-  text(string, x, y);
   pop();
 }
 
