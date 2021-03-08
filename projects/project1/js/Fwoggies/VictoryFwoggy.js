@@ -48,12 +48,6 @@ class VictoryFwoggy {
     }
   }
 
-  // Reset Fwoggy's variables
-  reset() {
-    // // Reset the current angle
-    // this.theta.current = 0;
-  }
-
   // Swith images depending
   switchImages(mouse) {
     // Body animation (does not include mouth)

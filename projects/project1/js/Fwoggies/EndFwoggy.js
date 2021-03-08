@@ -24,10 +24,7 @@ class EndFwoggy {
   }
 
   // Reset End Fwoggy's variables
-  reset() {
-    // Reset the current angle
-    this.theta.current = 0;
-  }
+  reset() {}
 
   // Update all behaviour of fwoggy
   update(cat) {

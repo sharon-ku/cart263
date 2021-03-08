@@ -101,6 +101,11 @@ let bgFill = {
     g: 250,
     b: 250,
   },
+  game: {
+    r: 226,
+    g: 248,
+    b: 249,
+  },
   defeat: {
     r: 50,
     g: 50,
@@ -835,16 +840,15 @@ function showScrollArrow() {
 // =============================================================
 // STATE: game()
 //
-// User must say the correct English word before the cat reaches the hamburger.
+// User must say the correct English word before the cat reaches the hamburger, or else the player loses a life.
+// User has 10 hamburger lives in total.
 // =============================================================
 function game() {
   // Resume annyang
   annyang.resume();
-  // // Abort annyang
-  // annyang.abort();
 
   // Set background color
-  bgFill.current = bgFill.intro;
+  bgFill.current = bgFill.game;
 
   // Make floating circles move around randomly
   addFloatingCircles();
@@ -861,18 +865,10 @@ function game() {
   }
 
   // Update fwoggy
-  // for (let i = 0; i < cats.length; i++) {
-  //   fwoggy.update(cats[i]);
-  // }
-
-  // Update fwoggy
   fwoggy.update();
 
   // Update volume button behaviour
   volumeButton.update(mouse);
-
-  // Calculate distance from object
-  // for (let i = 0; i < cats.length; i++) {
 
   // Check if answer is correct
   checkIfAnswerIsCorrect();
@@ -908,8 +904,6 @@ function game() {
       cats.splice(i, 1);
     }
   }
-
-  // console.log(state);
 
   // If cat overlaps with hamburger, player loses a life
   for (let i = 0; i < cats.length; i++) {
@@ -1106,7 +1100,9 @@ function defeat() {
 // =============================================================
 // STATE: victory()
 //
-// Display extremely happy Fwoggy.
+// Display happy Fwoggy (ready to eat!) with flying hamburger.
+// User can feed hamburger to Fwoggy by hovering over its body to open its mouth.
+// If hamburger overlaps with Fwoggy's mouth, hamburger will be sucked in.
 // =============================================================
 function victory() {
   // Set background color

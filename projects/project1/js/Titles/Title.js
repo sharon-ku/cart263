@@ -1,4 +1,5 @@
 // Title to be displayed in intro state
+// Parent of CantoneseTitle.js and EnglishTitle.js
 
 class Title {
   constructor(font) {

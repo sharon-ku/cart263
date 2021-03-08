@@ -5,11 +5,14 @@ class LessonText {
   constructor(string, font, englishSpeaker, cantoneseSpeaker) {
     // string to be displayed
     this.string = undefined;
+
     // language of string
     this.language = undefined;
+
     // position
     this.x = width / 2;
     this.y = undefined;
+
     // appearance information
     this.size = undefined;
     this.font = font;
@@ -33,9 +36,11 @@ class LessonText {
         b: 88,
       },
     };
+
     // Area around textbox's outer bounds that is accepted when mouse hovers over textbox
     this.boxWidthOffset = 0;
     this.boxHeightOffset = 10;
+
     // English and Cantonese speaker for ResponsiveVoice
     this.englishSpeaker = englishSpeaker;
     this.cantoneseSpeaker = cantoneseSpeaker;
@@ -45,14 +50,9 @@ class LessonText {
   update(updatedString, mouse) {
     // Display text
     this.display(updatedString);
-    // If mouse overlaps with textbox, change color
-    if (this.overlapsWith(mouse)) {
-      this.changeColor();
-    }
-    // Or else, keep normal color
-    else {
-      this.keepDefaultColor();
-    }
+
+    // If mouse overlaps with textbox, change font color
+    this.changeColor(mouse);
   }
 
   // Returns true if provided subject overlaps with text
@@ -65,7 +65,7 @@ class LessonText {
       this.size
     );
 
-    // Change text color if mouse hovers over bounding box
+    // Return true if mouse hovers over bounding box
     if (
       subject.x > this.x - boundingBox.w / 2 - this.boxWidthOffset &&
       subject.x < this.x + boundingBox.w / 2 + this.boxWidthOffset &&
@@ -76,24 +76,18 @@ class LessonText {
     } else {
       return false;
     }
-
-    // Display green rectangle where bounding box is
-    push();
-    fill(0, 255, 0, 50);
-    stroke(0);
-    rectMode(CENTER);
-    rect(boundingBox.x, boundingBox.y, boundingBox.w, boundingBox.h);
-    pop();
   }
 
-  // Changes text fill to hover color
-  changeColor() {
-    this.fill.current = this.fill.hover;
-  }
-
-  // Set color to default
-  keepDefaultColor() {
-    this.fill.current = this.fill.noHover;
+  // Change font color depending on mouse behaviour
+  changeColor(mouse) {
+    // If mouse overlaps with textbox, change font color
+    if (this.overlapsWith(mouse)) {
+      this.fill.current = this.fill.hover;
+    }
+    // Or else, keep normal font color
+    else {
+      this.fill.current = this.fill.noHover;
+    }
   }
 
   // Display text
@@ -110,7 +104,7 @@ class LessonText {
     pop();
   }
 
-  // When mouse is pressed and overlappin with string, have ResponsiveVoice say the string
+  // When mouse is pressed and overlapping with string, have ResponsiveVoice read the string
   mousePressed(mouse) {
     if (this.overlapsWith(mouse)) {
       this.speak(this.englishSpeaker, this.cantoneseSpeaker);
@@ -119,7 +113,7 @@ class LessonText {
 
   // Have ResponsiveVoice say string out loud
   speak() {
-    // If language is English, set English voice
+    // If language is English, set English voice to read string
     if (this.language === `english`) {
       responsiveVoice.speak(
         this.string,
@@ -127,7 +121,7 @@ class LessonText {
         this.englishSpeaker.voiceProperties
       );
     }
-    // Else if language is Cantonese, set Cantonese voice
+    // Else if language is Cantonese, set Cantonese voice to read string
     else if (this.language === `cantonese`) {
       responsiveVoice.speak(
         this.string,
