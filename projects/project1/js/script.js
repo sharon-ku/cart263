@@ -693,9 +693,8 @@ function intro() {
   }
 }
 
-// Draw page lines that resemble graph paper
+// Draw horizontal and vertical lines across the page
 function drawPageLines() {
-  // Draw horizontal and vertical lines across the page
   drawHorizontalLines();
   drawVerticalLines();
 }
@@ -758,7 +757,8 @@ function addFloatingFood() {
 // =============================================================
 // STATE: learn()
 //
-// Show a new vocabulary word at a time with its corresponding Cantonese word, English example sentence, and Cantonese example sentence; scrolling allows you to switch between pages
+// Show one new vocabulary word at a time with its corresponding Cantonese word, English example sentence, and Cantonese example sentence; scrolling allows you to switch between pages
+// There are 10 vocabulary words in total
 // =============================================================
 function learn() {
   // Set background color
@@ -830,47 +830,6 @@ function showScrollArrow() {
   else if (lessonWordIndex === vocabularyWord.lessonWords.length - 1) {
     topArrow.update();
   }
-}
-
-// // =============================================================
-// // STATE: flashcards()
-// //
-// // Show a Cantonese word on each flashcard and have user say corresponding English word out loud
-// // =============================================================
-// function flashcards() {
-//   // Set background color
-//   bgFill.current = bgFill.learn;
-//
-//   // Draw page lines that resemble graph paper
-//   drawPageLines();
-//
-//   // If it's time to choose a random word, pick a random lessonWordIndex
-//   chooseRandomWord();
-//
-//   // Set current lesson word
-//   setCurrentLessonWord();
-//
-//   // Update Cantonese flashcard
-//   updateCantoneseFlashcard();
-// }
-
-// If it's time to choose a random word, pick a random lessonWordIndex
-function chooseRandomWord() {
-  if (timeToChooseRandomWord) {
-    // Get a random number within range of index numbers for lessonWords
-    // Note that since Math.floor (used in next step) rounds number DOWN to an integer, the last argument provided in random() is an integer higher than range of index numbers
-    let randomIndex = random(0, vocabularyWord.lessonWords.length);
-    // Since randomIndex can be a decimal number, use Math.floor to return biggest integer that is less than or equal to randomIndex
-    lessonWordIndex = Math.floor(randomIndex);
-    print(lessonWordIndex);
-    // It's no longer time to choose random word
-    timeToChooseRandomWord = false;
-  }
-}
-
-// Update lesson text that is displayed on canvas
-function updateCantoneseFlashcard() {
-  cantoneseWordText.update(cantoneseWord, mouse);
 }
 
 // =============================================================
