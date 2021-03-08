@@ -1,4 +1,6 @@
-// Evil cat
+// Evil cat in `game` state that flies towards hamburger
+// Cat holds a card that contains a random Chinese word
+// If user says correct English word corresponding to card word, cat flees in opposite direction
 
 class Cat {
   constructor(x, y, images, font, cantoneseWord, englishWord) {
@@ -9,6 +11,7 @@ class Cat {
     // frames elapsed for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 50;
+
     // position
     this.x = x;
     this.y = y;
@@ -16,17 +19,17 @@ class Cat {
     this.vx = 0;
     this.vy = 0;
     this.speed = {
-      toHamburger: 0.4, //0.5
+      toHamburger: 0.4,
       fleeing: 2,
     };
 
-    // acceptable distance to be from hamburger
+    // acceptable distance to be from hamburger or Fwoggy
     this.buffer = {
       x: 100,
       y: 50,
     };
 
-    // rectangle card
+    // rectangle card that cat holds
     this.rectangle = {
       // offset distance from this.x and this.y
       xOffset: 0,
@@ -88,9 +91,8 @@ class Cat {
     this.move(hamburger, fwoggy);
   }
 
-  // Display cat
+  // Display cat image
   displayCat() {
-    // Display image
     push();
     imageMode(CENTER);
     image(this.images[this.imageIndex], this.x, this.y);
@@ -99,6 +101,7 @@ class Cat {
 
   // Swith images depending on cat's feeling
   switchImages() {
+    // If cat is confident, switch between images with index 0 and 1
     if (this.feeling === `confident`) {
       this.framesElapsed++;
       if (this.framesElapsed === this.framesBtwEachImage) {
@@ -109,7 +112,9 @@ class Cat {
         }
         this.framesElapsed = 0;
       }
-    } else if (this.feeling === `scared`) {
+    }
+    // Else, if cat is scared, switch between images with index 2 and 3
+    else if (this.feeling === `scared`) {
       this.framesElapsed++;
       if (this.framesElapsed === this.framesBtwEachImage) {
         if (this.imageIndex === 2) {
@@ -124,7 +129,7 @@ class Cat {
 
   // Display card that cat is holding
   displayCard() {
-    // Display rectangle
+    // Display rectangular card
     push();
     fill(this.rectangle.fill.r, this.rectangle.fill.g, this.rectangle.fill.b);
     stroke(
@@ -143,7 +148,7 @@ class Cat {
     );
     pop();
 
-    // Display text
+    // Display Cantonese word on top of card
     push();
     textAlign(CENTER);
     textFont(this.cardText.font);
@@ -189,13 +194,16 @@ class Cat {
   }
 
   // Either move towards or away from subject
+  // this.buffer is the acceptable distance to be from subject
   updatePosition({ x, y }) {
+    // Update x position
     if (this.x > x + this.buffer.x) {
       this.x -= this.vx;
     } else if (this.x < x - this.buffer.x) {
       this.x += this.vx;
     }
 
+    // Update y position
     if (this.y > y + this.buffer.y) {
       this.y -= this.vy;
     } else if (this.y < y - this.buffer.y) {
@@ -216,10 +224,4 @@ class Cat {
       return false;
     }
   }
-
-  // // Calculate distance from object provided as argument to cat
-  // calculateDistTo({x,y}) {
-  //   let distance = dist(this.x, this.y, x, y);
-  //   return distance;
-  // }
 }

@@ -1,17 +1,23 @@
-// Fwoggy in `game state`
+// Fwoggy in `game` state that protects the hamburger
 
 class Fwoggy {
   constructor(images) {
-    // frames elapsed for image animation
-    this.framesElapsed = 0;
-    this.framesBtwEachImage = 50;
     // images
     this.images = images;
     // image index
     this.imageIndex = 0;
+    // frames elapsed for image animation
+    this.framesElapsed = 0;
+    this.framesBtwEachImage = 50;
     // image size
     this.width = 285;
     this.height = 212;
+    // image scale
+    this.scale = {
+      x: 1,
+      y: 1,
+    };
+
     // position
     this.x = width / 2;
     this.y = height / 2 + 50;
@@ -19,15 +25,6 @@ class Fwoggy {
     this.vx = 0;
     this.vy = 0;
     this.speed = 5;
-    // image scale
-    this.scale = {
-      x: 1,
-      y: 1,
-    };
-
-    // fwoggy's task
-    // all possible tasks: protectBurger, walkToCat
-    this.task = `protectBurger`;
 
     // acceptable distance to be from cat (for whacking purposes)
     this.buffer = {
@@ -38,14 +35,8 @@ class Fwoggy {
 
   // Update all behaviour of fwoggy
   update() {
-    // Change animation depending on task
-    if (this.task === `protectBurger`) {
-      // Stay still in front of burger with arms protecting it
-      this.protectBurger();
-    }
-    // else if (this.task === `moveToCat`) {
-    //   // this.moveTo(cat);
-    // }
+    // Stay still in front of burger with arms protecting it
+    this.protectBurger();
 
     // Display image
     this.display();
@@ -64,32 +55,17 @@ class Fwoggy {
   // Protect burger
   protectBurger() {
     this.imageIndex = 0;
+    // Flip image right and left to make Fwoggy seem paranoid
     this.framesElapsed++;
     if (this.framesElapsed === this.framesBtwEachImage) {
       if (this.scale.x === 1) {
+        // Face left
         this.scale.x = -1;
       } else {
+        // Face right
         this.scale.x = 1;
       }
       this.framesElapsed = 0;
     }
   }
-
-  // // Walk to cat
-  // moveTo(cat) {
-  //   this.vx = this.speed;
-  //   this.vy = this.speed;
-  //
-  //   if (this.x > cat.x + this.buffer.x) {
-  //     this.x -= this.vx;
-  //   } else if (this.x < cat.x - this.buffer.x) {
-  //     this.x += this.vx;
-  //   }
-  //
-  //   if (this.y > cat.y + this.buffer.y) {
-  //     this.y -= this.vy;
-  //   } else if (this.y < cat.y - this.buffer.y) {
-  //     this.y += this.vy;
-  //   }
-  // }
 }

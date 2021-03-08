@@ -230,37 +230,11 @@ const NUM_CAT_IMAGES = 4;
 // Info on cats for each level
 let levelCat = undefined;
 
-// True if it's time to check if answer is correct
-let timeToCheckIfAnswerCorrect = false;
-
-// True if it's time to update number of correct answers
-let timeToUpdateNumCorrectAnswers = false;
-
-// True if it's victory time
-let victoryTime = false;
-// True if it's defeat time
-let defeatTime = false;
-
 // Store current answer
 let currentAnswer = undefined;
 
-// Guess text string
-let guessText = {
-  size: 80,
-  stroke: {
-    r: 255,
-    g: 255,
-    b: 255,
-  },
-  fill: {
-    r: 75,
-    g: 161,
-    b: 88,
-  },
-  strokeWeight: 5,
-  x: undefined,
-  y: undefined,
-};
+// Guess text string displayed on canvas
+let guessText = undefined;
 
 // FOR DEFEAT STATE ------------------------------
 // Defeat hamburger
@@ -380,7 +354,7 @@ function setUpAnnyang() {
     // Create commands
     let commands = {
       // If the user responds, set the current answer to the animal guessed
-      "*guess": guessEnglishWord,
+      "*guess": processGuess,
     };
     // Add the commands and start annyang
     annyang.addCommands(commands);
@@ -509,6 +483,9 @@ function prepareGame() {
 
   // Create hearts that represent lives
   createHearts();
+
+  // Create new guess text
+  guessText = new GuessText(font, currentAnswer);
 }
 
 // Create hearts that represent lives
@@ -642,18 +619,6 @@ function resetGame() {
 
   // Create hearts that represent lives
   createHearts();
-
-  // Set time to check if answer is correct to false
-  timeToCheckIfAnswerCorrect = false;
-
-  // Set time to update number of correct answers to false
-  timeToUpdateNumCorrectAnswers = false;
-
-  // Set victory time to false
-  victoryTime = false;
-
-  // Set defeat time to false
-  defeatTime = false;
 
   // Reset currentAnswer
   currentAnswer = undefined;
@@ -870,42 +835,87 @@ function game() {
   // Update volume button behaviour
   volumeButton.update(mouse);
 
-  // Check if answer is correct
-  checkIfAnswerIsCorrect();
+  // If user's guess is correct, make cat feel scared
+  checkIfGuessIsCorrect();
 
-  // // React to user's answer based on whether it is correct or not
-  // reactToAnswer();
-
-  // Display current answer on screen and change its color depending on whether it was right or wrong
-  displayGuess();
+  // Display current answer on screen
+  guessText.update(currentAnswer);
 
   // If no more cats left, swith to next level or set to victory state
+  noMoreCats();
+
+  // Update cat behaviour: Display cat, make it move, animate its images
+  updateCatBehaviour();
+
+  // Also remove cat when it flies off canvas
+  catFleesOffCanvas();
+
+  // If cat overlaps with hamburger, player loses a life and cat disappears
+  catReachesHamburger();
+
+  // If user has no more lives, cue defeat state
+  if (numLives <= 0) {
+    cueDefeatState();
+  }
+}
+
+// If user's guess is correct, make cat feel scared
+function checkIfGuessIsCorrect() {
+  for (let i = 0; i < cats.length; i++) {
+    // First make sure that cat is inside the canvas
+    if (
+      cats[i].x > 0 &&
+      cats[i].x < width &&
+      cats[i].y > 0 &&
+      cats[i].y < height
+    ) {
+      // And if answer is correct, make cat feel scared
+      if (cats[i].englishWord === currentAnswer) {
+        cats[i].feeling = `scared`;
+      }
+      console.log(cats[i].englishWord);
+    }
+  }
+}
+
+// If user has no more lives, cue defeat state
+function cueDefeatState() {
+  // Reset the variables for defeatFwoggy and defeatHamburger
+  defeatFwoggy.reset();
+  defeatHamburger.reset();
+
+  // Set to defeat state
+  state = `defeat`;
+}
+
+// If no more cats left, swith to next level or set to victory state
+function noMoreCats() {
   if (cats.length === 0) {
     // Add 1 to level
     level++;
 
-    // If user hasn't reached last level yet
+    // If user hasn't reached last level yet, create new level cats
     if (level < levelCat.levelCats.length) {
-      // Create new level cats
       createCats(level);
     }
     // Or else, user won! Set to victory state
     else {
-      // Reset the variables for victoryHamburger
-      victoryHamburger.reset();
-
-      state = `victory`;
+      cueVictoryState();
     }
   }
+}
 
-  // If cat overlaps with hamburger, remove cat from cats array
-  for (let i = 0; i < cats.length; i++) {
-    if (cats[i].x === hamburger.x && cats[i].y === hamburger.y) {
-      cats.splice(i, 1);
-    }
-  }
+// Reset victory state variables and set state to `victory`
+function cueVictoryState() {
+  // Reset the variables for victoryHamburger
+  victoryHamburger.reset();
 
-  // If cat overlaps with hamburger, player loses a life
+  // Set to victory state
+  state = `victory`;
+}
+
+// If cat overlaps with hamburger, player loses a life and cat disappears
+function catReachesHamburger() {
   for (let i = 0; i < cats.length; i++) {
     if (cats[i].overlapsWith(hamburger)) {
       // Remove a life
@@ -916,22 +926,18 @@ function game() {
       hearts.splice(hearts.length - 1, 1);
     }
   }
+}
 
-  // If user has zero lives or less, user lost
-  if (numLives <= 0) {
-    // Reset the variables for defeatFwoggy and defeatHamburger
-    defeatFwoggy.reset();
-    defeatHamburger.reset();
-
-    // Set to defeat state
-    state = `defeat`;
-  }
-
-  // Update cats
+// Update cat behaviour: Display cat, make it move, animate its images
+function updateCatBehaviour() {
   for (let i = 0; i < cats.length; i++) {
     cats[i].update(hamburger, fwoggy);
+  }
+}
 
-    // If cat flees off canvas, remove it
+// If cat flees off canvas because it is scared, remove it from cats array
+function catFleesOffCanvas() {
+  for (let i = 0; i < cats.length; i++) {
     if (
       cats[i].feeling === `scared` &&
       (cats[i].x > width ||
@@ -979,95 +985,16 @@ function createCats(level) {
   }
 }
 
-// Guess the English word
-function guessEnglishWord(guess) {
+// Store guess that user just said, check if it's correct, and remove guess after 3 seconds
+function processGuess(guess) {
   // Sets currentAnswer to the guess that user just said
   // And convert answer to all lowercase
   currentAnswer = guess.toLowerCase();
-  // Set that it's time to check if answer is correct
-  timeToCheckIfAnswerCorrect = true;
 
   // If user has not said another guess after 3 seconds, remove current answer
   setTimeout(() => {
     currentAnswer = undefined;
   }, 3000);
-}
-
-// Check if the answer is correct and react to it
-function checkIfAnswerIsCorrect() {
-  // If it's time to check if answer is correct
-  if (timeToCheckIfAnswerCorrect) {
-    for (let i = 0; i < cats.length; i++) {
-      // If user's guess is correct
-      if (cats[i].englishWord === currentAnswer) {
-        // fwoggy.task = `moveToCat`;
-        // fwoggy.moveTo(cats[i]);
-
-        // // It's time for computer to say something nice
-        // victoryTime = true;
-
-        // If Fwoggy successfully whacks the cat, remove cat
-        if (cats[i].overlapsWith(fwoggy)) {
-          cats.splice(i, 1);
-        }
-      }
-      // If incorrect
-      else {
-        // // Have computer say something mean and discouraging so that the user will know to do better next time
-        // defeatTime = true;
-      }
-      timeToCheckIfAnswerCorrect = false;
-    }
-  }
-}
-
-// // React to user's answer based on whether it is correct or not
-// function reactToAnswer() {
-//   // If it's victory time (user got right answer)
-//   if (victoryTime) {
-//     // // Have computer say some nice words of encouragement
-//     // computerSaysNiceMessage();
-//     // Update numCorrectAnswers counter
-//     timeToUpdateNumCorrectAnswers = true;
-//   }
-//   // Else if it's defeat time (user got wrong answer)
-//   else if (defeatTime) {
-//     // // Have computer say some mean words
-//     // computerSaysMeanMessage();
-//   }
-// }
-
-// Display current answer on screen and change its color depending on whether it was right or wrong
-function displayGuess() {
-  for (let i = 0; i < cats.length; i++) {
-    let cat = cats[i];
-    if (cat.x > 0 && cat.x < width && cat.y > 0 && cat.y < height) {
-      // If answer is correct:
-      if (cat.englishWord === currentAnswer) {
-        // Set cat feeling to scared
-        cat.feeling = `scared`;
-      }
-      // Else if answer is wrong:
-      else {
-      }
-      console.log(cat.englishWord);
-    }
-  }
-
-  // Setting x and y positions of guess text
-  guessText.x = width / 2;
-  guessText.y = 150;
-
-  // Display text showing user's guess
-  push();
-  strokeWeight(guessText.strokeWeight);
-  textFont(font);
-  stroke(guessText.stroke.r, guessText.stroke.g, guessText.stroke.b);
-  fill(guessText.fill.r, guessText.fill.g, guessText.fill.b);
-  textAlign(CENTER);
-  textSize(guessText.size);
-  text(currentAnswer, guessText.x, guessText.y);
-  pop();
 }
 
 // =============================================================
