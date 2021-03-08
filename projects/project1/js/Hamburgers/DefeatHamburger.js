@@ -1,43 +1,43 @@
 // Defeat hamburger that flies off to hamburger heaven
 
-class DefeatHamburger {
+class DefeatHamburger extends EndHamburger {
   constructor(images) {
-    // images for flying animation
-    this.images = images;
-    // current image index
-    this.imageIndex = 3;
-    // frames elapsed for image animation
-    this.framesElapsed = 0;
-    this.framesBtwEachImage = 10;
-    // position
-    this.x = 900;
-    this.y = height - 300;
-    // velocity
-    this.vx = 0;
-    this.vy = 0;
-    this.speed = 1;
+    super(images);
+
+    // image index
+    this.imageIndex = {
+      current: 3,
+      min: 3,
+      max: 4,
+    };
     // image size
     this.width = 213;
     this.height = 199;
+
+    // position
+    this.x = 900;
+    this.y = height - 300;
+    // speed
+    this.speed = 1;
   }
 
   // Update all behaviour of hamburger
   update() {
+    // Get superclass's code for this method
+    super.update();
+
     // Display image
     this.display();
 
     // Fly off to hamburger heaven
     this.fly();
-
-    // Wing flapping animation
-    this.flapWings();
   }
 
   // Display image
   display() {
     push();
     imageMode(CENTER);
-    image(this.images[this.imageIndex], this.x, this.y);
+    image(this.images[this.imageIndex.current], this.x, this.y);
     pop();
   }
 
@@ -48,19 +48,6 @@ class DefeatHamburger {
     // Update x and y positions with velocity
     this.x += this.vx;
     this.y += this.vy;
-  }
-
-  // Flapping wing animation
-  flapWings() {
-    this.framesElapsed++;
-    if (this.framesElapsed === this.framesBtwEachImage) {
-      if (this.imageIndex === 3) {
-        this.imageIndex = 4;
-      } else {
-        this.imageIndex = 3;
-      }
-      this.framesElapsed = 0;
-    }
   }
 
   // Returns true if hamburger flew to top of canvas (aka hamburger heaven)

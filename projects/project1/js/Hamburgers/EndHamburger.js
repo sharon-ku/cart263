@@ -1,85 +1,60 @@
-// Hamburger in end state (either victory or defeat)
+// Hamburger in end state
+// Superclass of DefeatHamburger.js and VictoryHamburger.js
 
 class EndHamburger {
   constructor(images) {
     // images for flying animation
     this.images = images;
-    // current image index
-    this.imageIndex = 1;
+
+    // image index
+    this.imageIndex = {
+      current: undefined,
+      min: undefined,
+      max: undefined,
+    };
+
+    // image size
+    this.width = undefined;
+    this.height = undefined;
+
     // frames elapsed for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 10;
+
     // position
-    this.x = 900;
-    this.y = height - 300;
+    this.x = undefined;
+    this.y = undefined;
     // velocity
     this.vx = 0;
     this.vy = 0;
-    this.speed = 1;
-    // image size
-    this.width = 214;
-    this.height = 149;
+    this.speed = undefined;
   }
 
   // Update all behaviour of hamburger
   update() {
-    // Display image
-    this.display();
-
-    // Fly off to hamburger heaven
-    this.fly();
-
     // Wing flapping animation
     this.flapWings();
   }
 
   // Display image
-  display() {
-    push();
-    imageMode(CENTER);
-    image(this.images[this.imageIndex], this.x, this.y);
-    pop();
-  }
+  display() {}
 
-  // Fly off to hamburger heaven
-  fly() {
-    // Set vy to be negative so it flies upward
-    this.vy = -this.speed;
-    // Update x and y positions with velocity
-    this.x += this.vx;
-    this.y += this.vy;
-  }
+  // Fly
+  fly() {}
 
   // Flapping wing animation
   flapWings() {
     this.framesElapsed++;
     if (this.framesElapsed === this.framesBtwEachImage) {
-      if (this.imageIndex === 1) {
-        this.imageIndex = 2;
+      if (this.imageIndex.current === this.imageIndex.min) {
+        this.imageIndex.current = this.imageIndex.max;
       } else {
-        this.imageIndex = 1;
+        this.imageIndex.current = this.imageIndex.min;
       }
       this.framesElapsed = 0;
     }
   }
 
-  // Returns true if hamburger flew to top of canvas (aka hamburger heaven)
-  isInHamburgerHeaven() {
-    if (this.y + this.height / 2 < 0) {
-      console.log(true);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // Reset defeatHamburger's variables
-  reset() {
-    // position
-    this.x = 900;
-    this.y = height - 300;
-    // initial velocity
-    this.vx = 0;
-    this.vy = 0;
-  }
+  // Reset hamburger's variables
+  reset() {}
 }
