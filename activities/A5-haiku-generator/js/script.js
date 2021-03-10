@@ -40,7 +40,8 @@ line3P.addEventListener(`click`, lineClicked);
 
 // Handles a click on a line
 function lineClicked(event) {
-  setNewLine(event.target);
+  // setNewLine(event.target);
+  fadeOut(event.target, getOpacity(event.target));
 }
 
 // Sets a new line to the provided element
@@ -56,6 +57,34 @@ function setNewLine(element) {
 function random(array) {
   let index = Math.floor(Math.random() * array.length);
   return array[index];
+}
+
+function getOpacity(element) {
+  // Get the opacity
+  let opacity = element.style[`opacity`];
+  // Convert opacity string to a number
+  opacity = parseFloat(opacity);
+  // Check if string is empty
+  if (isNaN(opacity)) {
+    // Set opacity to 1
+    opacity = 1;
+  }
+  // Return it as a number
+  return opacity;
+}
+
+function fadeOut(element, currentOpacity) {
+  // Reduce the opacity
+  currentOpacity -= 0.01;
+  // Set the opacity on the element
+  element.style[`opacity`] = currentOpacity;
+  // Check if the opacity is still above 0
+  if (currentOpacity > 0) {
+    // if yes, call fadeOut() again on the next frame
+    requestAnimationFrame(function () {
+      fadeOut(element, currentOpacity);
+    });
+  }
 }
 
 // // setup()
