@@ -40,23 +40,8 @@ line3P.addEventListener(`click`, lineClicked);
 
 // Handles a click on a line
 function lineClicked(event) {
-  // setNewLine(event.target);
+  // fade out
   fadeOut(event.target, getOpacity(event.target));
-}
-
-// Sets a new line to the provided element
-function setNewLine(element) {
-  if (element === line1P || element === line3P) {
-    element.innerText = random(fiveSyllableLines);
-  } else if (element === line2P) {
-    element.innerText = random(sevenSyllableLines);
-  }
-}
-
-// Returns a random element from any array passed as an argument
-function random(array) {
-  let index = Math.floor(Math.random() * array.length);
-  return array[index];
 }
 
 function getOpacity(element) {
@@ -73,9 +58,10 @@ function getOpacity(element) {
   return opacity;
 }
 
+// Make element fade out
 function fadeOut(element, currentOpacity) {
   // Reduce the opacity
-  currentOpacity -= 0.01;
+  currentOpacity -= 0.005;
   // Set the opacity on the element
   element.style[`opacity`] = currentOpacity;
   // Check if the opacity is still above 0
@@ -85,6 +71,41 @@ function fadeOut(element, currentOpacity) {
       fadeOut(element, currentOpacity);
     });
   }
+  // if no, start fading in and swap lines
+  else {
+    fadeIn(element, getOpacity(element));
+    setNewLine(element);
+  }
+}
+
+// Make element fade in
+function fadeIn(element, currentOpacity) {
+  // Reduce the opacity
+  currentOpacity += 0.005;
+  // Set the opacity on the element
+  element.style[`opacity`] = currentOpacity;
+  // Check if the opacity is still above 0
+  if (currentOpacity < 1) {
+    // if yes, call fadeOut() again on the next frame
+    requestAnimationFrame(function () {
+      fadeIn(element, currentOpacity);
+    });
+  }
+}
+
+// Sets a new line to the provided element
+function setNewLine(element) {
+  if (element === line1P || element === line3P) {
+    element.innerText = random(fiveSyllableLines);
+  } else if (element === line2P) {
+    element.innerText = random(sevenSyllableLines);
+  }
+}
+
+// Returns a random element from any array passed as an argument
+function random(array) {
+  let index = Math.floor(Math.random() * array.length);
+  return array[index];
 }
 
 // // setup()
