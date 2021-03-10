@@ -1,4 +1,12 @@
 body {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+  background: lightcoral
+}
+
+#haiku {
+  font-family: Georgia, sans-serif;
+  font-size: 2em;
+  margin: 30px;
 }
