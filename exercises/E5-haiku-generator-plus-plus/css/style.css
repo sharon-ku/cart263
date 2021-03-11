@@ -10,12 +10,33 @@ body {
   height: 100vh;
 }
 
+video {
+  z-index: -1000;
+  position: absolute;
+}
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80%;
+  height: 80vh;
+}
+
 #title {
+  margin: 30px;
   font-family: sans-serif;
   width: 300px;
   margin-right: 50px;
   text-align: right;
   font-size: 2.5em;
+  padding: 5px;
+}
+
+#title:hover {
+  cursor: pointer;
+  background: lightcyan;
 }
 
 #haiku {
@@ -25,8 +46,7 @@ body {
   width: 350px;
 }
 
-p:hover,
-#title:hover {
+p:hover {
   cursor: pointer;
   background: bisque;
 }

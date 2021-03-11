@@ -3,17 +3,22 @@ Exercise 5: Haiku Generator
 Sharon Ku
 
 Generates a random haiku
+You can switch a haiku line by clicking on it
 
-Source: some lines taken from Umaru-Chan's "An Ode to the Potato Chip"
+Source: some haiku lines taken from Umaru-Chan's "An Ode to the Potato Chip"
+
+Background video: Video by FL Studio from Pexels
+https://www.pexels.com/video/beach-with-clear-blue-water-3089895/
 **************************************************/
 
 "use strict";
 
 // Background fill
 let backgroundFill = {
-  r: 15,
-  g: 15,
-  b: 15,
+  r: 210,
+  g: 210,
+  b: 210,
+  alpha: 0.95,
 };
 
 // All five syllable lines
@@ -55,8 +60,15 @@ const NUM_LINES = 3;
 
 let title = document.getElementById(`title`);
 
-// Body element
-let body = document.getElementsByTagName(`body`);
+// Content element
+let content = document.getElementById(`content`);
+
+content.style.background = `rgba(
+    ${backgroundFill.r},
+    ${backgroundFill.g},
+    ${backgroundFill.b},
+    ${backgroundFill.alpha}
+  )`;
 
 // For each line, get using document's ID and push to lines array
 for (let i = 0; i < NUM_LINES; i++) {
@@ -87,17 +99,16 @@ function lineClicked(event) {
   // Fade out
   fadeOut(event.target, getOpacity(event.target));
 
-  // Change body's background color
-  for (let i = 0; i < body.length; i++) {
-    // Set a random background fill
-    setRandomBackgroundFill();
-    // Grab the body's background and set new background fill to it
-    body[i].style.background = `rgb(
+  // Set a random background fill to content
+  setRandomBackgroundFill();
+
+  // Grab the content's background and set new background fill to it
+  content.style.background = `rgba(
       ${backgroundFill.r},
       ${backgroundFill.g},
-      ${backgroundFill.b}
+      ${backgroundFill.b},
+      ${backgroundFill.alpha}
     )`;
-  }
 }
 
 // Set a random background fill color
@@ -173,13 +184,3 @@ function randomElement(array) {
   let index = Math.floor(Math.random() * array.length);
   return array[index];
 }
-
-// // setup()
-// //
-// // Description of setup() goes here.
-// function setup() {}
-//
-// // draw()
-// //
-// // Description of draw() goes here.
-// function draw() {}
