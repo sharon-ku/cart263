@@ -7,6 +7,7 @@ Generates a random haiku
 
 "use strict";
 
+// All five syllable lines
 let fiveSyllableLines = [
   `O, to be a tree`,
   `The cat does not know`,
@@ -14,6 +15,7 @@ let fiveSyllableLines = [
   `You have done your best`,
   `They are all gone now`,
 ];
+// All seven syllable lines
 let sevenSyllableLines = [
   `Say the things left unsaid`,
   `Never believe the wind's lies`,
@@ -22,21 +24,31 @@ let sevenSyllableLines = [
   `They will not come back again`,
 ];
 
-let line1 = random(fiveSyllableLines);
-let line2 = random(sevenSyllableLines);
-let line3 = random(fiveSyllableLines);
+// Create an array to store the 3 haiku lines
+let lines = [];
+// Number of haiku lines
+const NUM_LINES = 3;
 
-let line1P = document.getElementById(`line-1`);
-let line2P = document.getElementById(`line-2`);
-let line3P = document.getElementById(`line-3`);
+// For each line, get using document's ID and push to lines array
+for (let i = 0; i < NUM_LINES; i++) {
+  let line = document.getElementById(`line-${i + 1}`);
+  lines.push(line);
+}
 
-line1P.innerText = line1;
-line2P.innerText = line2;
-line3P.innerText = line3;
+// Assign initial haiku lines
+for (let i = 0; i < lines.length; i++) {
+  // If it's the 1st or 3rd line, assign random five syllable line
+  if (i === 0 || i === 2) {
+    lines[i].innerText = random(fiveSyllableLines);
+  }
+  // Else, if it's the 2nd line, assign random 7 syllable line
+  else {
+    lines[i].innerText = random(sevenSyllableLines);
+  }
 
-line1P.addEventListener(`click`, lineClicked);
-line2P.addEventListener(`click`, lineClicked);
-line3P.addEventListener(`click`, lineClicked);
+  // Add event listener to each line
+  lines[i].addEventListener(`click`, lineClicked);
+}
 
 // Handles a click on a line
 function lineClicked(event) {
@@ -44,6 +56,7 @@ function lineClicked(event) {
   fadeOut(event.target, getOpacity(event.target));
 }
 
+// Get opacity of line
 function getOpacity(element) {
   // Get the opacity
   let opacity = element.style[`opacity`];
@@ -95,9 +108,9 @@ function fadeIn(element, currentOpacity) {
 
 // Sets a new line to the provided element
 function setNewLine(element) {
-  if (element === line1P || element === line3P) {
+  if (element === lines[0] || element === lines[2]) {
     element.innerText = random(fiveSyllableLines);
-  } else if (element === line2P) {
+  } else if (element === lines[1]) {
     element.innerText = random(sevenSyllableLines);
   }
 }
