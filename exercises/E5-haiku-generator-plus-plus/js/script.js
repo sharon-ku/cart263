@@ -28,7 +28,6 @@ let fiveSyllableLines = [
   `We are all forests`,
   `You have done your best`,
   `They are all gone now`,
-  `I eat you for lunch`,
 ];
 // All seven syllable lines
 let sevenSyllableLines = [
