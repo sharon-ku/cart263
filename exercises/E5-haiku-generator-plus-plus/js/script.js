@@ -1,27 +1,38 @@
 /**************************************************
-Activity 5: Haiku Generator
+Exercise 5: Haiku Generator
 Sharon Ku
 
 Generates a random haiku
+
+Source: some lines taken from Umaru-Chan's "An Ode to the Potato Chip"
 **************************************************/
 
 "use strict";
 
+// Background fill
+let backgroundFill = {
+  r: 15,
+  g: 15,
+  b: 15,
+};
+
 // All five syllable lines
 let fiveSyllableLines = [
-  `O, to be a tree`,
+  `O, potato chip`,
   `The cat does not know`,
   `We are all forests`,
   `You have done your best`,
   `They are all gone now`,
+  `I eat you for lunch`,
 ];
 // All seven syllable lines
 let sevenSyllableLines = [
   `Say the things left unsaid`,
-  `Never believe the wind's lies`,
+  `Oh how I love to crunch thee`,
   `The autumn stretches its legs`,
   `Nothing can satisfy you`,
   `They will not come back again`,
+  `Your crispy corners are well equipped`,
 ];
 
 // Create an array to store the 3 haiku lines
@@ -35,15 +46,17 @@ for (let i = 0; i < NUM_LINES; i++) {
   lines.push(line);
 }
 
+let body = document.getElementsByTagName(`body`);
+
 // Assign initial haiku lines
 for (let i = 0; i < lines.length; i++) {
   // If it's the 1st or 3rd line, assign random five syllable line
   if (i === 0 || i === 2) {
-    lines[i].innerText = random(fiveSyllableLines);
+    lines[i].innerText = randomElement(fiveSyllableLines);
   }
   // Else, if it's the 2nd line, assign random 7 syllable line
   else {
-    lines[i].innerText = random(sevenSyllableLines);
+    lines[i].innerText = randomElement(sevenSyllableLines);
   }
 
   // Add event listener to each line
@@ -52,8 +65,26 @@ for (let i = 0; i < lines.length; i++) {
 
 // Handles a click on a line
 function lineClicked(event) {
-  // fade out
+  // Fade out
   fadeOut(event.target, getOpacity(event.target));
+
+  for (let i = 0; i < body.length; i++) {
+    // Set a random background fill
+    setRandomBackgroundFill();
+    // Grab the background of body and set new background fill to it
+    body[i].style.background = `rgb(
+      ${backgroundFill.r},
+      ${backgroundFill.g},
+      ${backgroundFill.b}
+    )`;
+  }
+}
+
+// Set a random background fill color
+function setRandomBackgroundFill() {
+  backgroundFill.r = Math.floor(150 + 105 * Math.random());
+  backgroundFill.g = Math.floor(150 + 105 * Math.random());
+  backgroundFill.b = Math.floor(150 + 105 * Math.random());
 }
 
 // Get opacity of line
@@ -109,14 +140,14 @@ function fadeIn(element, currentOpacity) {
 // Sets a new line to the provided element
 function setNewLine(element) {
   if (element === lines[0] || element === lines[2]) {
-    element.innerText = random(fiveSyllableLines);
+    element.innerText = randomElement(fiveSyllableLines);
   } else if (element === lines[1]) {
-    element.innerText = random(sevenSyllableLines);
+    element.innerText = randomElement(sevenSyllableLines);
   }
 }
 
 // Returns a random element from any array passed as an argument
-function random(array) {
+function randomElement(array) {
   let index = Math.floor(Math.random() * array.length);
   return array[index];
 }
@@ -125,8 +156,8 @@ function random(array) {
 // //
 // // Description of setup() goes here.
 // function setup() {}
-
-// draw()
 //
-// Description of draw() goes here.
-function draw() {}
+// // draw()
+// //
+// // Description of draw() goes here.
+// function draw() {}

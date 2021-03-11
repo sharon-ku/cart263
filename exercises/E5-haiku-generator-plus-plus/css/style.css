@@ -2,11 +2,24 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  background: lightcoral
+  background: #f0fff4;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 #haiku {
   font-family: Georgia, sans-serif;
   font-size: 2em;
   margin: 30px;
+}
+
+p {
+}
+
+p:hover {
+  cursor: pointer;
+  background: bisque;
 }
