@@ -35,18 +35,34 @@ let sevenSyllableLines = [
   `Your crispy corners are well equipped`,
 ];
 
+// All titles
+let titles = [
+  `What a Life`,
+  `A Crunching Sound`,
+  `Journey to the Abyss`,
+  `Love You Forever`,
+  `Neglected Tears`,
+  `Be My French Fry`,
+  `Feeling Miserable`,
+  `The Ant's Whisper`,
+  `The Aunt's Whisper`,
+];
+
 // Create an array to store the 3 haiku lines
 let lines = [];
 // Number of haiku lines
 const NUM_LINES = 3;
+
+let title = document.getElementById(`title`);
+
+// Body element
+let body = document.getElementsByTagName(`body`);
 
 // For each line, get using document's ID and push to lines array
 for (let i = 0; i < NUM_LINES; i++) {
   let line = document.getElementById(`line-${i + 1}`);
   lines.push(line);
 }
-
-let body = document.getElementsByTagName(`body`);
 
 // Assign initial haiku lines
 for (let i = 0; i < lines.length; i++) {
@@ -63,15 +79,19 @@ for (let i = 0; i < lines.length; i++) {
   lines[i].addEventListener(`click`, lineClicked);
 }
 
+// Add event listener to title
+title.addEventListener(`click`, lineClicked);
+
 // Handles a click on a line
 function lineClicked(event) {
   // Fade out
   fadeOut(event.target, getOpacity(event.target));
 
+  // Change body's background color
   for (let i = 0; i < body.length; i++) {
     // Set a random background fill
     setRandomBackgroundFill();
-    // Grab the background of body and set new background fill to it
+    // Grab the body's background and set new background fill to it
     body[i].style.background = `rgb(
       ${backgroundFill.r},
       ${backgroundFill.g},
@@ -143,6 +163,8 @@ function setNewLine(element) {
     element.innerText = randomElement(fiveSyllableLines);
   } else if (element === lines[1]) {
     element.innerText = randomElement(sevenSyllableLines);
+  } else if (element === title) {
+    element.innerText = randomElement(titles);
   }
 }
 
