@@ -20,3 +20,7 @@ CSS: Raving Redactionist
   color: red;
   text-decoration: underline;
 }
+
+#defeat-text {
+  text-align: center;
+}

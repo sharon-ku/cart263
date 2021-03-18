@@ -1,5 +1,5 @@
 /**
-Activity 6: Raving Redactionist
+Exercise 6: Raving Redactionist
 Sharon Ku
 
 We will create a webpage of text with some passages “redacted” (covered in black bars).
@@ -32,5 +32,12 @@ function attemptReveal() {
     $(this).removeClass(`redacted`);
     // Add the revealed class
     $(this).addClass(`revealed`);
+
+    // If all spans in the page have been revealed, then switch document text
+    if ($(`.revealed`).length === $(`.top-secret`).length) {
+      $(`#secret-document`).html(
+        `<p id="defeat-text">YOU LOST THE COLD WAR!!</p>`
+      );
+    }
   }
 }
