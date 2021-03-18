@@ -1,6 +1,22 @@
 /*********************************************
 
-Here is a description of any special CSS used.
-By default that's nothing.
+CSS: Raving Redactionist
 
 **********************************************/
+#secret-document {
+  font-family: monospace;
+  font-size: 1.25rem;
+  width: 50vw;
+  margin: auto;
+}
+
+.redacted {
+  background: black;
+  /* Prevents user from selecting the text */
+  user-select: none;
+}
+
+.revealed {
+  color: red;
+  text-decoration: underline;
+}
