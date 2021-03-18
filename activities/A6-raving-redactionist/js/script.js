@@ -9,10 +9,28 @@ The user is in charge of keeping the information secret, so they click the secre
 
 "use strict";
 
-// Code goes here
-
-/* When user clicks on redacted text, re-redact the text */
-$(`.redacted`).on(`click`, function (event) {
-  $(this).css(`background`, `black`);
-  $(this).css(`user-select`, `none`);
+// When user clicks on redacted text, re-redact the text
+$(`.top-secret`).on(`click`, function (event) {
+  // Remove the revealed class
+  $(this).removeClass(`revealed`);
+  // Add the redacted class
+  $(this).addClass(`redacted`);
 });
+
+// Remove redacted class over time
+setInterval(revelation, 500);
+
+function revelation() {
+  $(`.redacted`).each(attemptReveal);
+}
+
+// Attempt a hack
+function attemptReveal() {
+  // Hack succeeds 10% of the time
+  if (Math.random() < 0.1) {
+    // Remove the redacted class
+    $(this).removeClass(`redacted`);
+    // Add the revealed class
+    $(this).addClass(`revealed`);
+  }
+}
