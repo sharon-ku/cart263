@@ -20,6 +20,7 @@ $(`.top-secret`).on(`click`, function (event) {
 // Remove redacted class over time
 setInterval(revelation, 500);
 
+// Attempt revealing the redacted text
 function revelation() {
   $(`.redacted`).each(attemptReveal);
 }
@@ -35,9 +36,14 @@ function attemptReveal() {
 
     // If all spans in the page have been revealed, then switch document text
     if ($(`.revealed`).length === $(`.top-secret`).length) {
-      $(`#secret-document`).html(
-        `<p id="defeat-text">YOU LOST THE COLD WAR!!</p>`
-      );
+      setInterval(showDefeatText, 1000);
     }
+  }
+
+  // Show defeat text
+  function showDefeatText() {
+    $(`#secret-document`).html(
+      `<p id="defeat-text">YOU LOST THE COLD WAR!!</p>`
+    );
   }
 }
