@@ -5,6 +5,12 @@ Sharon Ku
 The user is the Tom-Hanks-in-the-Da-Vinci-Code of classic poetry, seeing coded messages in poems. The user reads a poem and searches it with their mouse to uncover special letters. If they drag the letters in the correct order into a special solution area, they crack the code!
 
 Poem: Encounter by Amanda Jernigan
+
+Music:
+Warm Duck Shuffle by arnebhus | https://soundcloud.com/arnebhus
+Creative Commons Attribution 3.0 Unported License
+https://creativecommons.org/licenses/by/3.0/deed.en_US
+
 */
 
 "use strict";
@@ -16,6 +22,9 @@ const FOUND_ANIMATION_DURATION = 500;
 const CORRECT_ANSWER = "baby in space";
 const FIRST_WORD = "baby";
 const FIRST_TWO_WORDS = "baby in";
+
+// Victory music
+const VICTORY_MUSIC = new Audio("assets/sounds/warm-duck-shuffle.mp3");
 
 // Create instructions dialog box
 $(`#instructions`).dialog({
@@ -74,6 +83,8 @@ $(`#answer`).droppable({
     if ($(this).text() === CORRECT_ANSWER) {
       // Open solved dialog box if answer correct
       $(`#solved-dialog`).dialog(`open`);
+      // Play victory music
+      VICTORY_MUSIC.play();
     }
   },
 });
