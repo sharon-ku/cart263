@@ -4,8 +4,13 @@ CSS for Code Taker
 
 **********************************************/
 
+body {
+  padding: 30px;
+}
+
 #poem {
-  font-size: 2em;
+  font-size: 1.3em;
+  line-height: 1.2em;
 }
 
 #answer {

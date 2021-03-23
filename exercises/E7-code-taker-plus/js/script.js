@@ -3,6 +3,8 @@ Code Tacker
 Sharon Ku
 
 The user is the Tom-Hanks-in-the-Da-Vinci-Code of classic poetry, seeing coded messages in poems. The user reads a poem and searches it with their mouse to uncover special letters. If they drag the letters in the correct order into a special solution area, they crack the code!
+
+Poem: Encounter by Amanda Jernigan
 */
 
 "use strict";
