@@ -40,3 +40,8 @@ h4 {
   color: #fc9c00;
   font-weight: bold;
 }
+
+/* Hide close button on dialog */
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}

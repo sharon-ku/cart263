@@ -23,24 +23,65 @@ const CORRECT_ANSWER = "baby in space";
 const FIRST_WORD = "baby";
 const FIRST_TWO_WORDS = "baby in";
 
+// Alert message
+const ALERT_MESSAGE = "Goodbye.";
+// Delay in milliseconds before displaying alert message
+const ALERT_MESSAGE_DELAY = 100;
+
 // Victory music
 const VICTORY_MUSIC = new Audio("assets/sounds/warm-duck-shuffle.mp3");
 
+// Create expulsion dialog box
+$(`#expulsion`).dialog({
+  // Need to close dialog before interacting with page
+  modal: true,
+  // Do not show dialog by default
+  autoOpen: false,
+  // Hide the close button
+  dialogClass: "no-close",
+  // Buttons on dialog
+  buttons: {
+    // Give user option to redeem themselves
+    "Noooo don't be like that! If I break this code successfully, you have to let me stay.": function () {
+      $(this).dialog(`close`);
+    },
+    "Mkay, bye.": function () {
+      $(this).dialog(`close`);
+      // Hide entire poem; user does not deserve to break this code
+      $(`body`).hide();
+      // Display final Goodbye message after delay
+      setTimeout(function () {
+        alert(ALERT_MESSAGE);
+      }, ALERT_MESSAGE_DELAY);
+    },
+  },
+});
+
 // Create instructions dialog box
 $(`#instructions`).dialog({
+  // Need to close dialog before interacting with page
+  modal: true,
+  // Hide the close button
+  dialogClass: "no-close",
   // Buttons on dialog
   buttons: {
     "YES! ALLONS-Y! LET'S GO!": function () {
+      // Close instructions dialog
       $(this).dialog(`close`);
     },
     "Meh, maybe another day.": function () {
+      // Close instructions dialog
       $(this).dialog(`close`);
+      // Open expulsion dialog
+      $(`#expulsion`).dialog(`open`);
     },
   },
 });
 
 // Create solved dialog box
 $(`#solved-dialog`).dialog({
+  // Need to close dialog before interacting with page
+  modal: true,
   // Do not show dialog by default
   autoOpen: false,
   // Button on dialog
