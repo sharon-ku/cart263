@@ -45,7 +45,7 @@ $(`#answer`).droppable({
     ui.draggable.removeClass(`found`);
 
     // Check if answer is right
-    if ($(this).text() === "Theremin") {
+    if ($(this).text() === "baby in space") {
       // Open solved dialog box if answer correct
       $(`#solved-dialog`).dialog(`open`);
     }
