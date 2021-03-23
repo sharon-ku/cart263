@@ -9,7 +9,28 @@ Poem: Encounter by Amanda Jernigan
 
 "use strict";
 
-// Created solved dialog box
+// Duration of animation to apply `found` class to secret letter
+const FOUND_ANIMATION_DURATION = 500;
+
+// Correct secret message
+const CORRECT_ANSWER = "baby in space";
+const FIRST_WORD = "baby";
+const FIRST_TWO_WORDS = "baby in";
+
+// Create instructions dialog box
+$(`#instructions`).dialog({
+  // Buttons on dialog
+  buttons: {
+    "YES! ALLONS-Y! LET'S GO!": function () {
+      $(this).dialog(`close`);
+    },
+    "Meh, maybe another day.": function () {
+      $(this).dialog(`close`);
+    },
+  },
+});
+
+// Create solved dialog box
 $(`#solved-dialog`).dialog({
   // Do not show dialog by default
   autoOpen: false,
@@ -24,7 +45,7 @@ $(`#solved-dialog`).dialog({
 // When mouse hovers over secret letter:
 $(`.secret`).one(`mouseover`, function (event) {
   // Add `found` class to secret element that is animated
-  $(this).addClass(`found`, 500);
+  $(this).addClass(`found`, FOUND_ANIMATION_DURATION);
   // Make secret element draggable
   $(this).draggable({
     // Clone the letter being dragged
@@ -44,8 +65,13 @@ $(`#answer`).droppable({
     // Remove found class from poem letter
     ui.draggable.removeClass(`found`);
 
+    // Add space between each word
+    if ($(this).text() === FIRST_WORD || $(this).text() === FIRST_TWO_WORDS) {
+      $(this).append(" ");
+    }
+
     // Check if answer is right
-    if ($(this).text() === "baby in space") {
+    if ($(this).text() === CORRECT_ANSWER) {
       // Open solved dialog box if answer correct
       $(`#solved-dialog`).dialog(`open`);
     }

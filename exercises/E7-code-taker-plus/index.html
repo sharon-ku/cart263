@@ -17,7 +17,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://code.jquery.com/ui/1.12.1/themes/le-frog/jquery-ui.css"
+      href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css"
     />
 
     <!-- Library script(s) go here -->
@@ -34,9 +34,21 @@
   </head>
 
   <body>
+    <!-- Congratulatory message when code is broken -->
+    <div id="instructions" title="What to do?">
+      <p>
+        Your cursor has magical properties. When you hover over the letters, a
+        secret code will be revealed!
+      </p>
+      <p>
+        Are you ready to take on this important mission?
+      </p>
+    </div>
+
     <!-- The poem, secret letters are in spans with class "secret" -->
     <section id="poem">
       <h2>Encounter</h2>
+      <h4>by Amanda Jernigan</h4>
       <p>
         A friend, seeing his babe in ultrasound,<br />
         imagined it an astronaut, “<span class="secret">b</span>ehind<br />
@@ -59,7 +71,6 @@
         as if I were the one adrift in spa<span class="secret">c</span>e,<br />
         and you the on<span class="secret">e</span> who might yet pull me in.<br />
       </p>
-      <h4>Amanda Jernigan</h4>
     </section>
 
     <!-- The secret answer area-->
