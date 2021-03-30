@@ -12,15 +12,43 @@ class Play extends Phaser.Scene {
     // Keep avatar trapped inside canvas
     this.avatar.setCollideWorldBounds(true);
 
-    // Set random x and y position for thumbs down
-    let x = Math.random() * this.sys.canvas.width;
-    let y = Math.random() * this.sys.canvas.height;
+    // Set x and y position for thumbs down
+    let thumbsDown = {
+      x: undefined,
+      y: undefined,
+    };
+    // Assign random x and y positions to thumbs down
+    this.setRandomPosition(thumbsDown);
 
     // Create the thumbs down
-    this.sadness = this.physics.add.sprite(x, y, `thumbs-down`);
+    this.sadness = this.physics.add.sprite(
+      thumbsDown.x,
+      thumbsDown.y,
+      `thumbs-down`
+    );
+
+    // Check for overlap between avatar and sadness
+    this.physics.add.overlap(
+      this.avatar,
+      this.sadness,
+      this.getSad,
+      null,
+      this
+    );
 
     // Create cursor keys
     this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  // Sets random position to provided subject
+  setRandomPosition(subject) {
+    subject.x = Math.random() * this.sys.canvas.width;
+    subject.y = Math.random() * this.sys.canvas.height;
+  }
+
+  // Reset sadness position
+  getSad(avatar, sadness) {
+    this.setRandomPosition(sadness);
   }
 
   // Update
