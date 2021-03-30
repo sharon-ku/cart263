@@ -8,7 +8,10 @@ class Boot extends Phaser.Scene {
   // Preload assets + switch scene when loaded
   preload() {
     // Load assets here!
+    // Load avatar image
     this.load.image(`avatar`, `assets/images/avatar.png`);
+    // Load thumbs down image
+    this.load.image(`thumbs-down`, `assets/images/thumbs-down.png`);
 
     // Switch to the scene with the key of "play" once loaded
     this.load.on(`complete`, () => {
