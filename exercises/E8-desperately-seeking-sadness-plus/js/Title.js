@@ -90,6 +90,15 @@ class Title extends Phaser.Scene {
         titleText.style
       )
       .setOrigin(0.5);
+
+    // Make title blink
+    this.tweens.add({
+      targets: this.title,
+      alpha: 0.4,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut",
+    });
   }
 
   // Create play button
@@ -136,6 +145,16 @@ class Title extends Phaser.Scene {
       },
       this
     );
+
+    // Animate "Play" button to change sizes
+    this.tweens.add({
+      targets: playText,
+      scaleX: 0.8,
+      scaleY: 0.9,
+      yoyo: true,
+      repeat: -1,
+      ease: "Sine.easeInOut",
+    });
   }
 
   // Update

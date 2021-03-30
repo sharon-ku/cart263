@@ -12,36 +12,33 @@ class Play extends Phaser.Scene {
     // Keep avatar trapped inside canvas
     this.avatar.setCollideWorldBounds(true);
 
-    // Set x and y position for thumbs down
-    let thumbsDown = {
-      x: undefined,
-      y: undefined,
-    };
-    // Assign random x and y positions to thumbs down
-    this.setRandomPosition(thumbsDown);
+    // Create and play background music
+    this.createBackgroundMusic();
 
-    // Create the thumbs down
-    this.sadness = this.physics.add.sprite(
-      thumbsDown.x,
-      thumbsDown.y,
-      `thumbs-down`
-    );
+    // Create arcade sound
+    this.arcade = this.sound.add(`arcade`);
 
-    // Create the thumbs up
-    this.happiness = this.physics.add.group({
-      key: `thumbs-up`,
-      quantity: 120,
-      bounceX: 0.5,
-      bounceY: 0.5,
-      collideWorldBounds: true,
-      dragX: 50,
-      dragY: 50,
-    });
-    // Get all children of happiness group and put them in random position somewhere inside rectangle defined by canvas
-    Phaser.Actions.RandomRectangle(
-      this.happiness.getChildren(),
-      this.physics.world.bounds
-    );
+    // Learned from this example: https://phaser.io/examples/v3/view/audio/html5-audio/play-audio-from-child-scene
+    // DO SOMETHING HERE WITH SOUND
+    // if (this.sound.locked) {
+    //   text.setText("Tap to unlock\nand play music");
+    //
+    //   this.sound.once(
+    //     "unlocked",
+    //     function (soundManager) {
+    //       setupSceneInput.call(this, text, this.arcade);
+    //     },
+    //     this
+    //   );
+    // } else {
+    //   setupSceneInput.call(this, text, jungle);
+    // }
+
+    // Create sadness
+    this.createSadness();
+
+    // Create happiness
+    this.createHappiness();
 
     // Deal with collision between avatar and happiness
     this.physics.add.collider(this.avatar, this.happiness);
@@ -62,15 +59,76 @@ class Play extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
+  // Create background music
+  createBackgroundMusic() {
+    // Create background music
+    this.backgroundMusic = this.sound.add(`background-music`);
+    // Properties for background music
+    let backgroundMusicConfig = {
+      volume: 0.2,
+      loop: true,
+    };
+    // Play background music
+    this.backgroundMusic.play(backgroundMusicConfig);
+  }
+
+  // Create sadness
+  createSadness() {
+    // Set x and y position for thumbs down
+    let thumbsDown = {
+      x: undefined,
+      y: undefined,
+    };
+    // Assign random x and y positions to thumbs down
+    this.setRandomPosition(thumbsDown);
+
+    // Create the thumbs down
+    this.sadness = this.physics.add.sprite(
+      thumbsDown.x,
+      thumbsDown.y,
+      `thumbs-down`
+    );
+  }
+
+  // Create happiness
+  createHappiness() {
+    // Create the thumbs up
+    this.happiness = this.physics.add.group({
+      key: `thumbs-up`,
+      quantity: 120,
+      bounceX: 0.5,
+      bounceY: 0.5,
+      collideWorldBounds: true,
+      dragX: 50,
+      dragY: 50,
+    });
+    // Get all children of happiness group and put them in random position somewhere inside rectangle defined by canvas
+    Phaser.Actions.RandomRectangle(
+      this.happiness.getChildren(),
+      this.physics.world.bounds
+    );
+  }
+
+  // Play arcade sound effect
+  playArcade(object1, object2) {
+    if (!this.arcade.isPlaying) {
+      this.arcade.play();
+    }
+  }
+
   // Sets random position to provided subject
   setRandomPosition(subject) {
     subject.x = Math.random() * this.sys.canvas.width;
     subject.y = Math.random() * this.sys.canvas.height;
   }
 
-  // Reset sadness position
+  // when avatar gets sadness
   getSad(avatar, sadness) {
+    // Reset sadness position
     this.setRandomPosition(sadness);
+
+    // Play arcade sound effect
+    this.playArcade();
   }
 
   // Update

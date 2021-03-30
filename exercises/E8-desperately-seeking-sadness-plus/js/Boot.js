@@ -14,6 +14,13 @@ class Boot extends Phaser.Scene {
     this.load.image(`thumbs-down`, `assets/images/thumbs-down.png`);
     // Load thumbs up image
     this.load.image(`thumbs-up`, `assets/images/thumbs-up.png`);
+    // Load background music
+    this.load.audio(
+      `background-music`,
+      `assets/sounds/unexpected-distress.mp3`
+    );
+    // Load arcade sound effect
+    this.load.audio(`arcade`, "assets/sounds/arcade.wav");
 
     // Switch to the scene with the key of "play" once loaded
     this.load.on(`complete`, () => {
