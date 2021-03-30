@@ -27,6 +27,28 @@ class Play extends Phaser.Scene {
       `thumbs-down`
     );
 
+    // Create the thumbs up
+    this.happiness = this.physics.add.group({
+      key: `thumbs-up`,
+      quantity: 120,
+      bounceX: 0.5,
+      bounceY: 0.5,
+      collideWorldBounds: true,
+      dragX: 50,
+      dragY: 50,
+    });
+    // Get all children of happiness group and put them in random position somewhere inside rectangle defined by canvas
+    Phaser.Actions.RandomRectangle(
+      this.happiness.getChildren(),
+      this.physics.world.bounds
+    );
+
+    // Deal with collision between avatar and happiness
+    this.physics.add.collider(this.avatar, this.happiness);
+
+    // Deal with collision between happiness group and itself
+    this.physics.add.collider(this.happiness, this.happiness);
+
     // Check for overlap between avatar and sadness
     this.physics.add.overlap(
       this.avatar,
