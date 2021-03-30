@@ -1,0 +1,13 @@
+/*********************************************
+
+Here is a description of any special CSS used.
+By default that's nothing.
+
+**********************************************/
+
+body {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
