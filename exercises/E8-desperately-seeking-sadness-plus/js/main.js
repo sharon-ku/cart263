@@ -22,7 +22,7 @@ let config = {
     default: "arcade",
   },
   // Scenes to load
-  scene: [Boot, Play],
+  scene: [Boot, Title, Play],
 };
 
 // Create game using configuration
