@@ -19,48 +19,48 @@ class Title extends Phaser.Scene {
     // Add play button
     this.createPlayButton(canvasCenter);
 
-    // Learned how to create rectangle from this example: https://phaser.io/examples/v3/view/game-objects/shapes/rectangle
-    // Learned how to create filled and rounded rectangle: https://phaser.io/examples/v3/view/game-objects/graphics/fill-rounded-rectangle
-    // // Set rectangular button properties
-    // let rectProperties = {
+    // // Learned how to create rectangle from this example: https://phaser.io/examples/v3/view/game-objects/shapes/rectangle
+    // // Learned how to create filled and rounded rectangle: https://phaser.io/examples/v3/view/game-objects/graphics/fill-rounded-rectangle
+    // // // Set rectangular button properties
+    // // let rectProperties = {
+    // //   x: canvasCenter.x,
+    // //   y: canvasCenter.y + 50,
+    // //   width: 200,
+    // //   height: 100,
+    // //   fill: 0x6666ff,
+    // // };
+    // // // Create rectangular button
+    // // let button = this.add.rectangle(
+    // //   rectProperties.x,
+    // //   rectProperties.y,
+    // //   rectProperties.width,
+    // //   rectProperties.height,
+    // //   rectProperties.fill
+    // // );
+    //
+    // let roundedRect = {
     //   x: canvasCenter.x,
-    //   y: canvasCenter.y + 50,
-    //   width: 200,
-    //   height: 100,
-    //   fill: 0x6666ff,
+    //   y: canvasCenter.y,
     // };
-    // // Create rectangular button
-    // let button = this.add.rectangle(
-    //   rectProperties.x,
-    //   rectProperties.y,
-    //   rectProperties.width,
-    //   rectProperties.height,
-    //   rectProperties.fill
+    //
+    // let button = this.add.graphics();
+    //
+    // button.fillStyle(0x6666ff, 1);
+    //
+    // button.fillRoundedRect(canvasCenter.x, canvasCenter.y, 400, 200, 32);
+    //
+    // // Make button interactive
+    // button.setInteractive();
+    //
+    // // Learned how to implement button function: https://phaser.io/examples/v3/view/physics/arcade/restart-physics-scene
+    // // Once button clicked on, switch scene to play
+    // button.once(
+    //   "pointerup",
+    //   function () {
+    //     this.scene.start(`play`);
+    //   },
+    //   this
     // );
-
-    let roundedRect = {
-      x: canvasCenter.x,
-      y: canvasCenter.y,
-    };
-
-    let button = this.add.graphics();
-
-    button.fillStyle(0x6666ff, 1);
-
-    button.fillRoundedRect(canvasCenter.x, canvasCenter.y, 400, 200, 32);
-
-    // Make button interactive
-    button.setInteractive();
-
-    // Learned how to implement button function: https://phaser.io/examples/v3/view/physics/arcade/restart-physics-scene
-    // Once button clicked on, switch scene to play
-    button.once(
-      "pointerup",
-      function () {
-        this.scene.start(`play`);
-      },
-      this
-    );
   }
 
   // Create title text
@@ -112,7 +112,8 @@ class Title extends Phaser.Scene {
       padding: 16,
     };
 
-    //  16px padding around all sides
+    // Learned how to add padding to text from here: https://phaser.io/examples/v3/view/game-objects/text/text-padding
+    // Set properties for "Play" button text
     let playText = this.add
       .text(
         canvasCenter.x + playProperties.xOffset,
