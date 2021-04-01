@@ -1,6 +1,15 @@
 /*********************************************
 
-Here is a description of any special CSS used.
-By default that's nothing.
+CSS style sheet for game
 
 **********************************************/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border;
+}
+
+body {
+  background: coral;
+}
