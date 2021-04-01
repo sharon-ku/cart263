@@ -9,8 +9,8 @@ class Title extends Phaser.Scene {
   create() {
     // Obtaining canvas's center positions
     const canvasCenter = {
-      x: this.cameras.main.worldView.x + this.cameras.main.width / 2,
-      y: this.cameras.main.worldView.y + this.cameras.main.height / 2,
+      x: this.physics.world.bounds.centerX,
+      y: this.physics.world.bounds.centerY,
     };
 
     // Create title text
@@ -18,6 +18,9 @@ class Title extends Phaser.Scene {
 
     // Add play button
     this.createPlayButton(canvasCenter);
+
+    // --- KEEPING THIS CODE HERE IN CASE I EVER WANT TO MAKE INTERACTIVE RECTANGLES IN FUTURE
+    // Note to future self: interactivity does not work with rounded rectangle graphics code! (works with normal rectangle though)
 
     // // Learned how to create rectangle from this example: https://phaser.io/examples/v3/view/game-objects/shapes/rectangle
     // // Learned how to create filled and rounded rectangle: https://phaser.io/examples/v3/view/game-objects/graphics/fill-rounded-rectangle

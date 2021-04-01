@@ -15,24 +15,9 @@ class Play extends Phaser.Scene {
     // Create and play background music
     this.createBackgroundMusic();
 
+    // Learned from this example: https://phaser.io/examples/v3/view/audio/html5-audio/play-audio-from-child-scene
     // Create arcade sound
     this.arcade = this.sound.add(`arcade`);
-
-    // Learned from this example: https://phaser.io/examples/v3/view/audio/html5-audio/play-audio-from-child-scene
-    // DO SOMETHING HERE WITH SOUND
-    // if (this.sound.locked) {
-    //   text.setText("Tap to unlock\nand play music");
-    //
-    //   this.sound.once(
-    //     "unlocked",
-    //     function (soundManager) {
-    //       setupSceneInput.call(this, text, this.arcade);
-    //     },
-    //     this
-    //   );
-    // } else {
-    //   setupSceneInput.call(this, text, jungle);
-    // }
 
     // Create sadness
     this.createSadness();
