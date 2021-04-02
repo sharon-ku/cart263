@@ -287,13 +287,14 @@ let sketch4 = function (p) {
 let myp54 = new p5(sketch4);
 
 // PUZZLE PIECES ----------------------------------------------------
-// Make puzzle pieces draggable
+// Make left puzzle draggable
 $(`#left-puzzle-canvas`).draggable({
   drag: function (event, ui) {
     $(this).css(`cursor`, `grab`);
   },
 });
 
+// Make right puzzle draggable
 $(`#right-puzzle-canvas`).draggable({
   drag: function (event, ui) {
     $(this).css(`cursor`, `grab`);
@@ -303,8 +304,8 @@ $(`#right-puzzle-canvas`).draggable({
 // When drop puzzle on box, make it snap to box
 $(`#puzzle-box`).droppable({
   drop: function (event, ui) {
-    $(ui.draggable).css("top", $(this).position().top - 100);
-    $(ui.draggable).css("left", $(this).position().left - 600);
+    $(ui.draggable).css("top", $(this).position().top);
+    $(ui.draggable).css("left", $(this).position().left);
   },
 });
 
