@@ -13,3 +13,12 @@ CSS style sheet for game
 body {
   background: coral;
 }
+
+p {
+  padding-bottom: 20px;
+}
+
+/* Hide close button for dialog box */
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
