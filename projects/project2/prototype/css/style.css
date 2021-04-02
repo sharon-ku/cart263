@@ -36,6 +36,13 @@ p {
   margin: 100px;
 }
 
+.left-puzzle-snap {
+  top: 0px;
+  left: 0px;
+  margin: none;
+  background: red;
+}
+
 #right-puzzle-canvas {
   display: inline;
 
@@ -43,4 +50,23 @@ p {
   position: relative;
   top: 300px;
   left: 500px;
+}
+
+#puzzle-box {
+  /* Dimensions of box */
+  width: 140px;
+  height: 120px;
+
+  /* Display type */
+  display: grid;
+
+  /* Background color */
+  background: white;
+
+  /* Set position relative to parent's position */
+  position: relative;
+  top: 300px;
+  left: 500px;
+
+  margin: 0px;
 }
