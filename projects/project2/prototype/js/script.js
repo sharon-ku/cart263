@@ -2,7 +2,7 @@
 Project 2 Prototype
 Sharon Ku
 
-Experimenting with jQuery dialog and p5.js canvases
+Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a way to progress the storyline
 */
 
 "use strict";
