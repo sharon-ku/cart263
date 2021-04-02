@@ -300,14 +300,11 @@ $(`#right-puzzle-canvas`).draggable({
   },
 });
 
+// When drop puzzle on box, make it snap to box
 $(`#puzzle-box`).droppable({
-  // drop: function (event, ui) {
-  //   // ui.draggable.remove();
-  //   ui.draggable.addClass(`left-puzzle-snap`);
-  // },
   drop: function (event, ui) {
-    $(ui.draggable).css("top", $(this).position().top - 120);
-    $(ui.draggable).css("left", $(this).position().left - 30);
+    $(ui.draggable).css("top", $(this).position().top - 100);
+    $(ui.draggable).css("left", $(this).position().left - 600);
   },
 });
 
