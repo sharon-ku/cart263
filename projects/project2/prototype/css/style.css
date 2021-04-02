@@ -58,3 +58,7 @@ p {
   /* Set margin */
   margin: 200px;
 }
+
+#puzzle-box-instructions {
+  padding: 10px;
+}

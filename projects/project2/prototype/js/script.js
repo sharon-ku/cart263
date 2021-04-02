@@ -93,7 +93,7 @@ let sketch = function (p) {
 let myp5 = new p5(sketch);
 
 // -------------------------------------------------------------------
-// Create intro canvas
+// Create distraction canvas
 let sketch2 = function (p) {
   // Background color: light purple
   let bgFill = {
@@ -114,8 +114,8 @@ let sketch2 = function (p) {
   // Create canvas and show video of user
   p.setup = function () {
     // Create canvas
-    let introCanvas = p.createCanvas(320, 240);
-    introCanvas.parent(`intro-canvas`);
+    let distractionCanvas = p.createCanvas(320, 240);
+    distractionCanvas.parent(`distraction-canvas`);
 
     // Show video of user
     p.createVideoCapture();
@@ -301,18 +301,24 @@ $(`#right-puzzle-canvas`).draggable({
   },
 });
 
-// When drop puzzle on box, make it snap to box
+// Make puzzle box droppable
 $(`#puzzle-box`).droppable({
+  // When drop puzzle on box:
   drop: function (event, ui) {
+    // Make puzzle snap to box
     $(ui.draggable).css("top", $(this).position().top);
     $(ui.draggable).css("left", $(this).position().left);
+    $(ui.draggable).css("left", $(this).position().left);
+
+    // Disable draggable functionality
+    $(ui.draggable).draggable("disable");
   },
 });
 
 // CREATE ALL DIALOG BOXES ----------------------------------------------------
 
-// Create an intro dialog
-$(`#intro-dialog`).dialog({
+// Create an distraction dialog
+$(`#distraction-dialog`).dialog({
   // Set position of dialog based on window position
   position: { my: "left+100 top+100", at: "left top", of: window },
   // Adjust size of dialog box based on content it stores
