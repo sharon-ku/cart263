@@ -7,6 +7,12 @@ Experimenting with jQuery dialog and p5.js canvases
 
 "use strict";
 
+// Number of puzzles dropped in box
+let numPuzzlesDropped = 0;
+
+// Number of total puzzles
+const NUM_TOTAL_PUZZLES = 2;
+
 // Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 
 // -------------------------------------------------------------------
@@ -312,6 +318,15 @@ $(`#puzzle-box`).droppable({
 
     // Disable draggable functionality
     $(ui.draggable).draggable("disable");
+
+    // Add 1 to numPuzzlesDropped
+    numPuzzlesDropped++;
+    console.log(numPuzzlesDropped);
+
+    // If total number of puzzles dropped, open congratulations-dialog box
+    if (numPuzzlesDropped === NUM_TOTAL_PUZZLES) {
+      $("#congratulations-dialog").dialog("open");
+    }
   },
 });
 
@@ -324,6 +339,15 @@ $(`#distraction-dialog`).dialog({
   // Adjust size of dialog box based on content it stores
   height: "auto",
   width: "auto",
+  // Button options
+  buttons: {
+    "I like what I see!": function () {
+      $(`#distraction-description`).text(`keep looking then`);
+    },
+    "Please stop distracting me": function () {
+      $(this).dialog(`close`);
+    },
+  },
 });
 
 // Create a welcome dialog
@@ -344,4 +368,20 @@ $(`#welcome-dialog`).dialog({
       $(this).dialog(`close`);
     },
   },
+});
+
+// Create a congratulations dialog
+$(`#congratulations-dialog`).dialog({
+  // Do not let user interact with anything else on page until dialog closed
+  modal: true,
+  // Don't open automatically
+  autoOpen: false,
+  // Hide close button
+  dialogClass: "no-close",
+  show: { effect: "fade", duration: 300 },
+  // Set position of dialog based on window position
+  position: { my: "center center", at: "center top+200", of: window },
+  // Adjust size of dialog box based on content it stores
+  height: "auto",
+  width: "auto",
 });
