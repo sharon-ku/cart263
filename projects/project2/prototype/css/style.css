@@ -11,7 +11,8 @@ CSS style sheet for game
 }
 
 body {
-  background: coral;
+  /* Lavender color */
+  background: rgb(150, 160, 253);
 }
 
 p {

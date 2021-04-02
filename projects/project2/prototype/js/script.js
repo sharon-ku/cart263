@@ -95,19 +95,52 @@ let myp5 = new p5(sketch);
 // -------------------------------------------------------------------
 // Create intro canvas
 let sketch2 = function (p) {
-  let capture;
-
-  p.setup = function () {
-    let introCanvas = p.createCanvas(320, 240);
-    capture = p.createCapture(p.VIDEO);
-    capture.size(320, 240);
-    capture.hide();
-    introCanvas.parent(`intro-canvas`);
+  // Background color: light purple
+  let bgFill = {
+    r: 240,
+    g: 170,
+    b: 255,
   };
 
+  // For video capture
+  let capture;
+  // Properties for video capture display
+  let captureProperties = {
+    // position
+    x: 0,
+    y: 0,
+  };
+
+  // Create canvas and show video of user
+  p.setup = function () {
+    // Create canvas
+    let introCanvas = p.createCanvas(320, 240);
+    introCanvas.parent(`intro-canvas`);
+
+    // Show video of user
+    p.createVideoCapture();
+  };
+
+  // Create video of user
+  p.createVideoCapture = function () {
+    capture = p.createCapture(p.VIDEO);
+    capture.size(p.width, p.height);
+    capture.hide();
+  };
+
+  // Set background color and display video capture
   p.draw = function () {
-    p.background(0);
-    p.image(capture, 0, 0, 320, 240);
+    // Set background color
+    p.background(bgFill.r, bgFill.g, bgFill.b);
+
+    // Show video capture
+    p.image(
+      capture,
+      captureProperties.x,
+      captureProperties.y,
+      p.width,
+      p.height
+    );
   };
 };
 
