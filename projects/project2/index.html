@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      width="device-width,"
+      initial-scale="1.0,"
+      maximum-scale="1.0,"
+      user-scalable="0"
+    />
+
+    <title>Project 2 Prototype</title>
+
+    <!-- CSS stylesheet(s) -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+
+    <!-- Library script(s) go here -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="js/libraries/p5.min.js"></script>
+    <script src="js/libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Welcome -->
+    <div id="welcome-dialog" title="Welcome!">
+      <p>Hi! A new friend! Come on in...</p>
+      <section id="welcome-canvas"></section>
+    </div>
+
+    <!-- Distraction dialog -->
+    <div id="distraction-dialog" title="Ah yes. We meet again.">
+      <p id="distraction-description">My job is to distract you.</p>
+      <section id="distraction-canvas"></section>
+    </div>
+
+    <!-- Puzzle box: drop puzzle pieces here -->
+    <section id="puzzle-box">
+      <!-- Right puzzle piece -->
+      <section id="right-puzzle-canvas"></section>
+
+      <!-- Left puzzle piece -->
+      <section id="left-puzzle-canvas"></section>
+
+      <!-- Subtle instructions that accompany puzzle box -->
+      <p id="puzzle-box-instructions">drop puzzle piece here.</p>
+    </section>
+
+    <!-- Congratulations dialog -->
+    <div id="congratulations-dialog" title="Congratulations! You did it!">
+      <h1 id="hooray">HOORAY!</h1>
+    </div>
+
+    <!-- My script(s) -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

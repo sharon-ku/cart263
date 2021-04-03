@@ -1,0 +1,68 @@
+/*********************************************
+
+CSS style sheet for game
+
+**********************************************/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border;
+}
+
+body {
+  /* Lavender color */
+  background: rgb(150, 160, 253);
+
+  overflow: hidden;
+}
+
+p {
+  padding-bottom: 20px;
+}
+
+/* Hide close button for dialog box */
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+#left-puzzle-canvas {
+  display: inline;
+
+  /* Set position relative to parent's position */
+  position: relative;
+  top: 400px;
+  right: 100px;
+}
+
+#right-puzzle-canvas {
+  display: inline;
+
+  /* Set position relative to parent's position */
+  position: relative;
+  top: 300px;
+  left: 500px;
+}
+
+#puzzle-box {
+  /* Dimensions of box */
+  width: 140px;
+  height: 120px;
+
+  /* Display type */
+  display: flex;
+
+  /* Background color */
+  background: white;
+
+  /* Set margin */
+  margin: 200px;
+}
+
+#puzzle-box-instructions {
+  padding: 10px;
+}
+
+#hooray {
+  font-size: 5em;
+}
