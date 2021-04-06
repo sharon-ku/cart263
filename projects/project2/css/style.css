@@ -21,6 +21,26 @@ p {
   padding-bottom: 20px;
 }
 
+/* First canvas we see */
+#start-canvas {
+  z-index: 1000;
+  /* Set top left position */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  /* Fill up whole window */
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+
+  /* Set black background */
+  background: black;
+}
+
 /* Hide close button for dialog box */
 .no-close .ui-dialog-titlebar-close {
   display: none;
