@@ -8,39 +8,9 @@ let instance1Sketch = function (p) {
   };
 
   // Drop
-  let drop = {
-    image: undefined,
-    // color tint
-    tint: {
-      current: {
-        r: 215,
-        g: 245,
-        b: 191,
-      },
-      start: {
-        r: 215,
-        g: 245,
-        b: 191,
-      },
-      end: {
-        r: 231,
-        g: 112,
-        b: 255,
-      },
-    },
-    // position
-    x: undefined,
-    y: -10,
-    yInitial: -100,
-    // velocity and speed
-    vx: 0,
-    vy: 5,
-    speed: 5,
-    // gravitational acceleration
-    gravity: 0.01,
-    // true if time to release drop
-    release: false,
-  };
+  let drop;
+  // Drop image
+  let dropImage = undefined;
 
   // Rectangle properties
   let rect = {
@@ -110,7 +80,7 @@ let instance1Sketch = function (p) {
   // Load assets
   p.preload = function () {
     // Load drop image
-    drop.image = p.loadImage(`assets/images/drop.png`);
+    dropImage = p.loadImage(`assets/images/drop.png`);
   };
 
   // Create canvas and set rectangle position
@@ -127,8 +97,10 @@ let instance1Sketch = function (p) {
     circle.x = p.width / 2;
     circle.y = p.height / 2;
 
-    // Set drop's x position
-    drop.x = p.width / 2;
+    // Create a new drop
+    let dropX = p.width / 2;
+    let dropY = -10;
+    drop = new Drop(p, dropImage, dropX, dropY);
   };
 
   // Set background color, draw and make rectangle grow
@@ -159,8 +131,8 @@ let instance1Sketch = function (p) {
 
     // If releaseDrop is true, update drop behaviour
     if (drop.release) {
-      // Update all of drop's behaviour
-      p.updateDrop();
+      // Update all behaviour of drop
+      drop.update(circle);
     }
 
     if (p.overlapsWithCircle(drop)) {
@@ -179,61 +151,6 @@ let instance1Sketch = function (p) {
     } else {
       return false;
     }
-  };
-
-  // Update all of drop's behaviour
-  p.updateDrop = function () {
-    // Display drop image
-    p.displayDrop();
-
-    // Move drop
-    p.moveDrop();
-
-    // Update drop tint based on y position
-    p.updateDropTint();
-  };
-
-  // Display drop
-  p.displayDrop = function () {
-    p.push();
-    p.imageMode(p.CENTER);
-    p.tint(drop.tint.current.r, drop.tint.current.g, drop.tint.current.b);
-    p.image(drop.image, drop.x, drop.y);
-    p.pop();
-  };
-
-  // Update drop's position
-  p.moveDrop = function () {
-    drop.y += drop.vy;
-    drop.vy += drop.gravity;
-  };
-
-  // Update drop tint by mapping tint to drop's y position
-  p.updateDropTint = function () {
-    // Update tint's r value
-    drop.tint.current.r = p.map(
-      drop.y,
-      drop.yInitial,
-      circle.y,
-      drop.tint.start.r,
-      drop.tint.end.r
-    );
-    // Update tint's g value
-    drop.tint.current.g = p.map(
-      drop.y,
-      drop.yInitial,
-      circle.y,
-      drop.tint.start.g,
-      drop.tint.end.g
-    );
-    // Update tint's b value
-    drop.tint.current.b = p.map(
-      drop.y,
-      drop.yInitial,
-      circle.y,
-      drop.tint.start.b,
-      drop.tint.end.b
-    );
   };
 
   // Draw rectangle
