@@ -8,25 +8,12 @@ let instance1Sketch = function (p) {
   };
 
   // Drop
-  let drop;
+  let drop = undefined;
   // Drop image
   let dropImage = undefined;
 
-  // Rectangle properties
-  let rect = {
-    // position
-    x: undefined,
-    y: undefined,
-    // color
-    fill: {
-      r: 255,
-      g: 230,
-      b: 255,
-    },
-    // size
-    width: undefined,
-    height: 300,
-  };
+  // Start rectangle that spans width of window
+  let startRectangle = undefined;
 
   // Pulsating circle
   let pulsatingCircle = undefined;
@@ -44,15 +31,22 @@ let instance1Sketch = function (p) {
     dropImage = p.loadImage(`assets/images/drop.png`);
   };
 
-  // Create canvas and set rectangle position
+  // Create canvas and objects
   p.setup = function () {
-    // Create a welcome canvas
+    // Create a start canvas
     let startCanvas = p.createCanvas(p.windowWidth, p.windowHeight);
     startCanvas.parent(`start-canvas`);
 
-    // Set rectangle position to center of canvas
-    rect.x = p.width / 2;
-    rect.y = p.height / 2;
+    // Create new start rectangle whose position is at the center of the canvas
+    let rectangleX = p.width / 2;
+    let rectangleY = p.height / 2;
+    let rectangleWidth = p.width;
+    startRectangle = new StartRectangle(
+      p,
+      rectangleX,
+      rectangleY,
+      rectangleWidth
+    );
 
     // Create a new pulsating circle
     let circleX = p.width / 2;
@@ -65,7 +59,7 @@ let instance1Sketch = function (p) {
     drop = new Drop(p, dropImage, dropX, dropY);
   };
 
-  // Set background color, draw and make rectangle grow
+  // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
   p.draw = function () {
     // Set mouse x and y positions
     mouse.x = p.mouseX;
@@ -74,11 +68,8 @@ let instance1Sketch = function (p) {
     // Set background color
     p.background(bgFill.r, bgFill.g, bgFill.b);
 
-    // Set rectangle values
-    rect.width = p.width;
-
-    // Draw rectangle
-    p.drawRectangle();
+    // Update all behaviour of rectangle
+    startRectangle.update();
 
     // Update circle behaviour
     pulsatingCircle.update();
@@ -111,19 +102,6 @@ let instance1Sketch = function (p) {
       return false;
     }
   };
-
-  // Draw rectangle
-  p.drawRectangle = function () {
-    p.push();
-    p.rectMode(p.CENTER);
-    p.fill(rect.fill.r, rect.fill.g, rect.fill.b);
-    p.rect(rect.x, rect.y, rect.width, rect.height);
-    p.pop();
-  };
-
-  // p.windowResized = function() {
-  //   p.width =
-  // }
 };
 
 let myp5Start = new p5(instance1Sketch);
