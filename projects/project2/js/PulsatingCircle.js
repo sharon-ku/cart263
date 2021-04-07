@@ -46,11 +46,14 @@ class PulsatingCircle {
 
   // Update all circle behaviour
   update() {
-    // Draw circle
-    this.display();
-
     // Make circle pulsate
     this.pulsate();
+
+    // Change stroke weight based on circle's size
+    this.changeStrokeWeight();
+
+    // Draw circle
+    this.display();
   }
 
   // Make circle pulsate (grow + shrink)
@@ -70,6 +73,17 @@ class PulsatingCircle {
     }
   }
 
+  // Change stroke weight based on circle's size
+  changeStrokeWeight() {
+    this.strokeWeight.current = this.p.map(
+      this.size.current,
+      this.size.min,
+      this.size.max,
+      this.strokeWeight.max,
+      this.strokeWeight.min
+    );
+  }
+
   // Display circle
   display() {
     this.p.push();
@@ -82,14 +96,20 @@ class PulsatingCircle {
     );
     this.p.strokeWeight(this.strokeWeight.current);
     this.p.ellipse(this.x, this.y, this.size.current);
-
-    this.strokeWeight.current = this.p.map(
-      this.size.current,
-      this.size.min,
-      this.size.max,
-      this.strokeWeight.max,
-      this.strokeWeight.min
-    );
     this.p.pop();
+  }
+
+  // Returns true if object provided overlaps with circle
+  overlapsWith({ x, y }) {
+    if (
+      x < this.x + this.size.current / 2 &&
+      x > this.x - this.size.current / 2 &&
+      y < this.y + this.size.current / 2 &&
+      y > this.y - this.size.current / 2
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

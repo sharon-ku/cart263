@@ -75,31 +75,17 @@ let instance1Sketch = function (p) {
     pulsatingCircle.update();
 
     // If mouse clicked on circle, release drop
-    if (p.overlapsWithCircle(mouse) && p.mouseIsPressed) {
+    if (pulsatingCircle.overlapsWith(mouse) && p.mouseIsPressed) {
       drop.release = true;
     }
 
-    // If releaseDrop is true, update drop behaviour
+    // If time to release drop, update drop behaviour
     if (drop.release) {
       // Update all behaviour of drop
       drop.update(pulsatingCircle);
     }
 
-    if (p.overlapsWithCircle(drop)) {
-    }
-  };
-
-  // Returns true if circle overlaps with object provided
-  p.overlapsWithCircle = function ({ x, y }) {
-    if (
-      x < pulsatingCircle.x + pulsatingCircle.size.current / 2 &&
-      x > pulsatingCircle.x - pulsatingCircle.size.current / 2 &&
-      y < pulsatingCircle.y + pulsatingCircle.size.current / 2 &&
-      y > pulsatingCircle.y - pulsatingCircle.size.current / 2
-    ) {
-      return true;
-    } else {
-      return false;
+    if (pulsatingCircle.overlapsWith(drop)) {
     }
   };
 };
