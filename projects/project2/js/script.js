@@ -7,6 +7,8 @@ Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a
 
 "use strict";
 
+let scene = 1;
+
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
 
@@ -16,6 +18,15 @@ const NUM_TOTAL_PUZZLES = 2;
 // Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 
 // -------------------------------------------------------------------
+
+// if (scene === 1) {
+//
+// } else if (scene === 2) {
+//   welcome();
+// }
+
+
+
 // Create welcome canvas
 //
 let sketch = function (p) {
@@ -220,7 +231,9 @@ let sketch3 = function (p) {
   };
 };
 
-let myp53 = new p5(sketch3);
+if (scene === 2) {
+  let myp53 = new p5(sketch3);
+}
 
 // -------------------------------------------------------------------
 // Create right-puzzle canvas
@@ -290,7 +303,9 @@ let sketch4 = function (p) {
   };
 };
 
-let myp54 = new p5(sketch4);
+if (scene === 2) {
+  let myp54 = new p5(sketch4);
+}
 
 // PUZZLE PIECES ----------------------------------------------------
 // Make left puzzle draggable
@@ -332,8 +347,10 @@ $(`#puzzle-box`).droppable({
 
 // CREATE ALL DIALOG BOXES ----------------------------------------------------
 
-// Create an distraction dialog
+// Create a distraction dialog
 $(`#distraction-dialog`).dialog({
+  // Don't open automatically
+  autoOpen: false,
   // Set position of dialog based on window position
   position: { my: "left+100 top+100", at: "left top", of: window },
   // Adjust size of dialog box based on content it stores
@@ -357,8 +374,8 @@ $(`#welcome-dialog`).dialog({
   // Hide close button
   dialogClass: "no-close",
   show: { effect: "fade", duration: 800 },
-  // Do not let user interact with anything else on page until dialog closed
-  modal: true,
+  // // Do not let user interact with anything else on page until dialog closed
+  // modal: true,
   // Set position of dialog based on window position
   position: { my: "center center", at: "center top+200", of: window },
   // Adjust size of dialog box based on content it stores

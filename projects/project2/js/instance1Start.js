@@ -25,6 +25,11 @@ let instance1Sketch = function (p) {
     b: 0,
   };
 
+  // True if time to set up next scene
+  let setUpNextScene = false;
+  // Number of times circle larger than rectangle
+  let count = 0;
+
   // Load assets
   p.preload = function () {
     // Load drop image
@@ -85,9 +90,32 @@ let instance1Sketch = function (p) {
       drop.update(pulsatingCircle);
     }
 
+    // If drop overlaps with circle, make circle expand throughout entire canvas
     if (pulsatingCircle.overlapsWith(drop)) {
+      pulsatingCircle.expandAllTheWay();
     }
+
+    // If circle exceeds rectangle height, display dialog boxes
+    if (pulsatingCircle.size.current > startRectangle.height && count===0) {
+      setUpNextScene = true;
+      count = 1;
+      // scene = 2;
+    }
+
+    if (setUpNextScene) {
+      $("#distraction-dialog").dialog("open");
+      $("#welcome-dialog").dialog("open");
+      let myp53 = new p5(sketch3);
+      let myp54 = new p5(sketch4);
+      setUpNextScene = false;
+    }
+
+
+    // if (scene === 2) {
+    //
+    // }
   };
+
 };
 
 let myp5Start = new p5(instance1Sketch);

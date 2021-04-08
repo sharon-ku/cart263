@@ -73,6 +73,11 @@ class PulsatingCircle {
     }
   }
 
+  // Expand to full width of canvas
+  expandAllTheWay() {
+    this.size.max = this.p.width;
+  }
+
   // Change stroke weight based on circle's size
   changeStrokeWeight() {
     this.strokeWeight.current = this.p.map(

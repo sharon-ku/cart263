@@ -23,7 +23,7 @@ p {
 
 /* First canvas we see */
 #start-canvas {
-  z-index: 1000;
+  /* z-index: 1000; */
   /* Set top left position */
   position: absolute;
   top: 0px;
