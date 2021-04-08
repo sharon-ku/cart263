@@ -31,8 +31,10 @@ class Drop {
     // velocity and speed
     this.vx = 0;
     this.vy = 5;
-    this.speed = 5;
-    // gravitational acceleration
+    this.maxSpeed = 5;
+    // acceleration
+    this.ax = 0;
+    this.ay = 0;
     this.gravity = 0.01;
     // true if time to release drop
     this.release = false;
@@ -42,6 +44,9 @@ class Drop {
   update(circle) {
     // Display drop image
     this.display();
+
+    // Apply gravity to drop
+    this.applyGravity();
 
     // Move drop
     this.move();
@@ -59,10 +64,18 @@ class Drop {
     this.p.pop();
   }
 
+  // Apply gravitational force
+  applyGravity() {
+    this.ay = this.gravity;
+  }
+
   // Drop the drop
   move() {
+    this.vy = this.p.constrain(this.vy, -this.maxSpeed, this.maxSpeed);
+
+    this.vy += this.ay;
+
     this.y += this.vy;
-    this.vy += this.gravity;
   }
 
   // Update tint of drop
