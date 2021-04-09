@@ -7,7 +7,8 @@ Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a
 
 "use strict";
 
-let scene = 1;
+// All possible states: title, welcome
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -19,16 +20,13 @@ const NUM_TOTAL_PUZZLES = 2;
 
 // -------------------------------------------------------------------
 
-// if (scene === 1) {
-//
-// } else if (scene === 2) {
-//   welcome();
-// }
+if (state === `title`) {
+  let myp5Start = new p5(instance1Sketch);
+}
 
 
 
 // Create welcome canvas
-//
 let sketch = function (p) {
   // Rectangle properties
   let rect = {
@@ -231,9 +229,7 @@ let sketch3 = function (p) {
   };
 };
 
-if (scene === 2) {
-  let myp53 = new p5(sketch3);
-}
+// let myp53 = new p5(sketch3);
 
 // -------------------------------------------------------------------
 // Create right-puzzle canvas
@@ -303,9 +299,9 @@ let sketch4 = function (p) {
   };
 };
 
-if (scene === 2) {
-  let myp54 = new p5(sketch4);
-}
+
+// let myp54 = new p5(sketch4);
+
 
 // PUZZLE PIECES ----------------------------------------------------
 // Make left puzzle draggable
@@ -323,84 +319,107 @@ $(`#right-puzzle-canvas`).draggable({
 });
 
 // Make puzzle box droppable
-$(`#puzzle-box`).droppable({
-  // When drop puzzle on box:
-  drop: function (event, ui) {
-    // Make puzzle snap to box
-    $(ui.draggable).css("top", $(this).position().top);
-    $(ui.draggable).css("left", $(this).position().left);
-    $(ui.draggable).css("left", $(this).position().left);
+function createPuzzleBox() {
+  $(`#puzzle-box`).droppable({
+    // When drop puzzle on box:
+    drop: function (event, ui) {
+      // Make puzzle snap to box
+      $(ui.draggable).css("top", $(this).position().top);
+      $(ui.draggable).css("left", $(this).position().left);
+      $(ui.draggable).css("left", $(this).position().left);
 
-    // Disable draggable functionality
-    $(ui.draggable).draggable("disable");
+      // Disable draggable functionality
+      $(ui.draggable).draggable("disable");
 
-    // Add 1 to numPuzzlesDropped
-    numPuzzlesDropped++;
-    console.log(numPuzzlesDropped);
+      // Add 1 to numPuzzlesDropped
+      numPuzzlesDropped++;
+      console.log(numPuzzlesDropped);
 
-    // If total number of puzzles dropped, open congratulations-dialog box
-    if (numPuzzlesDropped === NUM_TOTAL_PUZZLES) {
-      $("#congratulations-dialog").dialog("open");
-    }
-  },
-});
+      // If total number of puzzles dropped, open congratulations-dialog box
+      if (numPuzzlesDropped === NUM_TOTAL_PUZZLES) {
+        $("#congratulations-dialog").dialog("open");
+      }
+    },
+  });
+}
+
+function welcome() {
+  state = `welcome`;
+
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Create all dialogs
+  createDistractionDialog();
+  createWelcomeDialog();
+  createCongratulationsDialog();
+
+  // Create left and right puzzle pieces
+  let myp53 = new p5(sketch3);
+  let myp54 = new p5(sketch4);
+
+  // Create puzzle box
+  createPuzzleBox();
+}
 
 // CREATE ALL DIALOG BOXES ----------------------------------------------------
 
 // Create a distraction dialog
-$(`#distraction-dialog`).dialog({
-  // Don't open automatically
-  autoOpen: false,
-  // Set position of dialog based on window position
-  position: { my: "left+100 top+100", at: "left top", of: window },
-  // Adjust size of dialog box based on content it stores
-  height: "auto",
-  width: "auto",
-  // Button options
-  buttons: {
-    "I like what I see!": function () {
-      $(`#distraction-description`).text(`keep looking then`);
+function createDistractionDialog() {
+  $(`#distraction-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Button options
+    buttons: {
+      "I like what I see!": function () {
+        $(`#distraction-description`).text(`keep looking then`);
+      },
+      "Please stop distracting me": function () {
+        $(this).dialog(`close`);
+      },
     },
-    "Please stop distracting me": function () {
-      $(this).dialog(`close`);
-    },
-  },
-});
+  });
+}
 
 // Create a welcome dialog
-$(`#welcome-dialog`).dialog({
-  // Don't open automatically
-  autoOpen: false,
-  // Hide close button
-  dialogClass: "no-close",
-  show: { effect: "fade", duration: 800 },
-  // // Do not let user interact with anything else on page until dialog closed
-  // modal: true,
-  // Set position of dialog based on window position
-  position: { my: "center center", at: "center top+200", of: window },
-  // Adjust size of dialog box based on content it stores
-  height: "auto",
-  width: "auto",
-  // Button options
-  buttons: {
-    "Don't mind if I do!": function () {
-      $(this).dialog(`close`);
+function createWelcomeDialog() {
+  $(`#welcome-dialog`).dialog({
+    // Hide close button
+    dialogClass: "no-close",
+    show: { effect: "fade", duration: 800 },
+    // // Do not let user interact with anything else on page until dialog closed
+    // modal: true,
+    // Set position of dialog based on window position
+    position: { my: "center center", at: "center top+200", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Button options
+    buttons: {
+      "Don't mind if I do!": function () {
+        $(this).dialog(`close`);
+      },
     },
-  },
-});
+  });
+}
 
 // Create a congratulations dialog
-$(`#congratulations-dialog`).dialog({
-  // Do not let user interact with anything else on page until dialog closed
-  modal: true,
-  // Don't open automatically
-  autoOpen: false,
-  // Hide close button
-  dialogClass: "no-close",
-  show: { effect: "fade", duration: 300 },
-  // Set position of dialog based on window position
-  position: { my: "center center", at: "center top+200", of: window },
-  // Adjust size of dialog box based on content it stores
-  height: "auto",
-  width: "auto",
-});
+function createCongratulationsDialog() {
+  $(`#congratulations-dialog`).dialog({
+    // Do not let user interact with anything else on page until dialog closed
+    modal: true,
+    // Don't open automatically
+    autoOpen: false,
+    // Hide close button
+    dialogClass: "no-close",
+    show: { effect: "fade", duration: 300 },
+    // Set position of dialog based on window position
+    position: { my: "center center", at: "center top+200", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+  });
+}
