@@ -8,7 +8,7 @@ Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a
 "use strict";
 
 // All possible states: title, welcome
-let state = `title`;
+let state = `welcome`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -22,6 +22,8 @@ const NUM_TOTAL_PUZZLES = 2;
 
 if (state === `title`) {
   createTitleCanvas();
+} else if (state === `welcome`) {
+  welcome();
 }
 
 // Create welcome canvas
@@ -308,7 +310,7 @@ function createRightPuzzleCanvas() {
 }
 
 // STATE: welcome
-// 
+//
 function welcome() {
   state = `welcome`;
 
@@ -318,11 +320,13 @@ function welcome() {
   // Create canvases
   createDistractionCanvas();
   createWelcomeCanvas();
+  createSinkCanvas();
 
   // Create all dialogs
   createDistractionDialog();
   createWelcomeDialog();
   createCongratulationsDialog();
+  createSinkDialog();
 
   // Create left and right puzzle pieces
   createLeftPuzzleCanvas();

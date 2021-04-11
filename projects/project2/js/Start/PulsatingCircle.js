@@ -33,12 +33,13 @@ class PulsatingCircle {
     };
     // size + growth
     this.size = {
-      current: 0,
-      min: 0,
+      current: 5,
+      min: 5,
       max: 150,
       growthRate: {
         initial: 0.005,
         current: 0.005,
+        final: 0.05,
       },
       growthAcceleration: 0.01,
     };
@@ -58,13 +59,13 @@ class PulsatingCircle {
 
   // Make circle pulsate (grow + shrink)
   pulsate() {
-    // If rectangle has not reached max size yet
+    // If circle has not reached max size yet
     if (this.size.current < this.size.max) {
-      // Make rectangle grow on infinitely with speed and acceleration
+      // Make circle grow on infinitely with speed and acceleration
       this.size.growthRate.current += this.size.growthAcceleration;
       this.size.current += this.size.growthRate.current;
     }
-    // Else, if rectangle exceeds max size
+    // Else, if circle exceeds max size
     else {
       // Reset size
       this.size.current = this.size.min;
@@ -76,6 +77,7 @@ class PulsatingCircle {
   // Expand to full width of canvas
   expandAllTheWay() {
     this.size.max = this.p.width;
+    this.size.growthRate.current = this.size.growthRate.final;
   }
 
   // Change stroke weight based on circle's size
