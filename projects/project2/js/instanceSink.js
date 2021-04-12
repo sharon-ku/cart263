@@ -14,6 +14,11 @@ function createSinkCanvas() {
     // Cup
     let cup = undefined;
 
+    // Falling water
+    let fallingWater = undefined;
+    // Water that fills cup
+    let cupWater = undefined;
+
     // Create canvas and objects
     p.setup = function () {
       // Create a start canvas
@@ -25,6 +30,12 @@ function createSinkCanvas() {
 
       // Create new cup
       cup = new Cup(p);
+
+      // Create mew falling water
+      fallingWater = new FallingWater(p, faucetSpout, cup);
+
+      // Create new cup water
+      cupWater = new CupWater(p, cup);
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -33,8 +44,15 @@ function createSinkCanvas() {
       p.background(0, 0, 0);
 
       // Update behaviour of all objects
+      fallingWater.update();
+      cupWater.update();
+
       faucetSpout.update();
       cup.update();
+
+      if (fallingWater.heightCurrent === fallingWater.heightMax) {
+        cupWater.fillCup();
+      }
     };
   };
 
