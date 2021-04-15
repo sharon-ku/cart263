@@ -1,5 +1,10 @@
 // Instance: Sink canvas
 //
+
+// Current state of sink
+// All possible states: `on`, `off`
+let sinkState = `off`;
+
 function createSinkCanvas() {
   let instanceSinkSketch = function (p) {
     // Mouse position
@@ -43,16 +48,23 @@ function createSinkCanvas() {
       // Set background color
       p.background(0, 0, 0);
 
-      // Update behaviour of all objects
-      fallingWater.update();
-      cupWater.update();
-
+      // Display faucet spout and cup
       faucetSpout.update();
       cup.update();
 
-      if (fallingWater.heightCurrent === fallingWater.heightMax) {
-        cupWater.fillCup();
+      // If sink is off:
+      if (sinkState === `on`) {
+        // Update falling water
+        fallingWater.update();
+
+        // Fill cup based on water level
+        if (fallingWater.heightCurrent === fallingWater.heightMax) {
+          cupWater.fillCup();
+        }
+      } else if (sinkState === `on`) {
       }
+
+      cupWater.update();
     };
   };
 
@@ -70,5 +82,29 @@ function createSinkDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
+    // Set dialog buttons
+    buttons: [
+      {
+        id: "pour-button",
+        text: "Pour!",
+        // When button is clicked:
+        click: function () {
+          // If sink is off:
+          if (sinkState === `off`) {
+            // Turn it on
+            sinkState = `on`;
+            // Update button text to "Stop!"
+            $("#pour-button").button("option", "label", "Stop!");
+          }
+          // Else, if sink is on:
+          else if (sinkState === `on`) {
+            // Turn it off
+            sinkState = `off`;
+            // Update button text to "Pour!"
+            $("#pour-button").button("option", "label", "Pour!");
+          }
+        },
+      },
+    ],
   });
 }
