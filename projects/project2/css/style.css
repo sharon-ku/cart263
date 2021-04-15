@@ -87,6 +87,18 @@ p {
   font-size: 5em;
 }
 
+#peep-canvas {
+  display: block;
+  /* Set position relative to parent's position */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: 200px;
+  height: 200px;
+  /* padding: 0.5em; */
+}
+
 /* First canvas we see */
 #sink-canvas {
   /* z-index: 1000; */

@@ -6,7 +6,7 @@ class Cup {
     this.p = p;
     // position
     this.x = p.width / 2;
-    this.y = p.height - 150;
+    this.y = p.height - 100;
     // size
     this.width = 50;
     this.height = 70;

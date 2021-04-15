@@ -141,9 +141,9 @@ function createDistractionCanvas() {
 
     // Create video of user
     p.createVideoCapture = function () {
-      capture = p.createCapture(p.VIDEO);
-      capture.size(p.width, p.height);
-      capture.hide();
+      // capture = p.createCapture(p.VIDEO);
+      // capture.size(p.width, p.height);
+      // capture.hide();
     };
 
     // Set background color and display video capture
@@ -151,14 +151,14 @@ function createDistractionCanvas() {
       // Set background color
       p.background(bgFill.r, bgFill.g, bgFill.b);
 
-      // Show video capture
-      p.image(
-        capture,
-        captureProperties.x,
-        captureProperties.y,
-        p.width,
-        p.height
-      );
+      // // Show video capture
+      // p.image(
+      //   capture,
+      //   captureProperties.x,
+      //   captureProperties.y,
+      //   p.width,
+      //   p.height
+      // );
     };
   };
 
@@ -321,6 +321,7 @@ function welcome() {
   createDistractionCanvas();
   createWelcomeCanvas();
   createSinkCanvas();
+  createPeepCanvas();
 
   // Create all dialogs
   createDistractionDialog();

@@ -27,7 +27,7 @@ function createSinkCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create a start canvas
-      let sinkCanvas = p.createCanvas(300, 500);
+      let sinkCanvas = p.createCanvas(300, 400);
       sinkCanvas.parent(`sink-canvas`);
 
       // Create new faucet spout
