@@ -21,6 +21,11 @@ p {
   padding-bottom: 20px;
 }
 
+/* Section that displayes day number */
+#day-section {
+  padding: 30px;
+}
+
 /* First canvas we see */
 #start-canvas {
   /* z-index: 1000; */

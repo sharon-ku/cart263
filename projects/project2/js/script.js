@@ -3,6 +3,8 @@ Project 2
 Sharon Ku
 
 Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a way to progress the storyline
+
+Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 */
 
 "use strict";
@@ -16,14 +18,24 @@ let numPuzzlesDropped = 0;
 // Number of total puzzles
 const NUM_TOTAL_PUZZLES = 2;
 
-// Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
+// Track number of day (starts at 1)
+let dayNumber = 1;
 
 // -------------------------------------------------------------------
 
+// Set day number
+function updateDayNumber() {
+  $(`#day-number`).text(`${dayNumber}`);
+}
+
 if (state === `title`) {
   createTitleCanvas();
+  // update day number
+  updateDayNumber();
 } else if (state === `welcome`) {
   welcome();
+  // update day number
+  updateDayNumber();
 }
 
 // Create welcome canvas
