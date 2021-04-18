@@ -21,6 +21,15 @@ p {
   padding-bottom: 20px;
 }
 
+#letter-animation {
+  width: 100px;
+}
+
+#letter {
+  width: 100%;
+  height: auto;
+}
+
 /* Change look of email title bar */
 .email .ui-widget-header {
   border: 1px solid #2c4359;

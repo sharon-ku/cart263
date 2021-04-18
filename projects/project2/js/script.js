@@ -350,6 +350,12 @@ function welcome() {
   createPuzzleBox();
 }
 
+// When letter animation is clicked on, open email and hide letter animation
+$(`#letter-animation`).click(function () {
+  $(`#email-dialog`).dialog("open");
+  $(this).hide();
+});
+
 // PUZZLE PIECES ----------------------------------------------------
 // Make left puzzle draggable
 $(`#left-puzzle-canvas`).draggable({
@@ -400,6 +406,8 @@ function createEmailDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
+    // Don't open automatically
+    autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
     // Button options
