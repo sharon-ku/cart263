@@ -22,7 +22,7 @@ class Cup {
       // position
       xInitial: this.x - 30,
       xFinal: this.x + 30,
-      y: this.y - this.p.random(0, 30),
+      y: this.y - this.p.random(0, 60),
       // stroke
       strokeFill: {
         r: 255,
@@ -67,5 +67,44 @@ class Cup {
       this.waterLimit.y
     );
     this.p.pop();
+  }
+
+  // Returns true if water reaches limit line
+  limitLineIsReached(cupWater) {
+    // y position of cup's base
+    let cupBaseY = this.y + this.height / 2;
+
+    // If cup water overlaps with limit line, return true
+    if (
+      cupBaseY - cupWater.heightCurrent <
+        this.waterLimit.y + this.waterLimit.strokeWeight / 2 &&
+      cupBaseY - cupWater.heightCurrent >
+        this.waterLimit.y - this.waterLimit.strokeWeight / 2
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Returns true if water exceeds limit line
+  limitLineIsExceeded(cupWater) {
+    // y position of cup's base
+    let cupBaseY = this.y + this.height / 2;
+
+    // If cup water exceeds limit line, return true
+    if (
+      cupBaseY - cupWater.heightCurrent <
+      this.waterLimit.y - this.waterLimit.strokeWeight / 2
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Reset y position of water limit line
+  resetWaterLimit() {
+    this.waterLimit.y = this.y - this.p.random(-30, 30);
   }
 }

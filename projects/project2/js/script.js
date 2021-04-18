@@ -21,6 +21,12 @@ const NUM_TOTAL_PUZZLES = 2;
 // Track number of day (starts at 1)
 let dayNumber = 1;
 
+// Track game score
+let gameScore = 50;
+// Increase and decrease rate of score
+let scoreDecreaseRate = 10;
+let scoreIncreaseRate = 0.05;
+
 // -------------------------------------------------------------------
 
 // Set day number

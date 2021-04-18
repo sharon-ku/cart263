@@ -47,7 +47,7 @@ function createPeepCanvas() {
       p.background(bgFill.r, bgFill.g, bgFill.b);
 
       // Update Peep's behaviour
-      peep.update();
+      peep.update(gameScore);
     };
   };
 

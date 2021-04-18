@@ -15,10 +15,9 @@ class Peep {
     // this.height = 70;
 
     // user's game score
-    this.currentScore = 50;
     this.maxScore = 100;
     this.minScore = 0;
-    this.scoreDecreaseRate = 0.002;
+    this.scoreDecreaseRate = 20;
     this.scoreIncreaseRate = 0.005;
 
     // tracker displaying peep's mood
@@ -54,12 +53,12 @@ class Peep {
   }
 
   // Update all cup behaviour
-  update() {
+  update(gameScore) {
     // Display image
     this.display();
 
     // Update tracker
-    this.updateTracker();
+    this.updateTracker(gameScore);
 
     // Display tracker
     this.displayTracker();
@@ -93,8 +92,18 @@ class Peep {
     this.p.pop();
   }
 
+  // // Add points
+  // addPoints() {
+  //   this.currentScore += this.scoreIncreaseRate;
+  // }
+  //
+  // // Remove points
+  // removePoints() {
+  //   this.currentScore -= this.scoreDecreaseRate;
+  // }
+
   // Update tracker with current score
-  updateTracker() {
+  updateTracker(gameScore) {
     // Update positive tracker
     this.tracker.positive.x =
       this.p.width / 2 -
@@ -108,7 +117,7 @@ class Peep {
       this.tracker.negative.width / 2;
 
     // Update tracker widths
-    this.tracker.positiveWidth = this.currentScore;
-    this.tracker.negativeWidth = this.maxScore - this.currentScore;
+    this.tracker.positive.width = gameScore;
+    this.tracker.negative.width = this.maxScore - gameScore;
   }
 }

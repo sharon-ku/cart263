@@ -12,8 +12,9 @@ class FallingWater {
     this.y = faucetSpout.y + faucetSpout.height;
     // height values
     this.heightMin = 0;
-    this.heightCurrent = this.heightMin;
     this.heightMax = cup.y + cup.height / 2 - this.y;
+    this.heightCurrent = this.heightMin;
+
     this.heightIncreaseRate = 0.2; //0.5
     this.heightIncreaseAcceleration = 0.1;
     this.gravity = 0.1;
