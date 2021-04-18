@@ -44,145 +44,6 @@ if (state === `title`) {
   updateDayNumber();
 }
 
-// Create welcome canvas
-function createWelcomeCanvas() {
-  let sketch = function (p) {
-    // Rectangle properties
-    let rect = {
-      // position
-      x: undefined,
-      y: undefined,
-      // color
-      fill: 255,
-      // size + growth
-      size: {
-        current: 0,
-        min: 0,
-        max: 300,
-        growthRate: {
-          initial: 0.005,
-          current: 0.005,
-        },
-        growthAcceleration: 0.01,
-      },
-    };
-
-    // Background color: light purple
-    let bgFill = {
-      r: 240,
-      g: 170,
-      b: 255,
-    };
-
-    // Create canvas and set rectangle position
-    p.setup = function () {
-      // Create a welcome canvas
-      let welcomeCanvas = p.createCanvas(300, 300);
-      welcomeCanvas.parent(`welcome-canvas`);
-
-      // Set rectangle position to center of canvas
-      rect.x = p.width / 2;
-      rect.y = p.height / 2;
-    };
-
-    // Set background color, draw and make rectangle grow
-    p.draw = function () {
-      // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
-
-      // Draw rectangle
-      p.drawRectangle();
-
-      // Make rectangle grow
-      p.rectangleGrows();
-    };
-
-    // Draw rectangle
-    p.drawRectangle = function () {
-      p.push();
-      p.rectMode(p.CENTER);
-      p.fill(rect.fill);
-      p.rect(rect.x, rect.y, rect.size.current);
-      p.pop();
-    };
-
-    // Make rectangle grow
-    p.rectangleGrows = function () {
-      // If rectangle has not reached max size yet
-      if (rect.size.current < rect.size.max) {
-        // Make rectangle grow on infinitely with speed and acceleration
-        rect.size.growthRate.current += rect.size.growthAcceleration;
-        rect.size.current += rect.size.growthRate.current;
-      }
-      // Else, if rectangle exceeds max size
-      else {
-        // Reset size
-        rect.size.current = rect.size.min;
-        // Reset growth rate
-        rect.size.growthRate.current = rect.size.growthRate.initial;
-      }
-    };
-  };
-
-  let myp5 = new p5(sketch);
-}
-
-// -------------------------------------------------------------------
-// Create distraction canvas
-function createDistractionCanvas() {
-  let sketch2 = function (p) {
-    // Background color: light purple
-    let bgFill = {
-      r: 240,
-      g: 170,
-      b: 255,
-    };
-
-    // For video capture
-    let capture;
-    // Properties for video capture display
-    let captureProperties = {
-      // position
-      x: 0,
-      y: 0,
-    };
-
-    // Create canvas and show video of user
-    p.setup = function () {
-      // Create canvas
-      let distractionCanvas = p.createCanvas(320, 240);
-      distractionCanvas.parent(`distraction-canvas`);
-
-      // Show video of user
-      p.createVideoCapture();
-    };
-
-    // Create video of user
-    p.createVideoCapture = function () {
-      // capture = p.createCapture(p.VIDEO);
-      // capture.size(p.width, p.height);
-      // capture.hide();
-    };
-
-    // Set background color and display video capture
-    p.draw = function () {
-      // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
-
-      // // Show video capture
-      // p.image(
-      //   capture,
-      //   captureProperties.x,
-      //   captureProperties.y,
-      //   p.width,
-      //   p.height
-      // );
-    };
-  };
-
-  let myp52 = new p5(sketch2);
-}
-
 // -------------------------------------------------------------------
 // Create left-puzzle canvas
 function createLeftPuzzleCanvas() {
@@ -347,6 +208,7 @@ function welcome() {
   createCongratulationsDialog();
   createSinkDialog();
   createEmailDialog();
+  createToDoListDialog();
 
   // Create left and right puzzle pieces
   createLeftPuzzleCanvas();
@@ -429,42 +291,25 @@ function createEmailDialog() {
   });
 }
 
-// Create a distraction dialog
-function createDistractionDialog() {
-  $(`#distraction-dialog`).dialog({
+// Create to-do list dialog
+function createToDoListDialog() {
+  $(`#to-do-list-dialog`).dialog({
     // Set position of dialog based on window position
     position: { my: "left+100 top+100", at: "left top", of: window },
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
     // Button options
     buttons: {
-      "I like what I see!": function () {
-        $(`#distraction-description`).text(`keep looking then`);
-      },
-      "Please stop distracting me": function () {
+      Save: function () {
         $(this).dialog(`close`);
+        $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
       },
-    },
-  });
-}
-
-// Create a welcome dialog
-function createWelcomeDialog() {
-  $(`#welcome-dialog`).dialog({
-    // Hide close button
-    dialogClass: "no-close",
-    show: { effect: "fade", duration: 800 },
-    // // Do not let user interact with anything else on page until dialog closed
-    // modal: true,
-    // Set position of dialog based on window position
-    position: { my: "center center", at: "center top+200", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Button options
-    buttons: {
-      "Don't mind if I do!": function () {
+      Delete: function () {
         $(this).dialog(`close`);
       },
     },
