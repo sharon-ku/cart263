@@ -9,8 +9,8 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 
 "use strict";
 
-// All possible states: title, welcome
-let state = `welcome`;
+// All possible states: title, welcome, morning, work, night
+let state = `morning`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -27,13 +27,14 @@ let gameScore = 50;
 let scoreDecreaseRate = 10;
 let scoreIncreaseRate = 0.05;
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------
 
 // Set day number
 function updateDayNumber() {
   $(`#day-number`).text(`${dayNumber}`);
 }
 
+// Set up states
 if (state === `title`) {
   createTitleCanvas();
   // update day number
@@ -42,9 +43,17 @@ if (state === `title`) {
   welcome();
   // update day number
   updateDayNumber();
+} else if (state === `morning`) {
+  morning();
+  // update day number
+  updateDayNumber();
+} else if (state === `work`) {
+  work();
+} else if (state === `night`) {
+  night();
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------
 // Create left-puzzle canvas
 function createLeftPuzzleCanvas() {
   let sketch3 = function (p) {
@@ -116,7 +125,7 @@ function createLeftPuzzleCanvas() {
   let myp53 = new p5(sketch3);
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------
 // Create right-puzzle canvas
 function createRightPuzzleCanvas() {
   let sketch4 = function (p) {
@@ -188,6 +197,57 @@ function createRightPuzzleCanvas() {
   let myp54 = new p5(sketch4);
 }
 
+// -----------------------------------------------------
+
+// STATE: morning
+//
+function morning() {
+  state = `morning`;
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Create canvases
+
+  // Create all dialogs
+  createEmailDialog();
+}
+
+// When letter animation is clicked on, open email and hide letter animation
+$(`#letter-animation`).click(function () {
+  $(`#email-dialog`).dialog("open");
+  $(this).hide();
+});
+
+// -----------------------------------------------------
+
+// STATE: work
+//
+function work() {
+  state = `work`;
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Create canvases
+
+  // Create all dialogs
+}
+
+// -----------------------------------------------------
+
+// STATE: night
+//
+function night() {
+  state = `night`;
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Create canvases
+
+  // Create all dialogs
+}
+
+// -----------------------------------------------------
+
 // STATE: welcome
 //
 function welcome() {
@@ -207,7 +267,6 @@ function welcome() {
   createWelcomeDialog();
   createCongratulationsDialog();
   createSinkDialog();
-  createEmailDialog();
   createToDoListDialog();
 
   // Create left and right puzzle pieces
@@ -218,13 +277,7 @@ function welcome() {
   createPuzzleBox();
 }
 
-// When letter animation is clicked on, open email and hide letter animation
-$(`#letter-animation`).click(function () {
-  $(`#email-dialog`).dialog("open");
-  $(this).hide();
-});
-
-// PUZZLE PIECES ----------------------------------------------------
+// PUZZLE PIECES ---------------------------------------
 // Make left puzzle draggable
 $(`#left-puzzle-canvas`).draggable({
   drag: function (event, ui) {
@@ -264,7 +317,7 @@ function createPuzzleBox() {
   });
 }
 
-// CREATE ALL DIALOG BOXES ----------------------------------------------------
+// CREATE ALL DIALOG BOXES -----------------------------
 
 // Create an email dialog
 function createEmailDialog() {
