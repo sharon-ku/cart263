@@ -340,6 +340,7 @@ function welcome() {
   createWelcomeDialog();
   createCongratulationsDialog();
   createSinkDialog();
+  createEmailDialog();
 
   // Create left and right puzzle pieces
   createLeftPuzzleCanvas();
@@ -390,6 +391,29 @@ function createPuzzleBox() {
 }
 
 // CREATE ALL DIALOG BOXES ----------------------------------------------------
+
+// Create an email dialog
+function createEmailDialog() {
+  $(`#email-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+    // Button options
+    buttons: {
+      Save: function () {
+        $(this).dialog(`close`);
+        $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
+      },
+      Delete: function () {
+        $(this).dialog(`close`);
+      },
+    },
+  });
+}
 
 // Create a distraction dialog
 function createDistractionDialog() {
