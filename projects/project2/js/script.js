@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `goToWork`;
+let state = `night`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -40,25 +40,57 @@ function updateDayNumber() {
 
 // Set up states
 if (state === `title`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // create canvas
   createTitleCanvas();
   // update day number
   updateDayNumber();
 } else if (state === `welcome`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   welcome();
   // update day number
   updateDayNumber();
 } else if (state === `morning`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   morning();
   // update day number
   updateDayNumber();
 } else if (state === `goToWork`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   goToWork();
 } else if (state === `work`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   work();
 } else if (state === `returnHome`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   returnHome();
 } else if (state === `night`) {
+  // hide all HTML elements
+  hideAllHTML();
+  // start state
   night();
+}
+
+// Hide all HTML elements
+function hideAllHTML() {
+  $(`#start-state`).hide();
+  $(`#morning-state`).hide();
+  $(`#welcome-state`).hide();
+  $(`#go-to-work-state`).hide();
+  $(`#work-state`).hide();
+  $(`#return-home-state`).hide();
+  $(`#night-state`).hide();
 }
 
 // -----------------------------------------------------
@@ -70,8 +102,9 @@ function morning() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide dialogs not used in this state
-  $(`#choose-transportation-dialog`).hide();
+  // Show HTML elements for this state
+  $(`#start-state`).show();
+  $(`#morning-state`).show();
 
   // Create canvases
 
@@ -105,9 +138,8 @@ function goToWork() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation, email, and choose-transportation dialog
-  $(`#letter-animation`).hide();
-  $(`#email-dialog`).hide();
+  // Show go-to-work HTML elements
+  $(`#go-to-work-state`).show();
 
   // Create canvases
 
@@ -130,13 +162,9 @@ $(`#walk-button`).click(function () {
 //
 function work() {
   state = `work`;
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation, email, and choose-transportation dialog
-  $(`#letter-animation`).hide();
-  $(`#email-dialog`).hide();
-  $(`#choose-transportation-dialog`).hide();
+  // Show work-state HTML
+  $(`#work-state`).show();
 
   // Create canvases
   createSinkCanvas();
@@ -156,8 +184,17 @@ function work() {
 function returnHome() {
   state = `returnHome`;
 
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
+  // Show return-home HTML
+  $(`#return-home-state`).show();
+
+  // // Hide all HTML from other states
+  // $(`#start-state`).hide();
+  // $(`#morning-state`).hide();
+  // $(`#welcome-state`).hide();
+  // $(`#go-to-work-state`).hide();
+  // $(`#work-state`).hide();
+  // $(`#return-home-state`).hide();
+  // $(`#night-state`).hide();
 
   // Create canvases
 
@@ -173,10 +210,8 @@ function night() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation, email, and choose-transportation dialog
-  $(`#letter-animation`).hide();
-  $(`#email-dialog`).hide();
-  $(`#choose-transportation-dialog`).hide();
+  // Show night HTML
+  $(`#night-state`).show();
 
   // Create canvases
 
@@ -190,28 +225,20 @@ function night() {
 function welcome() {
   state = `welcome`;
 
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
+  // // Hide start canvas
+  // $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation, email, and choose-transportation dialog
-  $(`#letter-animation`).hide();
-  $(`#email-dialog`).hide();
-  $(`#choose-transportation-dialog`).hide();
+  // Show return-home HTML
+  $(`#welcome-state`).show();
 
   // Create canvases
   createDistractionCanvas();
   // createWelcomeCanvas();
-  createSinkCanvas();
-  createFoodDeliveryCanvas();
-  createPeepCanvas();
 
   // Create all dialogs
   createDistractionDialog();
   // createWelcomeDialog();
   createCongratulationsDialog();
-  createSinkDialog();
-  createFoodDeliveryDialog();
-  createToDoListDialog();
 
   // Create left and right puzzle pieces
   createLeftPuzzleCanvas();

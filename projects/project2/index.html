@@ -38,89 +38,107 @@
       <h1>Day <span id="day-number"></span></h1>
     </section>
 
-    <!-- Start canvas -->
-    <section id="start-canvas"></section>
-
-    <!-- Letter animation -->
-    <figure id="letter-animation">
-      <img
-        id="letter"
-        src="assets/images/test-email-gif.gif"
-        alt="Letter flashing"
-      />
-    </figure>
-
-    <!-- Email dialog -->
-    <div id="email-dialog" title="Message from Bob">
-      <p>Dear S,</p>
-      <p>You're hired!</p>
-      <p>Come to work tomorrow at 8AM sharp. Be there or be circle.</p>
-      <p id="signature">Bob</p>
-      <section id="welcome-canvas"></section>
-    </div>
-
-    <!-- Welcome dialog -->
-    <div id="welcome-dialog" title="Welcome!">
-      <p>Hi! A new friend! Come on in...</p>
-      <section id="welcome-canvas"></section>
-    </div>
-
-    <!-- Choose transportation dialog -->
-    <div id="choose-transportation-dialog" title="How should I get to work?">
-      <p>Choose a transportation method:</p>
-      <button id="walk-button">
-        <img src="assets/images/buttons/walk-button.jpg" alt="walk-button" />
-      </button>
-      <button id="bike-button">
-        <img src="assets/images/buttons/bike-button.jpg" alt="bike-button" />
-      </button>
-      <button id="bus-button">
-        <img src="assets/images/buttons/bus-button.jpg" alt="bus-button" />
-      </button>
-    </div>
-
-    <!-- Go to work background canvas -->
-    <section id="go-to-work-canvas"></section>
-
-    <!-- To-do list dialog -->
-    <div id="to-do-list-dialog" title="TO DO"></div>
-
-    <!-- Distraction dialog -->
-    <div id="distraction-dialog" title="Ah yes. We meet again.">
-      <p id="distraction-description">My job is to distract you.</p>
-      <section id="distraction-canvas"></section>
-    </div>
-
-    <!-- Puzzle box: drop puzzle pieces here -->
-    <section id="puzzle-box">
-      <!-- Right puzzle piece -->
-      <section id="right-puzzle-canvas"></section>
-
-      <!-- Left puzzle piece -->
-      <section id="left-puzzle-canvas"></section>
-
-      <!-- Subtle instructions that accompany puzzle box -->
-      <p id="puzzle-box-instructions">drop puzzle piece here.</p>
+    <!-- State: start -->
+    <section id="start-state">
+      <!-- Start canvas -->
+      <section id="start-canvas"></section>
     </section>
 
-    <!-- Congratulations dialog -->
-    <div id="congratulations-dialog" title="Congratulations! You did it!">
-      <h1 id="hooray">HOORAY!</h1>
-    </div>
+    <!-- State: morning -->
+    <section id="morning-state">
+      <!-- Letter animation -->
+      <figure id="letter-animation">
+        <img
+          id="letter"
+          src="assets/images/test-email-gif.gif"
+          alt="Letter flashing"
+        />
+      </figure>
 
-    <!-- Peep canvas -->
-    <section id="peep-canvas"></section>
+      <!-- Email dialog -->
+      <div id="email-dialog" title="Message from Bob">
+        <p>Dear S,</p>
+        <p>You're hired!</p>
+        <p>Come to work tomorrow at 8AM sharp. Be there or be circle.</p>
+        <p id="signature">Bob</p>
+        <section id="welcome-canvas"></section>
+      </div>
+    </section>
 
-    <!-- Sink dialog -->
-    <div id="sink-dialog" title="Fill the cup">
-      <section id="sink-canvas"></section>
-    </div>
+    <!-- State: welcome -->
+    <section id="welcome-state">
+      <!-- Welcome dialog -->
+      <div id="welcome-dialog" title="Welcome!">
+        <p>Hi! A new friend! Come on in...</p>
+        <section id="welcome-canvas"></section>
+      </div>
 
-    <!-- Food delivery dialog -->
-    <div id="food-delivery-dialog" title="Deliver the food to the right table">
-      <h2>Deliver to Table <span id="table-number"></span></h2>
-      <section id="food-delivery-canvas"></section>
-    </div>
+      <!-- Distraction dialog -->
+      <div id="distraction-dialog" title="Ah yes. We meet again.">
+        <p id="distraction-description">My job is to distract you.</p>
+        <section id="distraction-canvas"></section>
+      </div>
+
+      <!-- Puzzle box: drop puzzle pieces here -->
+      <section id="puzzle-box">
+        <!-- Right puzzle piece -->
+        <section id="right-puzzle-canvas"></section>
+
+        <!-- Left puzzle piece -->
+        <section id="left-puzzle-canvas"></section>
+
+        <!-- Subtle instructions that accompany puzzle box -->
+        <p id="puzzle-box-instructions">drop puzzle piece here.</p>
+      </section>
+
+      <!-- Congratulations dialog -->
+      <div id="congratulations-dialog" title="Congratulations! You did it!">
+        <h1 id="hooray">HOORAY!</h1>
+      </div>
+    </section>
+
+    <!-- State: goToWork -->
+    <section id="go-to-work-state">
+      <!-- Choose transportation dialog -->
+      <div id="choose-transportation-dialog" title="How should I get to work?">
+        <p>Choose a transportation method:</p>
+        <button id="walk-button">
+          <img src="assets/images/buttons/walk-button.jpg" alt="walk-button" />
+        </button>
+        <button id="bike-button">
+          <img src="assets/images/buttons/bike-button.jpg" alt="bike-button" />
+        </button>
+        <button id="bus-button">
+          <img src="assets/images/buttons/bus-button.jpg" alt="bus-button" />
+        </button>
+      </div>
+
+      <!-- Go to work background canvas -->
+      <section id="go-to-work-canvas"></section>
+    </section>
+
+    <!-- State: work -->
+    <section id="work-state">
+      <!-- To-do list dialog -->
+      <div id="to-do-list-dialog" title="TO DO"></div>
+
+      <!-- Peep canvas -->
+      <section id="peep-canvas"></section>
+
+      <!-- Sink dialog -->
+      <div id="sink-dialog" title="Fill the cup">
+        <section id="sink-canvas"></section>
+      </div>
+
+      <!-- Food delivery dialog -->
+      <div
+        id="food-delivery-dialog"
+        title="Deliver the food to the right table"
+      >
+        <h2>Deliver to Table <span id="table-number"></span></h2>
+        <section id="food-delivery-canvas"></section>
+      </div>
+    </section>
 
     <!-- My script(s) -->
     <script src="js/Start/StartRectangle.js"></script>
