@@ -8,16 +8,31 @@ function createFoodDeliveryCanvas() {
       y: undefined,
     };
 
+    // Tables
+    let tables = [];
+    const NUM_TABLES = 9;
+
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let foodDeliveryCanvas = p.createCanvas(300, 500);
+      let foodDeliveryCanvas = p.createCanvas(500, 400);
       foodDeliveryCanvas.parent(`food-delivery-canvas`);
+
+      // Create new tables
+      for (let i = 0; i < NUM_TABLES; i++) {
+        let table = new Table(p);
+        tables.push(table);
+      }
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
       p.background(0, 0, 0);
+
+      // Update behaviour of table
+      for (let i = 0; i < tables.length; i++) {
+        tables[i].update();
+      }
     };
   };
 
