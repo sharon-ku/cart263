@@ -12,6 +12,9 @@ function createFoodDeliveryCanvas() {
     let tables = [];
     const NUM_TABLES = 9;
 
+    // Table number to deliver food to
+    let tableToDeliver = undefined;
+
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
@@ -23,6 +26,9 @@ function createFoodDeliveryCanvas() {
         let table = new Table(p);
         tables.push(table);
       }
+
+      // Choose random table to deliver food to
+      p.chooseRandomTable();
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -33,6 +39,12 @@ function createFoodDeliveryCanvas() {
       for (let i = 0; i < tables.length; i++) {
         tables[i].update();
       }
+    };
+
+    // Choose random table to deliver food to
+    p.chooseRandomTable = function () {
+      tableToDeliver = Math.floor(1 + Math.random() * tables.length);
+      $(`#table-number`).text(`${tableToDeliver}`);
     };
   };
 
