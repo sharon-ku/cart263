@@ -207,15 +207,15 @@ function returnHome() {
 //
 function night() {
   state = `night`;
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
 
   // Show night HTML
   $(`#night-state`).show();
 
   // Create canvases
+  createAffirmationsCanvas();
 
   // Create all dialogs
+  createAffirmationsDialog();
 }
 
 // -----------------------------------------------------
@@ -321,6 +321,21 @@ function createToDoListDialog() {
         $(this).dialog(`close`);
       },
     },
+  });
+}
+
+// Create affirmations dialog
+function createAffirmationsDialog() {
+  $(`#affirmations-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
   });
 }
 

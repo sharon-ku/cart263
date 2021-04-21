@@ -135,8 +135,21 @@
         id="food-delivery-dialog"
         title="Deliver the food to the right table"
       >
-        <h2>Deliver to Table <span id="table-number"></span></h2>
+        <h2 id="food-delivery-task">
+          Deliver to Table <span id="table-number"></span>
+        </h2>
         <section id="food-delivery-canvas"></section>
+      </div>
+    </section>
+
+    <!-- State: returnHome -->
+    <section id="return-home-state"></section>
+
+    <!-- State: night -->
+    <section id="night-state">
+      <!-- Affirmations dialog -->
+      <div id="affirmations-dialog" title="Read affirmations out loud">
+        <section id="affirmations-canvas"></section>
       </div>
     </section>
 
@@ -158,6 +171,8 @@
 
     <script src="js/FoodDelivery/Table.js"></script>
     <script src="js/FoodDelivery/instanceFoodDelivery.js"></script>
+
+    <script src="js/Night/instanceAffirmations.js"></script>
 
     <script src="js/Peep.js"></script>
     <script src="js/instancePeep.js"></script>

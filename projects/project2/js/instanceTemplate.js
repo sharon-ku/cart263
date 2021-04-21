@@ -17,6 +17,7 @@ function createTemplateCanvas() {
 
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
+      // Set background color
       p.background(0, 0, 0);
     };
   };
