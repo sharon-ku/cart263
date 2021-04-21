@@ -45,6 +45,12 @@ p {
   background: #ffdca1;
 }
 
+/* Choose transportation dialog buttons */
+#choose-transportation-dialog button {
+  background: blue;
+  font-size: 0em;
+}
+
 /* Section that displayes day number */
 #day-section {
   padding: 30px;

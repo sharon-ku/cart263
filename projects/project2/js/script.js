@@ -9,8 +9,8 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 
 "use strict";
 
-// All possible states: title, welcome, morning, work, night
-let state = `work`;
+// All possible states: title, welcome, morning, goToWork, work, returnHome, night
+let state = `goToWork`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -26,6 +26,10 @@ let gameScore = 50;
 // Increase and decrease rate of score
 let scoreDecreaseRate = 10;
 let scoreIncreaseRate = 0.05;
+
+// Transportation mode
+// All possible modes: walk, bike, bus
+let transportationMode = undefined;
 
 // -----------------------------------------------------
 
@@ -47,8 +51,12 @@ if (state === `title`) {
   morning();
   // update day number
   updateDayNumber();
+} else if (state === `goToWork`) {
+  goToWork();
 } else if (state === `work`) {
   work();
+} else if (state === `returnHome`) {
+  returnHome();
 } else if (state === `night`) {
   night();
 }
@@ -61,6 +69,9 @@ function morning() {
   state = `morning`;
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
+
+  // Hide dialogs not used in this state
+  $(`#choose-transportation-dialog`).hide();
 
   // Create canvases
 
@@ -86,6 +97,35 @@ $(`#letter-animation`).draggable({
 
 // -----------------------------------------------------
 
+// STATE: goToWork
+//
+function goToWork() {
+  state = `goToWork`;
+
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Hide letter animation, email, and choose-transportation dialog
+  $(`#letter-animation`).hide();
+  $(`#email-dialog`).hide();
+
+  // Create canvases
+
+  // Create dialogs
+  createChooseTransportationDialog();
+}
+
+// When walk button is clicked on, set walking transportation method
+$(`#walk-button`).click(function () {
+  $(`#choose-transportation-dialog`).dialog("close");
+
+  transportationMode = `walk`;
+
+  console.log(transportationMode);
+});
+
+// -----------------------------------------------------
+
 // STATE: work
 //
 function work() {
@@ -93,9 +133,10 @@ function work() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation and email dialog
+  // Hide letter animation, email, and choose-transportation dialog
   $(`#letter-animation`).hide();
   $(`#email-dialog`).hide();
+  $(`#choose-transportation-dialog`).hide();
 
   // Create canvases
   createSinkCanvas();
@@ -110,6 +151,21 @@ function work() {
 
 // -----------------------------------------------------
 
+// STATE: returnHome
+//
+function returnHome() {
+  state = `returnHome`;
+
+  // Hide start canvas
+  $(`#start-canvas`).slideToggle();
+
+  // Create canvases
+
+  // Create dialogs
+}
+
+// -----------------------------------------------------
+
 // STATE: night
 //
 function night() {
@@ -117,9 +173,10 @@ function night() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation and email dialog
+  // Hide letter animation, email, and choose-transportation dialog
   $(`#letter-animation`).hide();
   $(`#email-dialog`).hide();
+  $(`#choose-transportation-dialog`).hide();
 
   // Create canvases
 
@@ -136,9 +193,10 @@ function welcome() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
-  // Hide letter animation and email dialog
+  // Hide letter animation, email, and choose-transportation dialog
   $(`#letter-animation`).hide();
   $(`#email-dialog`).hide();
+  $(`#choose-transportation-dialog`).hide();
 
   // Create canvases
   createDistractionCanvas();
@@ -186,6 +244,31 @@ function createEmailDialog() {
         $(this).dialog(`close`);
       },
     },
+  });
+}
+
+// Create choose transportation dialog
+function createChooseTransportationDialog() {
+  $(`#choose-transportation-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+    // Button options
+    // buttons: {
+    //   Save: function () {
+    //     $(this).dialog(`close`);
+    //     $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
+    //   },
+    //   Delete: function () {
+    //     $(this).dialog(`close`);
+    //   },
+    // },
   });
 }
 
