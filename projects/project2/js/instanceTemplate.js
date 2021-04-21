@@ -8,6 +8,13 @@ function createTemplateCanvas() {
       y: undefined,
     };
 
+    // Background fill
+    let bgFill = {
+      r: 0,
+      g: 0,
+      b: 0,
+    };
+
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
@@ -18,7 +25,7 @@ function createTemplateCanvas() {
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
       // Set background color
-      p.background(0, 0, 0);
+      p.background(bgFill.r, bgFill.g, bgFill.b);
     };
   };
 

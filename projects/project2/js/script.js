@@ -212,6 +212,7 @@ function night() {
   $(`#night-state`).show();
 
   // Create canvases
+  createMirrorCanvas();
   createAffirmationsCanvas();
 
   // Create all dialogs
