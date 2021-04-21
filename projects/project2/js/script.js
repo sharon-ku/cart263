@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, work, night
-let state = `welcome`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -66,12 +66,22 @@ function morning() {
 
   // Create all dialogs
   createEmailDialog();
+
+  // Show letter animation
+  $(`#letter-animation`).show();
 }
 
 // When letter animation is clicked on, open email and hide letter animation
 $(`#letter-animation`).click(function () {
   $(`#email-dialog`).dialog("open");
   $(this).hide();
+});
+
+// Make letter animation draggable
+$(`#letter-animation`).draggable({
+  drag: function (event, ui) {
+    $(this).css(`cursor`, `grab`);
+  },
 });
 
 // -----------------------------------------------------
@@ -83,9 +93,19 @@ function work() {
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
 
+  // Hide letter animation and email dialog
+  $(`#letter-animation`).hide();
+  $(`#email-dialog`).hide();
+
   // Create canvases
+  createSinkCanvas();
+  createFoodDeliveryCanvas();
+  createPeepCanvas();
 
   // Create all dialogs
+  createSinkDialog();
+  createFoodDeliveryDialog();
+  createToDoListDialog();
 }
 
 // -----------------------------------------------------
@@ -96,6 +116,10 @@ function night() {
   state = `night`;
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
+
+  // Hide letter animation and email dialog
+  $(`#letter-animation`).hide();
+  $(`#email-dialog`).hide();
 
   // Create canvases
 
@@ -111,6 +135,10 @@ function welcome() {
 
   // Hide start canvas
   $(`#start-canvas`).slideToggle();
+
+  // Hide letter animation and email dialog
+  $(`#letter-animation`).hide();
+  $(`#email-dialog`).hide();
 
   // Create canvases
   createDistractionCanvas();

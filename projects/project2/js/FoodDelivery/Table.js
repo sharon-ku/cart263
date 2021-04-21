@@ -22,7 +22,9 @@ class Table {
       g: 255,
       b: 255,
     };
-    this.strokeWeight = 5;
+    this.strokeWeight = 2;
+    // corner radius
+    this.cornerRadius = 5;
   }
 
   // Update all table behaviour
@@ -38,7 +40,7 @@ class Table {
     this.p.strokeWeight(this.strokeWeight);
     this.p.fill(this.fill.r, this.fill.g, this.fill.b, this.fill.alpha);
     this.p.rectMode(this.p.CENTER);
-    this.p.rect(this.x, this.y, this.width, this.height);
+    this.p.rect(this.x, this.y, this.width, this.height, this.cornerRadius);
     this.p.pop();
   }
 
