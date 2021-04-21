@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, work, night
-let state = `morning`;
+let state = `welcome`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -116,6 +116,7 @@ function welcome() {
   createDistractionCanvas();
   // createWelcomeCanvas();
   createSinkCanvas();
+  createFoodDeliveryCanvas();
   createPeepCanvas();
 
   // Create all dialogs
@@ -123,6 +124,7 @@ function welcome() {
   // createWelcomeDialog();
   createCongratulationsDialog();
   createSinkDialog();
+  createFoodDeliveryDialog();
   createToDoListDialog();
 
   // Create left and right puzzle pieces
