@@ -13,6 +13,27 @@ function createTitleCanvas() {
     // Drop image
     let dropImage = undefined;
 
+    // Title font
+    let titleFont = undefined;
+
+    // Title string
+    let titleString = `fogdog`;
+    // Title string split into letters
+    let titleLetters = [];
+
+    // Letter objects that contains behaviour
+    let letters = [];
+
+    // Letter properties
+    let letterProperties = {
+      // horizontal spacing between letters
+      xSpacing: undefined,
+      // maxmimum distance letter can be positioned from center line
+      yRangeFromCenter: 50,
+      // x position of first character
+      firstXPosition: undefined,
+    };
+
     // Title rectangle that spans width of window
     let titleRectangle = undefined;
 
@@ -30,6 +51,9 @@ function createTitleCanvas() {
     p.preload = function () {
       // Load drop image
       dropImage = p.loadImage(`assets/images/drop.png`);
+
+      // Load title font
+      titleFont = p.loadFont(`assets/fonts/ShipporiMincho-Medium.ttf`);
     };
 
     // Create canvas and objects
@@ -61,6 +85,38 @@ function createTitleCanvas() {
       let dropX = p.width / 2;
       let dropY = -10;
       drop = new Drop(p, dropImage, dropX, dropY, pulsatingCircle);
+
+      // Split title into letters and store in titleLetters array
+      titleLetters = p.split(titleString, ``);
+
+      // Set horizontal spacing between each letter
+      letterProperties.xSpacing = p.width / 8;
+
+      // Calculate total length of word with custom spacing
+      let wordLength = letterProperties.xSpacing * (titleLetters.length - 1);
+
+      // Set x position of first letter
+      letterProperties.firstXPosition = p.width / 2 - wordLength / 2;
+
+      // Create new letters
+      for (let i = 0; i < titleLetters.length; i++) {
+        let letterX =
+          letterProperties.firstXPosition + letterProperties.xSpacing * i;
+        let letterY = p.random(
+          p.height / 2 + 150 - letterProperties.yRangeFromCenter,
+          p.height / 2 + 150 + letterProperties.yRangeFromCenter
+        );
+
+        let letter = new Letter(
+          p,
+          titleLetters[i],
+          titleFont,
+          letterX,
+          letterY
+        );
+
+        letters.push(letter);
+      }
     };
 
     // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
@@ -77,6 +133,11 @@ function createTitleCanvas() {
 
       // Update circle behaviour
       pulsatingCircle.update();
+
+      // Update behaviour of letters
+      for (let i = 0; i < letters.length; i++) {
+        letters[i].update();
+      }
 
       // If mouse clicked on circle, release drop
       if (pulsatingCircle.overlapsWith(mouse) && p.mouseIsPressed) {

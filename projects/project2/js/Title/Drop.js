@@ -8,23 +8,26 @@ class Drop {
     this.image = dropImage;
     // image color tint
     this.tint = {
+      // current color:
       current: {
-        r: 215,
-        g: 245,
-        b: 191,
+        r: 207,
+        g: 229,
+        b: 255,
         alpha: 255,
       },
+      // start color: light blue
       start: {
-        r: 215,
-        g: 245,
-        b: 191,
+        r: 207,
+        g: 229,
+        b: 255,
         alpha: 255,
       },
+      // end color: vibrant purple
       end: {
         r: 231,
         g: 112,
         b: 255,
-        alpha: 30,
+        alpha: 50,
       },
     };
     // position
