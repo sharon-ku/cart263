@@ -39,9 +39,12 @@ class PulsatingCircle {
       growthRate: {
         initial: 0.005,
         current: 0.005,
-        final: 0.05,
+        final: 3,
       },
-      growthAcceleration: 0.01,
+      growthAcceleration: {
+        current: 0.01,
+        final: 0.03,
+      },
     };
   }
 
@@ -62,7 +65,7 @@ class PulsatingCircle {
     // If circle has not reached max size yet
     if (this.size.current < this.size.max) {
       // Make circle grow on infinitely with speed and acceleration
-      this.size.growthRate.current += this.size.growthAcceleration;
+      this.size.growthRate.current += this.size.growthAcceleration.current;
       this.size.current += this.size.growthRate.current;
     }
     // Else, if circle exceeds max size
@@ -77,7 +80,7 @@ class PulsatingCircle {
   // Expand to full width of canvas
   expandAllTheWay() {
     this.size.max = this.p.width;
-    this.size.growthRate.current = this.size.growthRate.final;
+    this.size.growthAcceleration.current = this.size.growthAcceleration.final;
   }
 
   // Change stroke weight based on circle's size

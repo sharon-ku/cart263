@@ -1,7 +1,7 @@
 // Rectangle that spans the width of the window
 // Used for dramatic effect
 
-class StartRectangle {
+class TitleRectangle {
   constructor(p, x, y, width) {
     // p5 instance
     this.p = p;

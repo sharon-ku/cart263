@@ -1,4 +1,4 @@
-// Instance 1: Start canvas
+// Instance 1: Title canvas
 //
 function createTitleCanvas() {
   let instance1Sketch = function (p) {
@@ -13,17 +13,17 @@ function createTitleCanvas() {
     // Drop image
     let dropImage = undefined;
 
-    // Start rectangle that spans width of window
-    let startRectangle = undefined;
+    // Title rectangle that spans width of window
+    let titleRectangle = undefined;
 
     // Pulsating circle
     let pulsatingCircle = undefined;
 
-    // Background color: black
+    // Background color: white
     let bgFill = {
-      r: 0,
-      g: 0,
-      b: 0,
+      r: 255,
+      g: 255,
+      b: 255,
     };
 
     // Load assets
@@ -34,15 +34,18 @@ function createTitleCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Create a start canvas
-      let startCanvas = p.createCanvas(p.windowWidth, p.windowHeight);
-      startCanvas.parent(`start-canvas`);
+      // Remove all strokes
+      p.noStroke();
 
-      // Create new start rectangle whose position is at the center of the canvas
+      // Create a title canvas
+      let titleCanvas = p.createCanvas(p.windowWidth, p.windowHeight);
+      titleCanvas.parent(`title-canvas`);
+
+      // Create new title rectangle whose position is at the center of the canvas
       let rectangleX = p.width / 2;
       let rectangleY = p.height / 2;
       let rectangleWidth = p.width;
-      startRectangle = new StartRectangle(
+      titleRectangle = new TitleRectangle(
         p,
         rectangleX,
         rectangleY,
@@ -57,7 +60,7 @@ function createTitleCanvas() {
       // Create a new drop
       let dropX = p.width / 2;
       let dropY = -10;
-      drop = new Drop(p, dropImage, dropX, dropY);
+      drop = new Drop(p, dropImage, dropX, dropY, pulsatingCircle);
     };
 
     // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
@@ -70,7 +73,7 @@ function createTitleCanvas() {
       p.background(bgFill.r, bgFill.g, bgFill.b);
 
       // Update all behaviour of rectangle
-      startRectangle.update();
+      titleRectangle.update();
 
       // Update circle behaviour
       pulsatingCircle.update();
@@ -82,8 +85,7 @@ function createTitleCanvas() {
 
       // If time to release drop, update drop behaviour
       if (drop.release) {
-        // Update all behaviour of drop
-        drop.update(pulsatingCircle);
+        drop.update();
       }
 
       // If drop overlaps with circle, make circle expand throughout entire canvas
@@ -91,13 +93,15 @@ function createTitleCanvas() {
         pulsatingCircle.expandAllTheWay();
       }
 
-      // If circle exceeds rectangle height, display dialog boxes
-      if (pulsatingCircle.size.current > startRectangle.height && state === `title`) {
-        welcome();
+      // If circle exceeds rectangle height, switch states
+      if (
+        pulsatingCircle.size.current > titleRectangle.height &&
+        state === `title`
+      ) {
+        morning();
       }
     };
-
   };
 
-  let myp5Start = new p5(instance1Sketch);
+  let myp5Title = new p5(instance1Sketch);
 }

@@ -1,7 +1,7 @@
 // Drop of water that falls from top of canvas when user clicks on pulsating circle
 
 class Drop {
-  constructor(p, dropImage, x, y) {
+  constructor(p, dropImage, x, y, pulsatingCircle) {
     // p5 instance
     this.p = p;
     // image
@@ -12,22 +12,26 @@ class Drop {
         r: 215,
         g: 245,
         b: 191,
+        alpha: 255,
       },
       start: {
         r: 215,
         g: 245,
         b: 191,
+        alpha: 255,
       },
       end: {
         r: 231,
         g: 112,
         b: 255,
+        alpha: 30,
       },
     };
     // position
     this.x = x;
     this.y = y;
     this.yInitial = y;
+    this.yFinal = pulsatingCircle.y;
     // velocity and speed
     this.vx = 0;
     this.vy = 5;
@@ -40,8 +44,8 @@ class Drop {
     this.release = false;
   }
 
-  // Update all behaviour of circle
-  update(circle) {
+  // Update all behaviour of drop
+  update() {
     // Display drop image
     this.display();
 
@@ -52,14 +56,19 @@ class Drop {
     this.move();
 
     // Update drop tint based on y position
-    this.updateTint(circle);
+    this.updateTint();
   }
 
   // Display drop image
   display() {
     this.p.push();
     this.p.imageMode(this.p.CENTER);
-    this.p.tint(this.tint.current.r, this.tint.current.g, this.tint.current.b);
+    this.p.tint(
+      this.tint.current.r,
+      this.tint.current.g,
+      this.tint.current.b,
+      this.tint.current.alpha
+    );
     this.p.image(this.image, this.x, this.y);
     this.p.pop();
   }
@@ -71,20 +80,21 @@ class Drop {
 
   // Drop the drop
   move() {
+    // Do not exceed terminal velocity
     this.vy = this.p.constrain(this.vy, -this.maxSpeed, this.maxSpeed);
 
+    // Update position with velocity and acceleration
     this.vy += this.ay;
-
     this.y += this.vy;
   }
 
   // Update tint of drop
-  updateTint(circle) {
+  updateTint() {
     // Update tint's r value
     this.tint.current.r = this.p.map(
       this.y,
       this.yInitial,
-      circle.y,
+      this.yFinal,
       this.tint.start.r,
       this.tint.end.r
     );
@@ -92,7 +102,7 @@ class Drop {
     this.tint.current.g = this.p.map(
       this.y,
       this.yInitial,
-      circle.y,
+      this.yFinal,
       this.tint.start.g,
       this.tint.end.g
     );
@@ -100,9 +110,17 @@ class Drop {
     this.tint.current.b = this.p.map(
       this.y,
       this.yInitial,
-      circle.y,
+      this.yFinal,
       this.tint.start.b,
       this.tint.end.b
+    );
+    // Update tint's alpha value
+    this.tint.current.alpha = this.p.map(
+      this.y,
+      this.yInitial,
+      this.yFinal,
+      this.tint.start.alpha,
+      this.tint.end.alpha
     );
   }
 }

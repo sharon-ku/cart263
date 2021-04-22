@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `night`;
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -42,10 +42,14 @@ function updateDayNumber() {
 if (state === `title`) {
   // hide all HTML elements
   hideAllHTML();
+  // hide day section
+  $(`#day-section`).hide();
   // create canvas
   createTitleCanvas();
   // update day number
   updateDayNumber();
+  // start state
+  title();
 } else if (state === `welcome`) {
   // hide all HTML elements
   hideAllHTML();
@@ -84,7 +88,7 @@ if (state === `title`) {
 
 // Hide all HTML elements
 function hideAllHTML() {
-  $(`#start-state`).hide();
+  $(`#title-state`).hide();
   $(`#morning-state`).hide();
   $(`#welcome-state`).hide();
   $(`#go-to-work-state`).hide();
@@ -95,16 +99,21 @@ function hideAllHTML() {
 
 // -----------------------------------------------------
 
+// STATE: title
+//
+function title() {
+  // Show HTML elements for this state
+  $(`#title-state`).show();
+}
+
+// -----------------------------------------------------
+
 // STATE: morning
 //
 function morning() {
   state = `morning`;
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
-
-  // Show HTML elements for this state
-  $(`#start-state`).show();
-  $(`#morning-state`).show();
+  // Made title canvas fade away
+  $(`#title-canvas`).toggle("fade", 3000, showMorningElements);
 
   // Create canvases
 
@@ -113,6 +122,15 @@ function morning() {
 
   // Show letter animation
   $(`#letter-animation`).show();
+
+  // Make letter animation draggable
+  makeElementDraggable(`#letter-animation`);
+}
+
+// Show HTML elements for morning state
+function showMorningElements() {
+  $(`#morning-state`).show();
+  $(`#day-section`).show();
 }
 
 // When letter animation is clicked on, open email and hide letter animation
@@ -121,12 +139,14 @@ $(`#letter-animation`).click(function () {
   $(this).hide();
 });
 
-// Make letter animation draggable
-$(`#letter-animation`).draggable({
-  drag: function (event, ui) {
-    $(this).css(`cursor`, `grab`);
-  },
-});
+// Make something draggable
+function makeElementDraggable(element) {
+  $(`${element}`).draggable({
+    drag: function (event, ui) {
+      $(this).css(`cursor`, `grab`);
+    },
+  });
+}
 
 // -----------------------------------------------------
 
@@ -135,8 +155,8 @@ $(`#letter-animation`).draggable({
 function goToWork() {
   state = `goToWork`;
 
-  // Hide start canvas
-  $(`#start-canvas`).slideToggle();
+  // Hide title canvas
+  $(`#title-canvas`).slideToggle();
 
   // Show go-to-work HTML elements
   $(`#go-to-work-state`).show();
@@ -188,7 +208,7 @@ function returnHome() {
   $(`#return-home-state`).show();
 
   // // Hide all HTML from other states
-  // $(`#start-state`).hide();
+  // $(`#title-state`).hide();
   // $(`#morning-state`).hide();
   // $(`#welcome-state`).hide();
   // $(`#go-to-work-state`).hide();
@@ -217,6 +237,9 @@ function night() {
 
   // Create all dialogs
   createAffirmationsDialog();
+
+  // Make mirror canvas draggable
+  makeElementDraggable(`#mirror-canvas`);
 }
 
 // -----------------------------------------------------
@@ -226,8 +249,8 @@ function night() {
 function welcome() {
   state = `welcome`;
 
-  // // Hide start canvas
-  // $(`#start-canvas`).slideToggle();
+  // // Hide title canvas
+  // $(`#title-canvas`).slideToggle();
 
   // Show return-home HTML
   $(`#welcome-state`).show();

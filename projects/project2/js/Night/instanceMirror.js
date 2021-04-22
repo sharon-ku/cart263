@@ -17,12 +17,15 @@ function createMirrorCanvas() {
       b: 0,
     };
 
-    // Used for ml5
-    let faceapi;
-    let video;
+    // Used for ml5 -----------------------
+    // Faceapi object
+    let faceapi = undefined;
+    // The user's webcam
+    let video = undefined;
+    // Store all detections
     let detections;
 
-    // by default all options are set to true
+    // Modifying detection options (by default, they are set to true)
     const detection_options = {
       withLandmarks: true,
       withDescriptors: false,
@@ -67,8 +70,8 @@ function createMirrorCanvas() {
       // image(video, 0,0, width, height)
       if (detections) {
         if (detections.length > 0) {
-          // console.log(detections)
-          p.drawBox(detections);
+          // console.log(detections);
+          // p.drawBox(detections);
           p.drawLandmarks(detections);
         }
       }
