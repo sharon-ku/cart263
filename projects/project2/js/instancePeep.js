@@ -10,9 +10,9 @@ function createPeepCanvas() {
 
     // Background color: blue
     let bgFill = {
-      r: 0,
-      g: 0,
-      b: 255,
+      r: 251,
+      g: 235,
+      b: 241,
     };
 
     // Store Peep images

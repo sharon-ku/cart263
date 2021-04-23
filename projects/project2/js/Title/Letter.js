@@ -23,12 +23,19 @@ class Letter {
     this.vx = 0;
     this.vy = 5;
     this.maxSpeed = 5;
+    // acceleration
+    this.ax = 0;
+    this.ay = 0;
+    this.gravity = 0.01;
   }
 
   // Update all behaviour of letter
   update() {
     // Display letter
     this.display();
+
+    // // Apply gravity to letter
+    // this.applyGravity();
 
     // // Make letter float
     // this.float();
@@ -60,5 +67,9 @@ class Letter {
 
     this.x += this.vx;
     this.y += this.vy;
+
+    // Update position with velocity and acceleration
+    // this.vy += this.ay;
+    // this.y += this.vy;
   }
 }

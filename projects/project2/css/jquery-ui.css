@@ -4,6 +4,11 @@
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Gill%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.2em&cornerRadius=4px&bgColorHeader=e770ff&bgTextureHeader=dots_small&bgImgOpacityHeader=35&borderColorHeader=2c4359&fcHeader=ffe6ff&iconColorHeader=ffe6ff&bgColorContent=ffffff&bgTextureContent=flat&bgImgOpacityContent=75&borderColorContent=aaaaaa&fcContent=2c4359&iconColorContent=f79795&bgColorDefault=cfe5ff&bgTextureDefault=diagonals_small&bgImgOpacityDefault=50&borderColorDefault=cfe5ff&fcDefault=333333&iconColorDefault=ffffff&bgColorHover=d7f5bf&bgTextureHover=diagonals_small&bgImgOpacityHover=75&borderColorHover=999999&fcHover=212121&iconColorHover=454545&bgColorActive=f79795&bgTextureActive=diagonals_small&bgImgOpacityActive=40&borderColorActive=ff6b7f&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=aaf9a8&bgTextureHighlight=dots_medium&bgImgOpacityHighlight=80&borderColorHighlight=aaf9a8&fcHighlight=363636&iconColorHighlight=88a206&bgColorError=ff3853&bgTextureError=diagonals_small&bgImgOpacityError=50&borderColorError=ff6b7f&fcError=ffffff&iconColorError=ffeb33&bgColorOverlay=f7f7ba&bgTextureOverlay=white_lines&bgImgOpacityOverlay=85&opacityOverlay=80&bgColorShadow=ba9217&bgTextureShadow=flat&bgImgOpacityShadow=75&opacityShadow=20&thicknessShadow=10px&offsetTopShadow=8px&offsetLeftShadow=8px&cornerRadiusShadow=5px
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
 
+@font-face {
+  font-family: "main-font";
+  src: url("../assets/fonts/Lato-Regular.ttf");
+}
+
 /* Layout helpers
 ----------------------------------*/
 .ui-helper-hidden {
@@ -487,7 +492,9 @@ button.ui-button::-moz-focus-inner {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0.2em;
+  /* padding: 0.2em; */
+  padding: 0em;
+  border: 0.5px solid #e16bf9;
   outline: 0;
 }
 .ui-dialog .ui-dialog-titlebar {
@@ -520,9 +527,13 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-buttonpane {
   text-align: left;
-  border-width: 1px 0 0 0;
+  /* border-width: 1px 0 0 0; */
+  border-width: 0 0 0 0;
+  border-radius: 0 0 10px 10px;
+  /* light pink */
+  background: #f1abff;
   background-image: none;
-  margin-top: 0.5em;
+  /* margin-top: 0.5em; */
   padding: 0.3em 1em 0.5em 0.4em;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
@@ -531,6 +542,7 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog .ui-dialog-buttonpane button {
   margin: 0.5em 0.4em 0.5em 0;
   cursor: pointer;
+  border-radius: 5px;
 }
 .ui-dialog .ui-resizable-n {
   height: 2px;
@@ -879,7 +891,7 @@ body .ui-tooltip {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-  font-family: Arial, sans-serif;
+  font-family: "main-font", sans-serif;
   font-size: 1.2em;
 }
 .ui-widget .ui-widget {
@@ -889,14 +901,15 @@ body .ui-tooltip {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-  font-family: Arial, sans-serif;
+  font-family: "main-font", sans-serif;
   font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-  border: 1px solid #cfe5ff;
+  /* border: 1px solid #cfe5ff; */
+  border-radius: 10px;
 }
 .ui-widget-content {
-  border: 1px solid #aaaaaa;
+  /* border: 1px solid #aaaaaa; */
   background: #ffffff;
   color: #2c4359;
 }
@@ -904,11 +917,14 @@ body .ui-tooltip {
   color: #2c4359;
 }
 .ui-widget-header {
-  border: 1px solid #2c4359;
-  background: #e770ff url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
+  /* border: 1px solid #2c4359; */
+  /* light pink */
+  background: #f1abff url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
     repeat;
-  color: #ffe6ff;
-  font-weight: bold;
+  color: #ffffff;
+  /* font-weight: bold; */
+  border-radius: 5px;
+  font-size: 1.3em;
 }
 .ui-widget-header a {
   color: #ffe6ff;
@@ -1629,13 +1645,13 @@ a.ui-button:active,
 .ui-corner-top,
 .ui-corner-left,
 .ui-corner-tl {
-  border-top-left-radius: 0px;
+  /* border-top-left-radius: 0px; */
 }
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-right,
 .ui-corner-tr {
-  border-top-right-radius: 0px;
+  /* border-top-right-radius: 0px; */
 }
 .ui-corner-all,
 .ui-corner-bottom,

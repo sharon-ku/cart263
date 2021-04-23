@@ -30,10 +30,11 @@ class Peep {
         y: this.p.height - 30,
         width: this.currentScore,
         height: 20,
+        // light green
         fill: {
-          r: 0,
-          g: 255,
-          b: 0,
+          r: 215,
+          g: 245,
+          b: 191,
         },
       },
 
@@ -43,10 +44,11 @@ class Peep {
         y: this.p.height - 30,
         width: this.maxScore - this.currentScore,
         height: 20,
+        // peachy red
         fill: {
-          r: 255,
-          g: 0,
-          b: 0,
+          r: 229,
+          g: 174,
+          b: 149,
         },
       },
     };
@@ -81,6 +83,7 @@ class Peep {
   // Display tracker piece as rectangle
   displayTrackerPiece(trackerPiece) {
     this.p.push();
+    this.p.noStroke();
     this.p.fill(trackerPiece.fill.r, trackerPiece.fill.g, trackerPiece.fill.b);
     this.p.rectMode(this.p.CENTER);
     this.p.rect(
