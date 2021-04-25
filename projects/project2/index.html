@@ -39,11 +39,6 @@
   </head>
 
   <body>
-    <!-- Day number -->
-    <section id="day-section">
-      <h1>Day <span id="day-number"></span></h1>
-    </section>
-
     <!-- State: title -->
     <section id="title-state">
       <!-- Title canvas -->
@@ -52,6 +47,8 @@
 
     <!-- State: morning -->
     <section id="morning-state">
+      <!-- Morning canvas -->
+      <section id="morning-canvas"></section>
       <!-- Letter animation -->
       <figure id="letter-animation">
         <img
@@ -162,12 +159,20 @@
       <section id="mirror-canvas"></section>
     </section>
 
+    <!-- Day number -->
+    <section id="day-section">
+      <h1>Day <span id="day-number"></span></h1>
+    </section>
+
     <!-- My script(s) -->
     <script src="js/Title/TitleRectangle.js"></script>
     <script src="js/Title/PulsatingCircle.js"></script>
     <script src="js/Title/Drop.js"></script>
     <script src="js/Title/Letter.js"></script>
     <script src="js/Title/instance1Title.js"></script>
+
+    <script src="js/Morning/MorningRoom.js"></script>
+    <script src="js/Morning/instanceMorning.js"></script>
 
     <script src="js/instance2Welcome.js"></script>
     <script src="js/instance3Distraction.js"></script>

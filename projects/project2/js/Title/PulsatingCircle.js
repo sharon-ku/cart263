@@ -34,8 +34,8 @@ class PulsatingCircle {
     // size + growth
     this.size = {
       current: 5,
-      min: 5,
-      max: 150,
+      min: 0,
+      max: 250,
       growthRate: {
         initial: 0.005,
         current: 0.005,

@@ -17,7 +17,7 @@ CSS style sheet for Fogdog
 
 body {
   /* Lavender color */
-  background: rgb(150, 160, 253);
+  /* background: rgb(150, 160, 253); */
 
   font-family: "main-font", sans-serif;
 
@@ -39,12 +39,11 @@ p {
 
 /* Change look of email title bar */
 .email .ui-widget-header {
-  border: 1px solid #2c4359;
+  /* border: 1px solid #2c4359; */
   /* Change background color */
   background: #e5ae95 url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
     repeat;
   color: #ffe6ff;
-  font-weight: bold;
 }
 
 /* Change background color of email */
