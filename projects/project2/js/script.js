@@ -239,6 +239,7 @@ function night() {
 
   // Create all dialogs
   createAffirmationsDialog();
+  createSayGoodnightDialog();
 
   // // Make mirror canvas draggable
   // makeElementDraggable(`#mirror-canvas`);
@@ -362,6 +363,28 @@ function createAffirmationsDialog() {
     // autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
+  });
+}
+
+// Create say goodnight dialog
+function createSayGoodnightDialog() {
+  $(`#say-goodnight-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close",
+    // Button options
+    buttons: {
+      Goodnight: function () {
+        $(this).dialog(`close`);
+        // $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
+      },
+    },
   });
 }
 
