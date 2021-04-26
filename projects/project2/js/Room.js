@@ -1,25 +1,22 @@
-// Morning oom: to be displayed as background of morning
+// Room: parent of all rooms; this is to be displayed in background of a state
 
-class MorningRoom {
+class Room {
   constructor(p, images) {
     // p5 instance
     this.p = p;
     // position
     this.x = p.width / 2;
     this.y = p.height / 2;
-
     // images array
     this.images = images;
     // current image index
     this.imageIndex = 0;
-
     // frames for image animation
     this.framesElapsed = 0;
     this.framesBtwEachImage = 50;
-
-    // size information
-    this.width = undefined;
-    this.height = undefined;
+    // image size
+    this.width = 1280;
+    this.height = 720;
   }
 
   // Update all room behaviour

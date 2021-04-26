@@ -4,9 +4,13 @@ CSS style sheet for Fogdog
 
 **********************************************/
 
+/* Import Source Sans Pro typeface */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+
+/* Title font */
 @font-face {
-  font-family: "main-font";
-  src: url("../assets/fonts/Lato-Regular.ttf");
+  font-family: "heading-font";
+  src: url("../assets/fonts/ShipporiMincho-Medium.ttf");
 }
 
 * {
@@ -19,7 +23,7 @@ body {
   /* Lavender color */
   /* background: rgb(150, 160, 253); */
 
-  font-family: "main-font", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 
   overflow: hidden;
 }
@@ -59,11 +63,24 @@ p {
 
 /* Section that displayes day number */
 #day-section {
+  z-index: 1000;
+
+  /* Set top left position */
+  position: absolute;
+  top: 100px;
+  left: 0px;
+
   padding: 30px;
+  /* Purple */
+  color: #cd76ff;
+}
+
+#day-section h1 {
+  font-weight: 700;
 }
 
 /* First canvas we see */
-#start-canvas {
+#title-canvas {
   /* z-index: 1000; */
   /* Set top left position */
   position: absolute;
@@ -80,6 +97,30 @@ p {
 
   /* Set black background */
   background: black;
+}
+
+/* Set mirror canvas position */
+#mirror-canvas {
+  /* Set top left position */
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+/* Canvas that is in the background of each state */
+.background-canvas {
+  /* Set top left position */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  /* Fill up whole window */
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
 /* Hide close button for dialog box */

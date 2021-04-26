@@ -1,7 +1,7 @@
-// Instance 1: Morning canvas
+// Instance: Night canvas
 //
-function createMorningCanvas() {
-  let instanceMorningSketch = function (p) {
+function createNightCanvas() {
+  let instanceNightSketch = function (p) {
     // Mouse position
     let mouse = {
       x: undefined,
@@ -24,16 +24,14 @@ function createMorningCanvas() {
     // Store room images in here
     let roomImages = [];
 
-    // Morning room with all its behaviour
-    let morningRoom = undefined;
+    // Night room with all its behaviour
+    let nightRoom = undefined;
 
     // Load assets
     p.preload = function () {
       // Load room images
       for (let i = 0; i < NUM_ROOM_IMAGES; i++) {
-        let roomImage = p.loadImage(
-          `assets/images/scenes/morning-room${i}.png`
-        );
+        let roomImage = p.loadImage(`assets/images/scenes/night-room${i}.png`);
         roomImages.push(roomImage);
       }
 
@@ -46,12 +44,12 @@ function createMorningCanvas() {
       // Remove all strokes
       p.noStroke();
 
-      // Create a morning canvas
-      let morningCanvas = p.createCanvas(1280, 720);
-      morningCanvas.parent(`morning-canvas`);
+      // Create a night canvas
+      let nightCanvas = p.createCanvas(1280, 720);
+      nightCanvas.parent(`night-canvas`);
 
       // Create a new room
-      morningRoom = new Room(p, roomImages);
+      nightRoom = new Room(p, roomImages);
     };
 
     // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
@@ -63,10 +61,10 @@ function createMorningCanvas() {
       // Set background color
       p.background(bgFill.r, bgFill.g, bgFill.b);
 
-      // Update morning room's behaviour
-      morningRoom.update();
+      // Update night room's behaviour
+      nightRoom.update();
     };
   };
 
-  let myp5Morning = new p5(instanceMorningSketch);
+  let myp5Night = new p5(instanceNightSketch);
 }

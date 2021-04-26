@@ -34,7 +34,7 @@ function createMirrorCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let mirrorCanvas = p.createCanvas(300, 500);
+      let mirrorCanvas = p.createCanvas(150, 100);
       mirrorCanvas.parent(`mirror-canvas`);
 
       // load up user's video

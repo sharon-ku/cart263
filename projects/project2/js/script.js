@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `morning`;
+let state = `night`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -233,14 +233,15 @@ function night() {
   $(`#night-state`).show();
 
   // Create canvases
+  createNightCanvas();
   createMirrorCanvas();
   createAffirmationsCanvas();
 
   // Create all dialogs
   createAffirmationsDialog();
 
-  // Make mirror canvas draggable
-  makeElementDraggable(`#mirror-canvas`);
+  // // Make mirror canvas draggable
+  // makeElementDraggable(`#mirror-canvas`);
 }
 
 // -----------------------------------------------------

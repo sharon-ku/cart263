@@ -48,7 +48,7 @@
     <!-- State: morning -->
     <section id="morning-state">
       <!-- Morning canvas -->
-      <section id="morning-canvas"></section>
+      <section id="morning-canvas" class="background-canvas"></section>
       <!-- Letter animation -->
       <figure id="letter-animation">
         <img
@@ -150,6 +150,9 @@
 
     <!-- State: night -->
     <section id="night-state">
+      <!-- Night canvas -->
+      <section id="night-canvas"></section>
+
       <!-- Affirmations dialog -->
       <div id="affirmations-dialog" title="Read affirmations out loud">
         <section id="affirmations-canvas"></section>
@@ -165,13 +168,14 @@
     </section>
 
     <!-- My script(s) -->
+    <script src="js/Room.js"></script>
+
     <script src="js/Title/TitleRectangle.js"></script>
     <script src="js/Title/PulsatingCircle.js"></script>
     <script src="js/Title/Drop.js"></script>
     <script src="js/Title/Letter.js"></script>
     <script src="js/Title/instance1Title.js"></script>
 
-    <script src="js/Morning/MorningRoom.js"></script>
     <script src="js/Morning/instanceMorning.js"></script>
 
     <script src="js/instance2Welcome.js"></script>
@@ -187,6 +191,7 @@
     <script src="js/FoodDelivery/Table.js"></script>
     <script src="js/FoodDelivery/instanceFoodDelivery.js"></script>
 
+    <script src="js/Night/instanceNight.js"></script>
     <script src="js/Night/instanceAffirmations.js"></script>
     <script src="js/Night/instanceMirror.js"></script>
 
