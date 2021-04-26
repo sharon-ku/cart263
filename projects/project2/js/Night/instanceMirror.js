@@ -34,7 +34,7 @@ function createMirrorCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let mirrorCanvas = p.createCanvas(150, 100);
+      let mirrorCanvas = p.createCanvas(300, 300);
       mirrorCanvas.parent(`mirror-canvas`);
 
       // load up user's video
@@ -65,8 +65,7 @@ function createMirrorCanvas() {
       // console.log(result)
       detections = result;
 
-      // background(220);
-      p.background(255);
+      p.background(0, 0, 0);
       // image(video, 0,0, width, height)
       if (detections) {
         if (detections.length > 0) {
@@ -98,6 +97,8 @@ function createMirrorCanvas() {
       p.stroke(161, 95, 251);
       p.strokeWeight(2);
 
+      console.log(detections[0].parts.mouth);
+
       for (let i = 0; i < detections.length; i++) {
         const mouth = detections[i].parts.mouth;
         const nose = detections[i].parts.nose;
@@ -106,13 +107,38 @@ function createMirrorCanvas() {
         const rightEyeBrow = detections[i].parts.rightEyeBrow;
         const leftEyeBrow = detections[i].parts.leftEyeBrow;
 
-        p.drawPart(mouth, true);
-        p.drawPart(nose, false);
-        p.drawPart(leftEye, true);
-        p.drawPart(leftEyeBrow, false);
-        p.drawPart(rightEye, true);
-        p.drawPart(rightEyeBrow, false);
+        // p.drawPart(mouth, true);
+        // p.drawPart(nose, false);
+        // p.drawPart(leftEye, true);
+        // p.drawPart(leftEyeBrow, false);
+        // p.drawPart(rightEye, true);
+        // p.drawPart(rightEyeBrow, false);
       }
+
+      // Get mouth position
+      let mouthPosition = detections[0].parts.mouth;
+
+      // Set x position and width of mouth
+      let leftXPosition = mouthPosition[0]._x;
+      let rightXPosition = mouthPosition[6]._x;
+      let mouthWidth = rightXPosition - leftXPosition;
+
+      // Set y position and height of mouth
+      let bottomYPosition = mouthPosition[2]._y;
+      let topYPosition = mouthPosition[9]._y;
+      let mouthHeight = topYPosition - bottomYPosition;
+
+      // Draw mouth as ellipse
+      p.push();
+      p.fill(255);
+      p.noStroke();
+      p.ellipse(
+        mouthPosition[0]._x + mouthWidth / 2,
+        mouthPosition[0]._y + mouthHeight / 2 - 5,
+        mouthWidth,
+        mouthHeight
+      );
+      p.pop();
     };
 
     p.drawPart = function (feature, closed) {
@@ -120,6 +146,9 @@ function createMirrorCanvas() {
       for (let i = 0; i < feature.length; i++) {
         const x = feature[i]._x;
         const y = feature[i]._y;
+
+        // console.log(y);
+        // console.log(`yes`);
         p.vertex(x, y);
       }
 

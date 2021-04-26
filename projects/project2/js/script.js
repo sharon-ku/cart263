@@ -233,8 +233,8 @@ function night() {
   $(`#night-state`).show();
 
   // Create canvases
-  createNightCanvas();
   createMirrorCanvas();
+  createNightCanvas();
   createAffirmationsCanvas();
 
   // Create all dialogs

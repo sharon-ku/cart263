@@ -34,9 +34,6 @@ function createNightCanvas() {
         let roomImage = p.loadImage(`assets/images/scenes/night-room${i}.png`);
         roomImages.push(roomImage);
       }
-
-      // Load title font
-      titleFont = p.loadFont(`assets/fonts/ShipporiMincho-Medium.ttf`);
     };
 
     // Create canvas and objects
@@ -58,8 +55,8 @@ function createNightCanvas() {
       mouse.x = p.mouseX;
       mouse.y = p.mouseY;
 
-      // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      // // Set background color
+      // p.background(bgFill.r, bgFill.g, bgFill.b);
 
       // Update night room's behaviour
       nightRoom.update();
