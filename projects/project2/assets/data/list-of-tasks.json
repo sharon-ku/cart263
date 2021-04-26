@@ -1,11 +1,11 @@
 {
-  "description": "List of affirmations that are said nightly in front of a mirror",
-  "affirmations": [
-    "I am intelligent.",
-    "I am strong.",
-    "I am enough.",
-    "I am brave.",
-    "I am loved.",
+  "description": "List of tasks to do at work",
+  "tasks": [
+    "wash the dishes",
+    "deliver food to tables",
+    "wipe tables",
+    "clean windows",
+    "take orders",
     "I am beautiful.",
     "I can do anything!",
     "I shine as bright as a star.",

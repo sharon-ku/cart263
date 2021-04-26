@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `night`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -382,7 +382,8 @@ function createSayGoodnightDialog() {
     buttons: {
       Goodnight: function () {
         $(this).dialog(`close`);
-        // $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
+        // Update state
+        morning();
       },
     },
   });

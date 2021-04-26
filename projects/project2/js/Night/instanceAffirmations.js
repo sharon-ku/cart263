@@ -144,6 +144,8 @@ function createAffirmationsCanvas() {
         // If user said all 3 affirmations, time to say goodnight <3
         if (currentAffirmationIndex === affirmations.length) {
           console.log(`finished!`);
+          // Close affirmations dialog
+          $(`#affirmations-dialog`).dialog("close");
           // Open "Say goodnight" dialog
           $(`#say-goodnight-dialog`).dialog("open");
         }
