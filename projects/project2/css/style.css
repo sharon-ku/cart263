@@ -101,15 +101,16 @@ p {
 
 /* Set mirror canvas position */
 #mirror-canvas {
+  /* Move mirror-canvas behind background-canvas */
   z-index: -500;
-  /* Set top left position */
-  /* position: fixed;
-  top: 0px;
-  left: 0px; */
 
   position: relative;
   top: -35px;
   left: 1075px;
+
+  /* Flip canvas horizontally */
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 /* Canvas that is in the background of each state */
