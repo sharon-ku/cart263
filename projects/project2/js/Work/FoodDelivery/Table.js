@@ -1,12 +1,12 @@
 // Table in food delivery instance
 
 class Table {
-  constructor(p) {
+  constructor(p, x, y) {
     // p5 instance
     this.p = p;
     // position
-    this.x = p.random(0, p.width / 2);
-    this.y = p.random(0, p.height - 100);
+    this.x = x;
+    this.y = y;
     // size
     this.width = 50;
     this.height = 70;
