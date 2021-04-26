@@ -17,6 +17,22 @@ function createMirrorCanvas() {
       b: 0,
     };
 
+    // Landmark stroke color
+    const LANDMARK_STROKE_FILL = {
+      r: 241,
+      g: 142,
+      b: 48,
+    };
+
+    // Landmark stroke weight
+    const LANDMARK_STROKE_WEIGHT = 2;
+
+    // Body objects inside mirror
+    let mirrorHead = undefined;
+    let mirrorMouth = undefined;
+    let leftEye = undefined;
+    let rightEye = undefined;
+
     // Used for ml5 -----------------------
     // Faceapi object
     let faceapi = undefined;
@@ -43,6 +59,22 @@ function createMirrorCanvas() {
       video.hide(); // Hide the video element, and just show the canvas
       faceapi = ml5.faceApi(video, detection_options, p.modelReady);
       p.textAlign(p.RIGHT);
+
+      // Create new head in mirror
+      mirrorHead = new MirrorHead(p);
+
+      // Create new mouth
+      mirrorMouth = new MirrorMouth(p);
+
+      // Create new left eye
+      const LEFT_EYE_X_OFFSET = -5;
+      const LEFT_EYE_Y_OFFSET = 15;
+      leftEye = new MirrorEye(p, LEFT_EYE_X_OFFSET, LEFT_EYE_Y_OFFSET);
+
+      // Create new right eye
+      const RIGHT_EYE_X_OFFSET = 5;
+      const RIGHT_EYE_Y_OFFSET = 15;
+      rightEye = new MirrorEye(p, RIGHT_EYE_X_OFFSET, RIGHT_EYE_Y_OFFSET);
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -69,41 +101,22 @@ function createMirrorCanvas() {
       // image(video, 0,0, width, height)
       if (detections) {
         if (detections.length > 0) {
+          // Update behaviour of body parts
+          mirrorHead.update(detections);
+          mirrorMouth.update(detections);
+
+          let leftEyePosition = detections[0].parts.leftEye;
+          leftEye.update(detections, leftEyePosition);
+
+          let rightEyePosition = detections[0].parts.rightEye;
+          rightEye.update(detections, rightEyePosition);
+
           // p.drawBox(detections);
-          p.drawHead(detections);
+          // p.drawHead(detections);
           p.drawLandmarks(detections);
         }
       }
       faceapi.detect(p.gotResults);
-    };
-
-    // Draw ellipse for head
-    p.drawHead = function (detections) {
-      for (let i = 0; i < detections.length; i++) {
-        // Rectangle that stores head detections
-        let alignedRect = detections[i].alignedRect;
-        let x = alignedRect._box._x;
-        let y = alignedRect._box._y;
-
-        // Box that stores head's width and height
-        let boxWidth = alignedRect._box._width;
-        let boxHeight = alignedRect._box._height;
-
-        // Let the head size be the height of the box
-        let headSize = boxHeight;
-
-        // Offset to add to head's x position to make it centered
-        let xOffset = (boxWidth - boxHeight / 2) / 2;
-
-        // Draw ellipse
-        p.push();
-        p.noFill();
-        p.stroke(161, 95, 251);
-        p.strokeWeight(2);
-        p.ellipseMode(p.CORNER);
-        p.ellipse(x - xOffset, y, headSize);
-        p.pop();
-      }
     };
 
     p.drawBox = function (detections) {
@@ -123,10 +136,14 @@ function createMirrorCanvas() {
 
     p.drawLandmarks = function () {
       p.noFill();
-      p.stroke(161, 95, 251);
-      p.strokeWeight(2);
+      p.stroke(
+        LANDMARK_STROKE_FILL.r,
+        LANDMARK_STROKE_FILL.g,
+        LANDMARK_STROKE_FILL.b
+      );
+      p.strokeWeight(LANDMARK_STROKE_WEIGHT);
 
-      console.log(detections[0].parts.mouth);
+      // console.log(detections[0].parts.mouth);
 
       for (let i = 0; i < detections.length; i++) {
         const mouth = detections[i].parts.mouth;
@@ -143,79 +160,6 @@ function createMirrorCanvas() {
         // p.drawPart(rightEye, true);
         p.drawPart(rightEyeBrow, false);
       }
-
-      // Get left eye position
-      let leftEyePosition = detections[0].parts.leftEye;
-
-      // Set x position of eye
-      let leftEyeX = leftEyePosition[0]._x;
-      const LEFT_EYE_X_OFFSET = -5;
-      let leftEyeY = leftEyePosition[4]._y;
-      const LEFT_EYE_Y_OFFSET = 15;
-
-      // Draw eye as ellipse
-      p.push();
-      p.fill(255);
-      p.noStroke();
-      p.ellipse(
-        leftEyeX + LEFT_EYE_X_OFFSET,
-        leftEyeY + LEFT_EYE_Y_OFFSET,
-        12,
-        12
-      );
-      p.pop();
-
-      // RIGHT EYE ----
-      // Get right eye position
-      let rightEyePosition = detections[0].parts.rightEye;
-
-      // Set x position of right eye
-      let rightEyeX = rightEyePosition[0]._x;
-      const RIGHT_EYE_X_OFFSET = 5;
-      let rightEyeY = rightEyePosition[4]._y;
-      const RIGHT_EYE_Y_OFFSET = 15;
-
-      // Draw eye as ellipse
-      p.push();
-      p.fill(255);
-      p.noStroke();
-      p.ellipse(
-        rightEyeX + RIGHT_EYE_X_OFFSET,
-        rightEyeY + RIGHT_EYE_Y_OFFSET,
-        12,
-        12
-      );
-      p.pop();
-
-      // MOUTH ---
-      // Get mouth position
-      let mouthPosition = detections[0].parts.mouth;
-
-      // Set x position and width of mouth
-      let leftXPosition = mouthPosition[0]._x;
-      let rightXPosition = mouthPosition[6]._x;
-      let mouthWidth = rightXPosition - leftXPosition;
-
-      // Set y position and height of mouth
-      let bottomYPosition = mouthPosition[2]._y;
-      let topYPosition = mouthPosition[9]._y;
-      let mouthHeight = topYPosition - bottomYPosition;
-
-      // Offset to add to x and y positions
-      const MOUTH_X_OFFSET = -5;
-      const MOUTH_Y_OFFSET = -5;
-
-      // Draw mouth as ellipse
-      p.push();
-      p.fill(255);
-      p.noStroke();
-      p.ellipse(
-        leftXPosition + mouthWidth / 2 + MOUTH_X_OFFSET,
-        mouthPosition[0]._y + mouthHeight / 2 + MOUTH_Y_OFFSET,
-        mouthWidth,
-        mouthHeight
-      );
-      p.pop();
     };
 
     p.drawPart = function (feature, closed) {

@@ -1,0 +1,81 @@
+// Mirror mouth in night scene
+
+class MirrorMouth {
+  constructor(p) {
+    // p5 instance
+    this.p = p;
+    // position
+    this.x = {
+      leftPosition: undefined,
+      rightPosition: undefined,
+    };
+    this.y = {
+      topPosition: undefined,
+      bottomPosition: undefined,
+    };
+    // Offset to add to head's position to make it centered
+    this.xOffset = -5;
+    this.yOffset = -5;
+
+    // size
+    this.width = undefined;
+    this.height = undefined;
+
+    // color
+    this.fill = {
+      r: 241,
+      g: 142,
+      b: 48,
+    };
+    // stroke color: light purple
+    this.strokeFill = {
+      r: 241,
+      g: 142,
+      b: 48,
+    };
+    // stroke
+    this.strokeWeight = 0;
+  }
+
+  // Update all circle behaviour
+  update(detections) {
+    for (let i = 0; i < detections.length; i++) {
+      // Calculate circle's size and xOffset
+      this.calculateValues(detections);
+
+      // Draw circle
+      this.display();
+    }
+  }
+
+  // Calculate mouth's x and y positions, width, and height
+  calculateValues(detections) {
+    // Get mouth position
+    let mouthPosition = detections[0].parts.mouth;
+
+    // Set x position and width of mouth
+    this.x.leftPosition = mouthPosition[0]._x;
+    this.x.rightPosition = mouthPosition[6]._x;
+    this.width = this.x.rightPosition - this.x.leftPosition;
+
+    // Set y position and height of mouth
+    this.y.bottomPosition = mouthPosition[2]._y;
+    this.y.topPosition = mouthPosition[9]._y;
+    this.height = this.y.topPosition - this.y.bottomPosition;
+  }
+
+  // Display circle
+  display() {
+    this.p.push();
+    this.p.fill(this.fill.r, this.fill.g, this.fill.b);
+    this.p.stroke(this.strokeFill.r, this.strokeFill.g, this.strokeFill.b);
+    this.p.strokeWeight(this.strokeWeight);
+    this.p.ellipse(
+      this.x.leftPosition + this.width / 2 + this.xOffset,
+      this.y.bottomPosition + this.height / 2 + this.yOffset,
+      this.width,
+      this.height
+    );
+    this.p.pop();
+  }
+}
