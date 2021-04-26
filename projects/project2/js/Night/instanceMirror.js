@@ -10,11 +10,11 @@ function createMirrorCanvas() {
       y: undefined,
     };
 
-    // Background fill
+    // Background fill: pink
     let bgFill = {
-      r: 0,
-      g: 0,
-      b: 0,
+      r: 250,
+      g: 230,
+      b: 252,
     };
 
     // Landmark stroke color
@@ -84,8 +84,8 @@ function createMirrorCanvas() {
     };
 
     p.modelReady = function () {
-      console.log("ready!");
-      console.log(faceapi);
+      // console.log("ready!");
+      // console.log(faceapi);
       faceapi.detect(p.gotResults);
     };
 
@@ -97,7 +97,7 @@ function createMirrorCanvas() {
       // console.log(result)
       detections = result;
 
-      p.background(0, 0, 0);
+      p.background(bgFill.r, bgFill.g, bgFill.b);
       // image(video, 0,0, width, height)
       if (detections) {
         if (detections.length > 0) {

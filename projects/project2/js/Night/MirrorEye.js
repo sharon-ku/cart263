@@ -4,12 +4,10 @@ class MirrorEye {
   constructor(p, xOffset, yOffset) {
     // p5 instance
     this.p = p;
-    // // eye position we get from detections
-    // this.eyePosition = eyePosition;
     // position
     this.x = undefined;
     this.y = undefined;
-    // Offset to add to head's position to make it centered
+    // offset to add to head's position to make it centered
     this.xOffset = xOffset;
     this.yOffset = yOffset;
 
