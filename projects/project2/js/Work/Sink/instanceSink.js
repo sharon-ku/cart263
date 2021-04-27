@@ -5,6 +5,9 @@
 // All possible states: `on`, `off`
 let sinkState = `off`;
 
+// True if giving feedback to sink stopping
+let givingFeedback = false;
+
 function createSinkCanvas() {
   let instanceSinkSketch = function (p) {
     // Mouse position
@@ -20,8 +23,19 @@ function createSinkCanvas() {
       b: 196,
     };
 
+    // Number of cups to fill
+    const TOTAL_NUM_CUPS = 10;
+    // Count number of cups filled
+    let numCupsFilled = 0;
+
     // Faucet spout
     let faucetSpout = undefined;
+
+    // Bark sound effect
+    let barkSFX = undefined;
+
+    // Yay sound effect
+    let yaySFX = undefined;
 
     // Cup
     let cup = undefined;
@@ -33,6 +47,12 @@ function createSinkCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
+      // Create new bark sound effect
+      barkSFX = new Audio("assets/sounds/bark.wav");
+
+      // Create new yay sound effect
+      yaySFX = new Audio("assets/sounds/yay.mp3");
+
       // Create a start canvas
       let sinkCanvas = p.createCanvas(300, 400);
       sinkCanvas.parent(`sink-canvas`);
@@ -70,23 +90,39 @@ function createSinkCanvas() {
         if (fallingWater.heightCurrent === fallingWater.heightMax) {
           cupWater.fillCup();
         }
+      }
+      // Else if sink is off and time to give feedback
+      else if (sinkState === `off` && givingFeedback === true) {
+        // Reset water line if water reaches limit line
+        if (cup.limitLineIsReached(cupWater)) {
+          // Play victory sound effect
+          yaySFX.play();
+        }
 
-        // If water exceeds limit line, dock points
-        if (cup.limitLineIsExceeded(cupWater)) {
-          // Reset cup values
-          p.resetCupValues();
+        // If water does not match limit line, dock points
+        else {
+          // Play failure sound effect
+          barkSFX.play();
 
           // Dock points
           gameScore -= scoreDecreaseRate;
           console.log(`loser`);
         }
-      }
-      // Else if sink is off
-      else if (sinkState === `off`) {
-        // Reset water line if water reaches limit line
-        if (cup.limitLineIsReached(cupWater)) {
-          p.resetCupValues();
+
+        // Update number of cups filled
+        numCupsFilled++;
+
+        // If done filling total number of cups:
+        if (numCupsFilled === TOTAL_NUM_CUPS) {
+          $(`#sink-canvas`).hide();
+          $(`#sink-dialog`).text(`SUCCESS!`);
         }
+
+        // Reset cup values
+        p.resetCupValues();
+
+        // Done giving feedback
+        givingFeedback = false;
       }
 
       // Update cup water's behaviour
@@ -137,6 +173,8 @@ function createSinkDialog() {
           else if (sinkState === `on`) {
             // Turn it off
             sinkState = `off`;
+            // It's time to give feedback
+            givingFeedback = true;
             // Update button text to "Pour!"
             $("#pour-button").button("option", "label", "Pour!");
           }

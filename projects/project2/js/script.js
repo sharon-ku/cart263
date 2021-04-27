@@ -5,12 +5,15 @@ Sharon Ku
 Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a way to progress the storyline
 
 Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
+
+Sound effects sources:
+yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 */
 
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `morning`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -20,6 +23,9 @@ const NUM_TOTAL_PUZZLES = 2;
 
 // Track number of day (starts at 1)
 let dayNumber = 1;
+
+// True if time to switch day
+let switchDay = false;
 
 // Track game score
 let gameScore = 50;
@@ -50,8 +56,6 @@ if (state === `title`) {
   $(`#day-section`).hide();
   // create canvas
   createTitleCanvas();
-  // update day number
-  updateDayNumber();
   // start state
   title();
 } else if (state === `welcome`) {
@@ -59,8 +63,6 @@ if (state === `title`) {
   hideAllHTML();
   // start state
   welcome();
-  // update day number
-  updateDayNumber();
 } else if (state === `morning`) {
   // hide all HTML elements
   hideAllHTML();
@@ -119,6 +121,15 @@ function morning() {
   state = `morning`;
   // Made title canvas fade away
   $(`#title-canvas`).toggle("fade", 3000, showMorningElements);
+
+  // Add 1 to day number
+  if (switchDay) {
+    dayNumber++;
+    switchDay = false;
+  }
+
+  // Update day number
+  updateDayNumber();
 
   // Create canvases
   createMirrorCanvas();
@@ -259,6 +270,8 @@ function returnHome() {
 //
 function night() {
   state = `night`;
+
+  updateDayNumber();
 
   // Show night HTML
   $(`#night-state`).show();
@@ -494,6 +507,8 @@ function createSayGoodnightDialog() {
     buttons: {
       Goodnight: function () {
         $(this).dialog(`close`);
+        // Set switch day to true
+        switchDay = true;
         // Update state
         morning();
       },

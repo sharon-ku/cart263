@@ -29,7 +29,7 @@ class Cup {
       // position
       xInitial: this.x - 30,
       xFinal: this.x + 30,
-      y: this.y - this.p.random(0, 60),
+      y: this.y - this.p.random(-30, 30),
       // stroke: magenta
       strokeFill: {
         r: 231,
