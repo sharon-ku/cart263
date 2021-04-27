@@ -10,11 +10,18 @@ class Cup {
     // size
     this.width = 50;
     this.height = 70;
-    // fill: light orange
+    // fill: pink
     this.fill = {
-      r: 243,
-      g: 214,
-      b: 169,
+      r: 233,
+      g: 199,
+      b: 195,
+      alpha: 150,
+    };
+    // stroke color: magenta
+    this.strokeFill = {
+      r: 231,
+      g: 112,
+      b: 255,
       alpha: 150,
     };
     // water limit line (water cannot surpass this line)
@@ -23,10 +30,10 @@ class Cup {
       xInitial: this.x - 30,
       xFinal: this.x + 30,
       y: this.y - this.p.random(0, 60),
-      // stroke
+      // stroke: magenta
       strokeFill: {
-        r: 255,
-        g: 255,
+        r: 231,
+        g: 112,
         b: 255,
       },
       strokeWeight: 5,
@@ -46,6 +53,7 @@ class Cup {
   displayCup() {
     this.p.push();
     this.p.fill(this.fill.r, this.fill.g, this.fill.b, this.fill.alpha);
+    this.p.stroke(this.strokeFill.r, this.strokeFill.g, this.strokeFill.b);
     this.p.rectMode(this.p.CENTER);
     this.p.rect(this.x, this.y, this.width, this.height);
     this.p.pop();

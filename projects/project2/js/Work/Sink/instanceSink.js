@@ -13,6 +13,13 @@ function createSinkCanvas() {
       y: undefined,
     };
 
+    // Background color: light green
+    const BG_FILL = {
+      r: 220,
+      g: 244,
+      b: 196,
+    };
+
     // Faucet spout
     let faucetSpout = undefined;
 
@@ -46,7 +53,7 @@ function createSinkCanvas() {
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
       // Set background color
-      p.background(0, 0, 0);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Display faucet spout
       faucetSpout.update();
