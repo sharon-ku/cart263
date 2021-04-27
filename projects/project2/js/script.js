@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `night`;
+let state = `morning`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -37,6 +37,9 @@ let transportationMode = undefined;
 function updateDayNumber() {
   $(`#day-number`).text(`${dayNumber}`);
 }
+
+// Create internal dialog
+createInternalDialog();
 
 // Set up states
 // function resetState() {
@@ -123,6 +126,8 @@ function morning() {
 
   // Create all dialogs
   createEmailDialog();
+  createWorkoutDialog();
+  createGoToWorkQuestionDialog();
 
   // Show letter animation
   $(`#letter-animation`).show();
@@ -165,6 +170,9 @@ function goToWork() {
   // Show go-to-work HTML elements
   $(`#go-to-work-state`).show();
 
+  // Cue time before arrive to work
+  arriveToWork();
+
   // Create canvases
 
   // Create dialogs
@@ -179,6 +187,14 @@ $(`#walk-button`).click(function () {
 
   console.log(transportationMode);
 });
+
+// Start timer that will activate work state
+function arriveToWork() {
+  setTimeout(() => {
+    $(`#go-to-work-state`).hide();
+    work();
+  }, 5000);
+}
 
 // -----------------------------------------------------
 
@@ -212,6 +228,9 @@ function returnHome() {
   // Show return-home HTML
   $(`#return-home-state`).show();
 
+  // Cue time before returning home
+  returnHome();
+
   // // Hide all HTML from other states
   // $(`#title-state`).hide();
   // $(`#morning-state`).hide();
@@ -224,6 +243,14 @@ function returnHome() {
   // Create canvases
 
   // Create dialogs
+}
+
+// Start timer that will activate night state
+function returnHome() {
+  setTimeout(() => {
+    $(`#return-home-state`).hide();
+    night();
+  }, 5000);
 }
 
 // -----------------------------------------------------
@@ -280,6 +307,25 @@ function welcome() {
 }
 
 // CREATE ALL DIALOG BOXES -----------------------------
+// Create internal dialog
+function createInternalDialog() {
+  $(`#internal-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: {
+      my: "center center",
+      at: "center bottom",
+      of: $(`.background-canvas`),
+    },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "700px",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+  });
+}
+
 // Create an email dialog
 function createEmailDialog() {
   $(`#email-dialog`).dialog({
@@ -296,10 +342,72 @@ function createEmailDialog() {
     buttons: {
       Save: function () {
         $(this).dialog(`close`);
+        $(`#workout-dialog`).dialog(`open`);
         $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
       },
       Delete: function () {
+        $(`#workout-dialog`).dialog(`open`);
         $(this).dialog(`close`);
+      },
+    },
+  });
+}
+
+// Create an workout dialog
+function createWorkoutDialog() {
+  $(`#workout-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    autoOpen: false,
+    // Hide close button and change css of workout dialog
+    dialogClass: "no-close email",
+    // Button options
+    buttons: {
+      Yes: function () {
+        $(this).dialog(`close`);
+        $(`#internal-dialog-text`).text(
+          `Maybe another day. I don't feel like it today.`
+        );
+        $(`#go-to-work-question-dialog`).dialog(`open`);
+      },
+      No: function () {
+        $(this).dialog(`close`);
+        $(`#internal-dialog-text`).text(`Today's not the day.`);
+        $(`#go-to-work-question-dialog`).dialog(`open`);
+      },
+    },
+  });
+}
+
+// Create go-to-work-question dialog
+function createGoToWorkQuestionDialog() {
+  $(`#go-to-work-question-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    autoOpen: false,
+    // Hide close button and change css of dialog
+    dialogClass: "no-close email",
+    // Button options
+    buttons: {
+      Yes: function () {
+        // Close this dialog box
+        $(this).dialog(`close`);
+        // Cue goToWork state
+        goToWork();
+        // Hide current state
+        $(`#morning-state`).hide();
+      },
+      No: function () {
+        $(`#internal-dialog-text`).text(`You're going to be late!`);
+        // console.log(`${$(`#internal-dialog-text`)}`);
       },
     },
   });
