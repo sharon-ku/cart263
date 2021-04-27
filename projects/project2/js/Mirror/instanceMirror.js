@@ -51,7 +51,15 @@ function createMirrorCanvas() {
     p.setup = function () {
       // Create canvas
       let mirrorCanvas = p.createCanvas(300, 300);
-      mirrorCanvas.parent(`mirror-canvas`);
+      // $(`#mirror-canvas`).innerHTML = mirrorCanvas;
+      // let parentTest = $(`.mirror-canvas`);
+      // mirrorCanvas.parent(parentTest);
+      // mirrorCanvas.parent(`mirror-canvas`);
+      if (state === `morning`) {
+        mirrorCanvas.parent(`mirror-canvas1`);
+      } else if (state === `night`) {
+        mirrorCanvas.parent(`mirror-canvas2`);
+      }
 
       // load up user's video
       video = p.createCapture(p.VIDEO);

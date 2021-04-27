@@ -60,8 +60,8 @@ function createMorningBackgroundCanvas() {
       mouse.x = p.mouseX;
       mouse.y = p.mouseY;
 
-      // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      // // Set background color
+      // p.background(bgFill.r, bgFill.g, bgFill.b);
 
       // Update morning background's behaviour
       morningBackground.update();

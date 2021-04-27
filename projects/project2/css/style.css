@@ -100,7 +100,8 @@ p {
 }
 
 /* Set mirror canvas position */
-#mirror-canvas {
+#mirror-canvas1,
+#mirror-canvas2 {
   /* Move mirror-canvas behind background-canvas */
   z-index: -500;
 

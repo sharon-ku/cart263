@@ -10,7 +10,7 @@ Attribution: Pippin Barr helped with the code for setting up several p5.js insta
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `night`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -39,6 +39,7 @@ function updateDayNumber() {
 }
 
 // Set up states
+// function resetState() {
 if (state === `title`) {
   // hide all HTML elements
   hideAllHTML();
@@ -85,6 +86,7 @@ if (state === `title`) {
   // start state
   night();
 }
+// }
 
 // Hide all HTML elements
 function hideAllHTML() {
@@ -116,6 +118,7 @@ function morning() {
   $(`#title-canvas`).toggle("fade", 3000, showMorningElements);
 
   // Create canvases
+  createMirrorCanvas();
   createMorningBackgroundCanvas();
 
   // Create all dialogs
