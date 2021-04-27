@@ -13,7 +13,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `goToWork`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -185,6 +185,7 @@ function goToWork() {
   arriveToWork();
 
   // Create canvases
+  createGoToWorkBackgroundCanvas();
 
   // Create dialogs
   createChooseTransportationDialog();
@@ -204,7 +205,7 @@ function arriveToWork() {
   setTimeout(() => {
     $(`#go-to-work-state`).hide();
     work();
-  }, 5000);
+  }, 20000);
 }
 
 // -----------------------------------------------------
@@ -240,7 +241,7 @@ function returnHome() {
   $(`#return-home-state`).show();
 
   // Cue time before returning home
-  returnHome();
+  switchToNight();
 
   // // Hide all HTML from other states
   // $(`#title-state`).hide();
@@ -252,12 +253,13 @@ function returnHome() {
   // $(`#night-state`).hide();
 
   // Create canvases
+  // createReturnHomeBackgroundCanvas();
 
   // Create dialogs
 }
 
 // Start timer that will activate night state
-function returnHome() {
+function switchToNight() {
   setTimeout(() => {
     $(`#return-home-state`).hide();
     night();
