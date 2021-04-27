@@ -8,6 +8,13 @@ function createFoodDeliveryCanvas() {
       y: undefined,
     };
 
+    // Background color: green
+    const BG_FILL = {
+      r: 201,
+      g: 233,
+      b: 168,
+    };
+
     // Tables
     let tables = [];
     const NUM_TABLES = 6;
@@ -30,17 +37,18 @@ function createFoodDeliveryCanvas() {
       let foodDeliveryCanvas = p.createCanvas(500, 400);
       foodDeliveryCanvas.parent(`food-delivery-canvas`);
 
-      // // Create new tables
-      // for (let i = 0; i < NUM_TABLES; i++) {
-      //   let table = new Table(p);
-      //   tables.push(table);
-      // }
-      // Create new tables
+      // Create new tables by iterating through the columns, then through the rows
       for (let i = 0; i < NUM_TABLE_COLUMNS; i++) {
         for (let j = 0; j < NUM_TABLE_ROWS; j++) {
+          // Calculate x value of table
           let x = FIRST_TABLE_X + X_DISTANCE_BTW_TABLES * i;
+          // Calculate y value of table
           let y = FIRST_TABLE_Y + Y_DISTANCE_BTW_TABLES * j;
-          let table = new Table(p, x, y);
+          // With the power of math and anime, I calculated the table number using this formula:
+          let tableNumber = 3 * i + j + 1;
+          // Create new table
+          let table = new Table(p, x, y, tableNumber);
+          // Push to tables array
           tables.push(table);
         }
       }
@@ -51,7 +59,7 @@ function createFoodDeliveryCanvas() {
 
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
-      p.background(0, 0, 0);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Update behaviour of table
       for (let i = 0; i < tables.length; i++) {

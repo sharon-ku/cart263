@@ -1,6 +1,6 @@
-// Room: parent of all rooms; this is to be displayed in background of a state
+// Background: parent of all backgrounds; this is to be displayed in background of a state
 
-class Room {
+class Background {
   constructor(p, images) {
     // p5 instance
     this.p = p;

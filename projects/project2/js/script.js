@@ -116,7 +116,7 @@ function morning() {
   $(`#title-canvas`).toggle("fade", 3000, showMorningElements);
 
   // Create canvases
-  createMorningCanvas();
+  createMorningBackgroundCanvas();
 
   // Create all dialogs
   createEmailDialog();
@@ -188,6 +188,7 @@ function work() {
   $(`#work-state`).show();
 
   // Create canvases
+  createWorkBackgroundCanvas();
   createSinkCanvas();
   createFoodDeliveryCanvas();
   createPeepCanvas();
@@ -234,7 +235,7 @@ function night() {
 
   // Create canvases
   createMirrorCanvas();
-  createNightCanvas();
+  createNightBackgroundCanvas();
   createAffirmationsCanvas();
 
   // Create all dialogs
