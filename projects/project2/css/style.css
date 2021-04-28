@@ -26,6 +26,8 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 
   overflow: hidden;
+
+  background: black;
 }
 
 p {

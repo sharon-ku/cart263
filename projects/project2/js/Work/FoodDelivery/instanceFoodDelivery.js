@@ -15,6 +15,11 @@ function createFoodDeliveryCanvas() {
       b: 168,
     };
 
+    // Customers
+    let customers = [];
+    // Number of customers
+    const NUM_CUSTOMERS = 40;
+
     // Tables
     let tables = [];
     const NUM_TABLES = 6;
@@ -36,6 +41,12 @@ function createFoodDeliveryCanvas() {
       // Create canvas
       let foodDeliveryCanvas = p.createCanvas(500, 400);
       foodDeliveryCanvas.parent(`food-delivery-canvas`);
+
+      // Make customers
+      for (let i = 0; i < NUM_CUSTOMERS; i++) {
+        let customer = new Customer(p);
+        customers.push(customer);
+      }
 
       // Create new tables by iterating through the columns, then through the rows
       for (let i = 0; i < NUM_TABLE_COLUMNS; i++) {
@@ -64,6 +75,11 @@ function createFoodDeliveryCanvas() {
       // Update behaviour of table
       for (let i = 0; i < tables.length; i++) {
         tables[i].update();
+      }
+
+      // Update behaviour of customers
+      for (let i = 0; i < customers.length; i++) {
+        customers[i].update();
       }
     };
 

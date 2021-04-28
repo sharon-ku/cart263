@@ -13,7 +13,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `goToWork`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -263,7 +263,7 @@ function switchToNight() {
   setTimeout(() => {
     $(`#return-home-state`).hide();
     night();
-  }, 5000);
+  }, 20000);
 }
 
 // -----------------------------------------------------
