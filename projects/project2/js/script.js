@@ -13,7 +13,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `title`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -243,6 +243,11 @@ function removeATask() {
     // If no more tasks left, start boss dialog
     if (numTasksLeft === 0) {
       console.log(`COMPLETED ALL TASKS!`);
+
+      // Switch to returnHome state
+      returnHome();
+      $(`#work-state`).hide();
+      // getFeedbackFromBoss();
     }
 
     taskCompleted = false;

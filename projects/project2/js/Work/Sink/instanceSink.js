@@ -115,7 +115,7 @@ function createSinkCanvas() {
         // If done filling total number of cups:
         if (numCupsFilled === TOTAL_NUM_CUPS) {
           $(`#sink-canvas`).hide();
-          $(`#sink-dialog`).text(`SUCCESS!`);
+          $(`#sink-dialog`).text(`Task Complete`);
           // Mark task is completed
           taskCompleted = true;
           // Remove a task

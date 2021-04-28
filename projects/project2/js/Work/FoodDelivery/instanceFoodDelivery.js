@@ -37,7 +37,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const TOTAL_PLATES = 5;
+    const TOTAL_PLATES = 20;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut
@@ -168,6 +168,9 @@ function createFoodDeliveryCanvas() {
         if (deliverer.intersects(tables[tableToDeliver - 1])) {
           let table = tables[tableToDeliver - 1];
 
+          // Update numPlatesSentOut
+          updateNumPlates = true;
+
           // Randomize plate position and create a new plate
           table.randomizePlatePosition();
           table.timeToCreatePlate = true;
@@ -194,8 +197,9 @@ function createFoodDeliveryCanvas() {
           updateNumPlates = false;
 
           if (numPlatesSentOut === TOTAL_PLATES) {
-            console.log(`DONE!!!`);
-            // getFeedbackFromBoss();
+            $(`#food-delivery-canvas`).hide();
+            $(`#food-delivery-task`).hide();
+            $(`#food-delivery-dialog`).text(`Task complete`);
 
             // 1 less task to do!
             // Mark task is completed
@@ -211,8 +215,8 @@ function createFoodDeliveryCanvas() {
     p.resetDeliverer = function () {
       deliverer.reset();
 
-      // Update numPlatesSentOut
-      updateNumPlates = true;
+      // // Update numPlatesSentOut
+      // updateNumPlates = true;
     };
 
     // Choose random table to deliver food to
@@ -241,10 +245,18 @@ function createFoodDeliveryDialog() {
     height: "auto",
     width: "auto",
     // Button options
-    buttons: {
-      "Start delivering!": function () {
-        deliveryGame = `play`;
+    buttons: [
+      {
+        id: "start-delivering-button",
+        text: "Start delivering!",
+        // When button is clicked:
+        click: function () {
+          // Initiate game
+          deliveryGame = `play`;
+          // Hide button
+          $("#start-delivering-button").hide();
+        },
       },
-    },
+    ],
   });
 }

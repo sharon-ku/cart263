@@ -53,7 +53,7 @@ function createTitleCanvas() {
       dropImage = p.loadImage(`assets/images/drop.png`);
 
       // Load title font
-      titleFont = p.loadFont(`assets/fonts/ShipporiMincho-Medium.ttf`);
+      titleFont = p.loadFont(`assets/fonts/SourceSansPro-SemiBold.ttf`);
     };
 
     // Create canvas and objects
