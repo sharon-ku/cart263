@@ -27,7 +27,7 @@ function createFoodDeliveryCanvas() {
     // Customers
     let customers = [];
     // Number of customers
-    const NUM_CUSTOMERS = 10;
+    const NUM_CUSTOMERS = 40;
 
     // Kay the deliverer
     let deliverer = undefined;
@@ -196,6 +196,12 @@ function createFoodDeliveryCanvas() {
           if (numPlatesSentOut === TOTAL_PLATES) {
             console.log(`DONE!!!`);
             // getFeedbackFromBoss();
+
+            // 1 less task to do!
+            // Mark task is completed
+            taskCompleted = true;
+            // Remove a task
+            removeATask();
           }
         }
       }

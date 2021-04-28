@@ -38,7 +38,7 @@ let scoreIncreaseRate = 0.05;
 let transportationMode = undefined;
 
 // Number of work tasks left to do
-let numTasksLeft = 3;
+let numTasksLeft = 2;
 // True when a task is completed
 let taskCompleted = false;
 
