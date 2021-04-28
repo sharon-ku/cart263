@@ -6,10 +6,15 @@ let deliveryGame = `stop`;
 // Create food delivery canvas
 function createFoodDeliveryCanvas() {
   let instanceFoodDeliverySketch = function (p) {
-    // Mouse position
+    // Mouse
     let mouse = {
+      // position
       x: undefined,
       y: undefined,
+      // size
+      size: 20,
+      // color
+      fill: 255,
     };
 
     // Background color: green
@@ -32,7 +37,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const NUM_PLATES_TO_DELIVER = 5;
+    const TOTAL_PLATES = 5;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut
@@ -109,9 +114,6 @@ function createFoodDeliveryCanvas() {
 
       // Choose random table to deliver food to
       chooseNewTable = true;
-
-      // // Choose random table to deliver food to
-      // p.chooseRandomTable();
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -137,6 +139,14 @@ function createFoodDeliveryCanvas() {
         for (let i = 0; i < customers.length; i++) {
           customers[i].update();
         }
+
+        // Replace cursor with circle
+        p.push();
+        p.fill(mouse.fill);
+        p.noStroke();
+        p.ellipse(mouse.x, mouse.y, mouse.size);
+        p.noCursor();
+        p.pop();
 
         // Update behaviour of deliverer
         deliverer.update(mouse);
@@ -164,7 +174,6 @@ function createFoodDeliveryCanvas() {
           console.log(`reached table!`);
 
           // Choose random table to deliver food to
-          // p.chooseRandomTable();
           chooseNewTable = true;
 
           // Deliverer delivers the food successfully!
@@ -183,6 +192,11 @@ function createFoodDeliveryCanvas() {
         if (updateNumPlates) {
           numPlatesSentOut++;
           updateNumPlates = false;
+
+          if (numPlatesSentOut === TOTAL_PLATES) {
+            console.log(`DONE!!!`);
+            // getFeedbackFromBoss();
+          }
         }
       }
     };
@@ -193,9 +207,6 @@ function createFoodDeliveryCanvas() {
 
       // Update numPlatesSentOut
       updateNumPlates = true;
-      console.log(numPlatesSentOut);
-
-      console.log(tableToDeliver);
     };
 
     // Choose random table to deliver food to

@@ -42,10 +42,7 @@ class Deliverer {
       this.p.mouseY > 0 &&
       this.p.mouseY < this.p.height
     ) {
-      // Hide cursor
-      this.p.push();
-      this.p.noCursor();
-      this.p.pop();
+      // Move deliverer
       this.x = this.p.mouseX;
       this.y = this.p.mouseY;
     }
