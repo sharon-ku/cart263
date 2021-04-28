@@ -20,6 +20,13 @@ function createFoodDeliveryCanvas() {
     // Number of customers
     const NUM_CUSTOMERS = 40;
 
+    // Kay the deliverer
+    let deliverer = undefined;
+    // Store deliverer images here
+    let delivererImages = [];
+    // Number of deliverer images
+    const NUM_DELIVERER_IMAGES = 2;
+
     // Tables
     let tables = [];
     const NUM_TABLES = 6;
@@ -36,6 +43,17 @@ function createFoodDeliveryCanvas() {
     // Table number to deliver food to
     let tableToDeliver = undefined;
 
+    // Preload assets
+    p.preload = function () {
+      // Load deliverer images
+      for (let i = 0; i < NUM_DELIVERER_IMAGES; i++) {
+        let delivererImage = p.loadImage(
+          `assets/images/sceneObjects/deliverer${i}.png`
+        );
+        delivererImages.push(delivererImage);
+      }
+    };
+
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
@@ -47,6 +65,9 @@ function createFoodDeliveryCanvas() {
         let customer = new Customer(p);
         customers.push(customer);
       }
+
+      // Make deliverer
+      deliverer = new Deliverer(p, delivererImages);
 
       // Create new tables by iterating through the columns, then through the rows
       for (let i = 0; i < NUM_TABLE_COLUMNS; i++) {
@@ -70,7 +91,12 @@ function createFoodDeliveryCanvas() {
 
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
+      // Set background color
       p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
+
+      // Set mouse x and y positions
+      mouse.x = p.mouseX;
+      mouse.y = p.mouseY;
 
       // Update behaviour of table
       for (let i = 0; i < tables.length; i++) {
@@ -81,6 +107,9 @@ function createFoodDeliveryCanvas() {
       for (let i = 0; i < customers.length; i++) {
         customers[i].update();
       }
+
+      // Update behaviour of deliverer
+      deliverer.update(mouse);
     };
 
     // Choose random table to deliver food to

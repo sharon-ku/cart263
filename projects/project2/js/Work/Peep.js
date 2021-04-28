@@ -54,7 +54,7 @@ class Peep {
     };
   }
 
-  // Update all cup behaviour
+  // Update all behaviour
   update(gameScore) {
     // Display image
     this.display();

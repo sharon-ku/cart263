@@ -18,7 +18,7 @@ class Customer {
     this.theta = this.p.random(0, this.p.PI / 2);
 
     // border of canvas in which to constrain characters
-    this.border = 30;
+    this.border = 50;
 
     // customer's body
     this.body = {
