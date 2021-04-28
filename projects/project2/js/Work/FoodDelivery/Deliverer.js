@@ -42,6 +42,10 @@ class Deliverer {
       this.p.mouseY > 0 &&
       this.p.mouseY < this.p.height
     ) {
+      // Hide cursor
+      this.p.push();
+      this.p.noCursor();
+      this.p.pop();
       this.x = this.p.mouseX;
       this.y = this.p.mouseY;
     }
@@ -60,5 +64,20 @@ class Deliverer {
     } else {
       return false;
     }
+  }
+
+  // Switch images of deliverer to show Kay dropped food
+  spillsFood() {
+    this.imageIndex = 1;
+  }
+
+  // Deliver food successfully to table
+  deliversFood() {}
+
+  // Reset position and image
+  reset() {
+    // this.x = this.p.width / 2;
+    // this.y = 20;
+    this.imageIndex = 0;
   }
 }

@@ -22,7 +22,7 @@ function createFoodDeliveryCanvas() {
     // Customers
     let customers = [];
     // Number of customers
-    const NUM_CUSTOMERS = 40;
+    const NUM_CUSTOMERS = 10;
 
     // Kay the deliverer
     let deliverer = undefined;
@@ -35,6 +35,13 @@ function createFoodDeliveryCanvas() {
     const NUM_PLATES_TO_DELIVER = 5;
     // Number of plates sent out
     let numPlatesSentOut = 0;
+    // True if time to update numPlatesSentOut
+    let updateNumPlates = false;
+    // Store previous table number delivered to
+    let previousTableDelivered = undefined;
+
+    // Image of plate
+    let plateImage = undefined;
 
     // Tables
     let tables = [];
@@ -52,6 +59,9 @@ function createFoodDeliveryCanvas() {
     // Table number to deliver food to
     let tableToDeliver = undefined;
 
+    // True if time to choose random table
+    let chooseNewTable = false;
+
     // Preload assets
     p.preload = function () {
       // Load deliverer images
@@ -61,6 +71,9 @@ function createFoodDeliveryCanvas() {
         );
         delivererImages.push(delivererImage);
       }
+
+      // Load plate image
+      plateImage = p.loadImage(`assets/images/sceneObjects/baby-plate.png`);
     };
 
     // Create canvas and objects
@@ -88,14 +101,17 @@ function createFoodDeliveryCanvas() {
           // With the power of math and anime, I calculated the table number using this formula:
           let tableNumber = 3 * i + j + 1;
           // Create new table
-          let table = new Table(p, x, y, tableNumber);
+          let table = new Table(p, x, y, tableNumber, plateImage);
           // Push to tables array
           tables.push(table);
         }
       }
 
       // Choose random table to deliver food to
-      p.chooseRandomTable();
+      chooseNewTable = true;
+
+      // // Choose random table to deliver food to
+      // p.chooseRandomTable();
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -112,6 +128,10 @@ function createFoodDeliveryCanvas() {
         tables[i].update();
       }
 
+      // Look out for when it's time to choose a new table
+      p.chooseRandomTable();
+
+      // If game is playing:
       if (deliveryGame === `play`) {
         // Update behaviour of customers
         for (let i = 0; i < customers.length; i++) {
@@ -120,13 +140,72 @@ function createFoodDeliveryCanvas() {
 
         // Update behaviour of deliverer
         deliverer.update(mouse);
+
+        for (let i = 0; i < customers.length; i++) {
+          if (deliverer.intersects(customers[i])) {
+            console.log(`touche`);
+            // Deliverer drops the food (switch images)
+            deliverer.spillsFood();
+
+            // Reset deliverer and update numPlatesSentOut
+            p.resetDeliverer();
+
+            // Remove points
+            gameScore -= scoreDecreaseRate;
+          }
+        }
+
+        if (deliverer.intersects(tables[tableToDeliver - 1])) {
+          let table = tables[tableToDeliver - 1];
+
+          // Randomize plate position and create a new plate
+          table.randomizePlatePosition();
+          table.timeToCreatePlate = true;
+          console.log(`reached table!`);
+
+          // Choose random table to deliver food to
+          // p.chooseRandomTable();
+          chooseNewTable = true;
+
+          // Deliverer delivers the food successfully!
+          deliverer.deliversFood();
+
+          // Reset deliverer and update numPlatesSentOut
+          setTimeout(() => {
+            p.resetDeliverer();
+          }, 1000);
+
+          // Add points
+          gameScore += scoreIncreaseRate;
+        }
+
+        // Update numPlates sent out
+        if (updateNumPlates) {
+          numPlatesSentOut++;
+          updateNumPlates = false;
+        }
       }
+    };
+
+    // Reset deliverer and udpate numPlates
+    p.resetDeliverer = function () {
+      deliverer.reset();
+
+      // Update numPlatesSentOut
+      updateNumPlates = true;
+      console.log(numPlatesSentOut);
+
+      console.log(tableToDeliver);
     };
 
     // Choose random table to deliver food to
     p.chooseRandomTable = function () {
-      tableToDeliver = Math.floor(1 + Math.random() * tables.length);
-      $(`#table-number`).text(`${tableToDeliver}`);
+      if (chooseNewTable) {
+        tableToDeliver = Math.floor(1 + Math.random() * tables.length);
+        $(`#table-number`).text(`${tableToDeliver}`);
+        // No longer time to choose new table
+        chooseNewTable = false;
+      }
     };
   };
 

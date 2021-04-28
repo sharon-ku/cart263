@@ -29,16 +29,17 @@ class FallingWater {
 
   // Update all cup behaviour
   update() {
-    // Draw rectangle for cup
+    // Draw rectangle for falling water
     this.display();
 
     // Let water fall
     this.fall();
   }
 
-  // Draw rectangle for cup
+  // Draw rectangle for falling water
   display() {
     this.p.push();
+    this.p.noStroke();
     this.p.fill(this.fill.r, this.fill.g, this.fill.b, this.fill.alpha);
     this.p.rect(this.x, this.y, this.width, this.heightCurrent);
     this.p.pop();

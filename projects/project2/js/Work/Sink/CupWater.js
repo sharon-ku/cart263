@@ -32,14 +32,15 @@ class CupWater {
     // // Fill cup with water
     // this.fillCup();
 
-    // Draw rectangle for cup
+    // Draw water
     this.display();
   }
 
-  // Draw rectangle for cup
+  // Draw water
   display() {
     this.p.push();
     this.p.rectMode(this.p.CENTER);
+    this.p.noStroke();
     this.p.fill(this.fill.r, this.fill.g, this.fill.b, this.fill.alpha);
     this.p.rect(this.x, this.yCurrent, this.width, this.heightCurrent);
     this.p.pop();
@@ -55,6 +56,6 @@ class CupWater {
 
   // Reset water level
   resetHeight() {
-    this.heightCurrent = this.heightMin;
+    this.heightCurrent = 0;
   }
 }
