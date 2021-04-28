@@ -24,7 +24,7 @@ function createSinkCanvas() {
     };
 
     // Number of cups to fill
-    const TOTAL_NUM_CUPS = 10;
+    const TOTAL_NUM_CUPS = 3;
     // Count number of cups filled
     let numCupsFilled = 0;
 
@@ -116,6 +116,10 @@ function createSinkCanvas() {
         if (numCupsFilled === TOTAL_NUM_CUPS) {
           $(`#sink-canvas`).hide();
           $(`#sink-dialog`).text(`SUCCESS!`);
+          // Mark task is completed
+          taskCompleted = true;
+          // Remove a task
+          removeATask();
         }
 
         // Reset cup values

@@ -1,5 +1,9 @@
 // Instance: Food delivery canvas
 //
+// Set to `play` if the delivery game started
+let deliveryGame = `stop`;
+
+// Create food delivery canvas
 function createFoodDeliveryCanvas() {
   let instanceFoodDeliverySketch = function (p) {
     // Mouse position
@@ -26,6 +30,11 @@ function createFoodDeliveryCanvas() {
     let delivererImages = [];
     // Number of deliverer images
     const NUM_DELIVERER_IMAGES = 2;
+
+    // Number of plates to deliver
+    const NUM_PLATES_TO_DELIVER = 5;
+    // Number of plates sent out
+    let numPlatesSentOut = 0;
 
     // Tables
     let tables = [];
@@ -103,13 +112,15 @@ function createFoodDeliveryCanvas() {
         tables[i].update();
       }
 
-      // Update behaviour of customers
-      for (let i = 0; i < customers.length; i++) {
-        customers[i].update();
-      }
+      if (deliveryGame === `play`) {
+        // Update behaviour of customers
+        for (let i = 0; i < customers.length; i++) {
+          customers[i].update();
+        }
 
-      // Update behaviour of deliverer
-      deliverer.update(mouse);
+        // Update behaviour of deliverer
+        deliverer.update(mouse);
+      }
     };
 
     // Choose random table to deliver food to
@@ -133,5 +144,11 @@ function createFoodDeliveryDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
+    // Button options
+    buttons: {
+      "Start delivering!": function () {
+        deliveryGame = `play`;
+      },
+    },
   });
 }

@@ -37,6 +37,11 @@ let scoreIncreaseRate = 0.05;
 // All possible modes: walk, bike, bus
 let transportationMode = undefined;
 
+// Number of work tasks left to do
+let numTasksLeft = 3;
+// True when a task is completed
+let taskCompleted = false;
+
 // -----------------------------------------------------
 
 // Set day number
@@ -227,7 +232,22 @@ function work() {
   // Create all dialogs
   createSinkDialog();
   createFoodDeliveryDialog();
-  createToDoListDialog();
+  // createToDoListDialog();
+}
+
+// If task completed, remove a task
+function removeATask() {
+  if (taskCompleted) {
+    numTasksLeft--;
+
+    // If no more tasks left, start boss dialog
+    if (numTasksLeft === 0) {
+      console.log(`COMPLETED ALL TASKS!`);
+    }
+
+    taskCompleted = false;
+    console.log(numTasksLeft);
+  }
 }
 
 // -----------------------------------------------------
@@ -453,30 +473,30 @@ function createChooseTransportationDialog() {
   });
 }
 
-// Create to-do list dialog
-function createToDoListDialog() {
-  $(`#to-do-list-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-    // Button options
-    buttons: {
-      Save: function () {
-        $(this).dialog(`close`);
-        $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
-      },
-      Delete: function () {
-        $(this).dialog(`close`);
-      },
-    },
-  });
-}
+// // Create to-do list dialog
+// function createToDoListDialog() {
+//   $(`#to-do-list-dialog`).dialog({
+//     // Set position of dialog based on window position
+//     position: { my: "left+100 top+100", at: "left top", of: window },
+//     // Adjust size of dialog box based on content it stores
+//     height: "auto",
+//     width: "auto",
+//     // Don't open automatically
+//     // autoOpen: false,
+//     // Hide close button and change css of email dialog
+//     dialogClass: "no-close email",
+//     // Button options
+//     buttons: {
+//       Save: function () {
+//         $(this).dialog(`close`);
+//         $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
+//       },
+//       Delete: function () {
+//         $(this).dialog(`close`);
+//       },
+//     },
+//   });
+// }
 
 // Create affirmations dialog
 function createAffirmationsDialog() {
