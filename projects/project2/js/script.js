@@ -13,7 +13,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -125,7 +125,7 @@ function title() {
 function morning() {
   state = `morning`;
   // Made title canvas fade away
-  $(`#title-canvas`).toggle("fade", 3000, showMorningElements);
+  $(`#title-state`).toggle("fade", 3000, showMorningElements);
 
   // Add 1 to day number
   if (switchDay) {
