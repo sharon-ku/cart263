@@ -27,6 +27,11 @@ function createLadiWelcomeCanvas() {
     welcomeSpeech.volume = 1;
     welcomeSpeech.play();
 
+    // When Ladi is done talking, close its dialog box
+    welcomeSpeech.addEventListener("ended", function () {
+      $(`#ladi-welcome-dialog`).dialog("close");
+    });
+
     // Preload assets
     p.preload = function () {
       for (let i = 0; i < NUM_LADI_IMAGES; i++) {

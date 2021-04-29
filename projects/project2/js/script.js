@@ -26,7 +26,7 @@ Sound effects sources:
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `title`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -235,15 +235,18 @@ function work() {
   createSinkCanvas();
   createFoodDeliveryCanvas();
   createPeepCanvas();
+  createToDoDialog();
   createLadiWelcomeCanvas();
   // createLadiFeedbackCanvas();
 
   // Create all dialogs
-  createSinkDialog();
   createFoodDeliveryDialog();
+  createSinkDialog();
   createLadiWelcomeDialog();
   // createLadiFeedbackDialog();
-  // createToDoListDialog();
+
+  // Update number of tasks left
+  $(`#number-of-tasks-left`).text(`${numTasksLeft}`);
 }
 
 // If task completed, remove a task
@@ -356,8 +359,8 @@ function createInternalDialog() {
 // Create Ladi's welcome dialog
 function createLadiWelcomeDialog() {
   $(`#ladi-welcome-dialog`).dialog({
-    // Hide close button
-    dialogClass: "no-close",
+    // // Hide close button
+    // dialogClass: "no-close",
     // Set position of dialog based on window position
     position: {
       my: "center center",
@@ -507,30 +510,20 @@ function createChooseTransportationDialog() {
   });
 }
 
-// // Create to-do list dialog
-// function createToDoListDialog() {
-//   $(`#to-do-list-dialog`).dialog({
-//     // Set position of dialog based on window position
-//     position: { my: "left+100 top+100", at: "left top", of: window },
-//     // Adjust size of dialog box based on content it stores
-//     height: "auto",
-//     width: "auto",
-//     // Don't open automatically
-//     // autoOpen: false,
-//     // Hide close button and change css of email dialog
-//     dialogClass: "no-close email",
-//     // Button options
-//     buttons: {
-//       Save: function () {
-//         $(this).dialog(`close`);
-//         $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
-//       },
-//       Delete: function () {
-//         $(this).dialog(`close`);
-//       },
-//     },
-//   });
-// }
+// Create to-do dialog
+function createToDoDialog() {
+  $(`#to-do-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+  });
+}
 
 // Create affirmations dialog
 function createAffirmationsDialog() {
