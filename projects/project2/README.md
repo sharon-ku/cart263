@@ -14,4 +14,4 @@ The next greatest feat was modifying FaceApi to execute the behaviour of the use
 
 Finally, this project has come a long way. I am happy that the mirror person no longer looks like the evil witch from Snow White:
 
-![Process Picture](/images/process-pics/process1.png")
+![Process Picture](/assets/images/process-pics/process1.png")
