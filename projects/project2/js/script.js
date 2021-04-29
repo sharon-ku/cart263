@@ -231,11 +231,13 @@ function work() {
   createFoodDeliveryCanvas();
   createPeepCanvas();
   createLadiWelcomeCanvas();
+  // createLadiFeedbackCanvas();
 
   // Create all dialogs
   createSinkDialog();
   createFoodDeliveryDialog();
   createLadiWelcomeDialog();
+  // createLadiFeedbackDialog();
   // createToDoListDialog();
 }
 
@@ -247,16 +249,23 @@ function removeATask() {
     // If no more tasks left, start boss dialog
     if (numTasksLeft === 0) {
       console.log(`COMPLETED ALL TASKS!`);
+      // Get feedback from Ladi
+      getFeedbackFromBoss();
 
       // Switch to returnHome state
       returnHome();
       $(`#work-state`).hide();
-      // getFeedbackFromBoss();
     }
 
     taskCompleted = false;
     console.log(numTasksLeft);
   }
+}
+
+// Let Ladi make a speech
+function getFeedbackFromBoss() {
+  createLadiFeedbackCanvas();
+  createLadiFeedbackDialog();
 }
 
 // -----------------------------------------------------
@@ -373,6 +382,27 @@ function createInternalDialog() {
 // Create Ladi's welcome dialog
 function createLadiWelcomeDialog() {
   $(`#ladi-welcome-dialog`).dialog({
+    // Hide close button
+    dialogClass: "no-close",
+    // Set position of dialog based on window position
+    position: {
+      my: "center center",
+      at: "left top+300",
+      of: window,
+    },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+  });
+}
+
+// Create Ladi's feedback dialog
+function createLadiFeedbackDialog() {
+  $(`#ladi-feedback-dialog`).dialog({
     // Hide close button
     dialogClass: "no-close",
     // Set position of dialog based on window position
