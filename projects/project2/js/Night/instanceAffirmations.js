@@ -98,7 +98,8 @@ function createAffirmationsCanvas() {
     p.processGuess = function (guess) {
       // Store guess in currentAnswer and convert to all lowercase
       currentAnswer = guess.toLowerCase();
-      // console.log(guess);
+      // Place guess in internal dialog box
+      $(`#internal-dialog-text`).text(guess);
     };
 
     // Set mouse positions, set background color, update all behaviour of objects

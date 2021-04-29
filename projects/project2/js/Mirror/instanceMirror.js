@@ -10,11 +10,25 @@ function createMirrorCanvas() {
       y: undefined,
     };
 
-    // Background fill: pink
+    // Background fill
     let bgFill = {
-      r: 250,
-      g: 230,
-      b: 252,
+      current: {
+        r: 250,
+        g: 230,
+        b: 252,
+      },
+      // pink
+      morning: {
+        r: 250,
+        g: 230,
+        b: 252,
+      },
+      // dark blue
+      night: {
+        r: 74,
+        g: 73,
+        b: 113,
+      },
     };
 
     // Landmark stroke color
@@ -105,7 +119,14 @@ function createMirrorCanvas() {
       // console.log(result)
       detections = result;
 
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      // Set background color based on current state
+      if (state === `morning`) {
+        bgFill.current = bgFill.morning;
+      } else if (state === `night`) {
+        bgFill.current = bgFill.night;
+      }
+
+      p.background(bgFill.current.r, bgFill.current.g, bgFill.current.b);
       // image(video, 0,0, width, height)
       if (detections) {
         if (detections.length > 0) {

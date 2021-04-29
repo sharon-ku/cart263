@@ -13,7 +13,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `night`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -534,10 +534,13 @@ function createSayGoodnightDialog() {
     buttons: {
       Goodnight: function () {
         $(this).dialog(`close`);
-        // Set switch day to true
-        switchDay = true;
-        // Update state
-        morning();
+        // Make night state fade out
+        $(`#night-state`).fadeOut(5000, function () {
+          // Set switch day to true
+          switchDay = true;
+          // Update state
+          morning();
+        });
       },
     },
   });

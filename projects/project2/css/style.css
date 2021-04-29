@@ -116,6 +116,13 @@ p {
   transform: scaleX(-1);
 }
 
+/* Set stars position */
+#stars-animation {
+  position: relative;
+  top: -60px;
+  left: 630px;
+}
+
 /* Canvas that is in the background of each state */
 .background-canvas {
   /* Set top left position */

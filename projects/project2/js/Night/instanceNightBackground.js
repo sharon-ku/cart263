@@ -57,9 +57,6 @@ function createNightBackgroundCanvas() {
       mouse.x = p.mouseX;
       mouse.y = p.mouseY;
 
-      // // Set background color
-      // p.background(bgFill.r, bgFill.g, bgFill.b);
-
       // Update night background's behaviour
       nightBackground.update();
     };
