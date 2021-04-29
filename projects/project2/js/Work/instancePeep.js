@@ -50,14 +50,14 @@ function createPeepCanvas() {
       // Update Peep's behaviour
       peep.update(gameScore);
 
-      // Set Peep's feelings
-      if (gameScore <= 30) {
-        peep.feeling = `mad`;
-      } else if (gameScore > 30 && gameScore <= 75) {
-        peep.feeling = `normal`;
-      } else if (gameScore > 75) {
-        peep.feeling = `happy`;
-      }
+      // // Set Peep's feelings
+      // if (gameScore <= 30) {
+      //   peep.feeling = `mad`;
+      // } else if (gameScore > 30 && gameScore <= 75) {
+      //   peep.feeling = `normal`;
+      // } else if (gameScore > 75) {
+      //   peep.feeling = `happy`;
+      // }
     };
   };
 

@@ -157,6 +157,9 @@ function createFoodDeliveryCanvas() {
             // Deliverer drops the food (switch images)
             deliverer.spillsFood();
 
+            // Peep is mad now that you spilled food
+            peepFeeling = `mad`;
+
             // Reset deliverer and update numPlatesSentOut
             p.resetDeliverer();
 

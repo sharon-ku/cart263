@@ -55,6 +55,10 @@ let numTasksLeft = 2;
 // True when a task is completed
 let taskCompleted = false;
 
+// how is Peep feeling right now?
+// possible feelings: normal, happy, mad
+let peepFeeling = `normal`;
+
 // -----------------------------------------------------
 
 // Set day number

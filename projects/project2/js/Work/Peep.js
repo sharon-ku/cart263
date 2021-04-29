@@ -23,10 +23,6 @@ class Peep {
     this.framesElapsed = 0;
     this.framesBtwEachImage = 30;
 
-    // how is Peep feeling right now?
-    // possible feelings: normal, happy, mad
-    this.feeling = `normal`;
-
     // size
     this.width = 250;
     this.height = 188;
@@ -91,16 +87,15 @@ class Peep {
 
   // Set Peep's feeling using images
   setFeelingImages() {
-    // Change images in animation + frames between images
-    if (this.feeling === `normal`) {
+    if (peepFeeling === `normal`) {
       this.imageIndex.first = 0;
       this.imageIndex.second = 1;
       this.framesBtwEachImage = 30;
-    } else if (this.feeling === `happy`) {
+    } else if (peepFeeling === `happy`) {
       this.imageIndex.first = 2;
       this.imageIndex.second = 3;
       this.framesBtwEachImage = 10;
-    } else if (this.feeling === `mad`) {
+    } else if (peepFeeling === `mad`) {
       this.imageIndex.first = 4;
       this.imageIndex.second = 5;
       this.framesBtwEachImage = 10;
@@ -148,16 +143,6 @@ class Peep {
     );
     this.p.pop();
   }
-
-  // // Add points
-  // addPoints() {
-  //   this.currentScore += this.scoreIncreaseRate;
-  // }
-  //
-  // // Remove points
-  // removePoints() {
-  //   this.currentScore -= this.scoreDecreaseRate;
-  // }
 
   // Update tracker with current score
   updateTracker(gameScore) {

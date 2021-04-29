@@ -97,12 +97,18 @@ function createSinkCanvas() {
         if (cup.limitLineIsReached(cupWater)) {
           // Play victory sound effect
           yaySFX.play();
+
+          // Peep is happy
+          peepFeeling = `happy`;
         }
 
         // If water does not match limit line, dock points
         else {
           // Play Peep yelling
           peepYell.play();
+
+          // Peep is mad you messed up
+          peepFeeling = `mad`;
 
           // Dock points
           gameScore -= scoreDecreaseRate;
