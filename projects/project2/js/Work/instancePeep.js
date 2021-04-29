@@ -23,12 +23,19 @@ function createPeepCanvas() {
     // Peep (little birdie)
     let peep = undefined;
 
+    // Peep yell (audio)
+    let peepYell = new Audio(`assets/sounds/peep-angry.mp3`);
+
     // Preload assets
     p.preload = function () {
+      // Load Peep images
       for (let i = 0; i < NUM_PEEP_IMAGES; i++) {
         let peepImage = p.loadImage(`assets/images/peeps/peep${i}.png`);
         peepImages.push(peepImage);
       }
+
+      // Load Peep yell
+      // peepYell = p.loadSound(`assets/sounds/peep-angry.mp3`);
     };
 
     // Create canvas and objects
@@ -38,7 +45,7 @@ function createPeepCanvas() {
       peepCanvas.parent(`peep-canvas`);
 
       // Create a new Peep
-      peep = new Peep(p, peepImages);
+      peep = new Peep(p, peepImages, peepYell);
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -48,6 +55,15 @@ function createPeepCanvas() {
 
       // Update Peep's behaviour
       peep.update(gameScore);
+
+      // Set Peep's feelings
+      if (gameScore <= 30) {
+        peep.feeling = `mad`;
+      } else if (gameScore > 30 && gameScore <= 75) {
+        peep.feeling = `normal`;
+      } else if (gameScore > 75) {
+        peep.feeling = `happy`;
+      }
     };
   };
 
