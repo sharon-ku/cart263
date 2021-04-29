@@ -12,17 +12,20 @@ Don't worry, every day will get better.
 
 ***
 
+CREDITS
+
 Voice of Ladi and Peep: Bryan Ku
 
 Code attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 
 Sound effects sources:
-yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
+"yay" sound effect: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
+
 */
 
 "use strict";
 
-// All possible states: title, welcome, morning, goToWork, work, returnHome, night
+// All possible states: title, morning, goToWork, work, returnHome, night
 let state = `title`;
 
 // Number of puzzles dropped in box
@@ -73,11 +76,6 @@ if (state === `title`) {
   createTitleCanvas();
   // start state
   title();
-} else if (state === `welcome`) {
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  welcome();
 } else if (state === `morning`) {
   // hide all HTML elements
   hideAllHTML();
@@ -112,7 +110,6 @@ if (state === `title`) {
 function hideAllHTML() {
   $(`#title-state`).hide();
   $(`#morning-state`).hide();
-  $(`#welcome-state`).hide();
   $(`#go-to-work-state`).hide();
   $(`#work-state`).hide();
   $(`#return-home-state`).hide();
@@ -292,7 +289,6 @@ function returnHome() {
   // // Hide all HTML from other states
   // $(`#title-state`).hide();
   // $(`#morning-state`).hide();
-  // $(`#welcome-state`).hide();
   // $(`#go-to-work-state`).hide();
   // $(`#work-state`).hide();
   // $(`#return-home-state`).hide();
@@ -335,36 +331,6 @@ function night() {
 
   // // Make mirror canvas draggable
   // makeElementDraggable(`#mirror-canvas`);
-}
-
-// -----------------------------------------------------
-
-// STATE: welcome
-//
-function welcome() {
-  state = `welcome`;
-
-  // // Hide title canvas
-  // $(`#title-canvas`).slideToggle();
-
-  // Show return-home HTML
-  $(`#welcome-state`).show();
-
-  // Create canvases
-  createDistractionCanvas();
-  // createWelcomeCanvas();
-
-  // Create all dialogs
-  createDistractionDialog();
-  // createWelcomeDialog();
-  createCongratulationsDialog();
-
-  // Create left and right puzzle pieces
-  createLeftPuzzleCanvas();
-  createRightPuzzleCanvas();
-
-  // Create puzzle box
-  createPuzzleBox();
 }
 
 // CREATE ALL DIALOG BOXES -----------------------------
