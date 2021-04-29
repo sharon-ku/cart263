@@ -1,11 +1,12 @@
 // Floating letters that form title
 
 class Letter {
-  constructor(p, character, font, x, y) {
+  // constructor(p, character, font, x, y) {
+  constructor(p, character, x, y) {
     // p5 instance
     this.p = p;
     // font
-    this.font = font;
+    // this.font = font;
     // letter
     this.character = character;
     // letter size
@@ -44,7 +45,7 @@ class Letter {
   // Display letter
   display() {
     this.p.push();
-    this.p.textFont(this.font);
+    // this.p.textFont(this.font);
     this.p.fill(this.fill.r, this.fill.g, this.fill.b);
     this.p.textAlign(this.p.CENTER);
     this.p.textSize(this.size);

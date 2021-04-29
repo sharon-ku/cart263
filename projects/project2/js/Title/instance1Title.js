@@ -102,18 +102,24 @@ function createTitleCanvas() {
       for (let i = 0; i < titleLetters.length; i++) {
         let letterX =
           letterProperties.firstXPosition + letterProperties.xSpacing * i;
-        let letterY = p.random(
-          p.height / 2 + 150 - letterProperties.yRangeFromCenter,
-          p.height / 2 + 150 + letterProperties.yRangeFromCenter
+        // let letterY = p.random(
+        //   p.height / 2 + 150 - letterProperties.yRangeFromCenter,
+        //   p.height / 2 + 150 + letterProperties.yRangeFromCenter
+        // );
+        let letterY = Math.floor(
+          p.height / 2 -
+            letterProperties.yRangeFromCenter +
+            Math.random(2 * letterProperties.yRangeFromCenter)
         );
 
-        let letter = new Letter(
-          p,
-          titleLetters[i],
-          titleFont,
-          letterX,
-          letterY
-        );
+        // let letter = new Letter(
+        //   p,
+        //   titleLetters[i],
+        //   titleFont,
+        //   letterX,
+        //   letterY
+        // );
+        let letter = new Letter(p, titleLetters[i], letterX, letterY);
 
         letters.push(letter);
       }

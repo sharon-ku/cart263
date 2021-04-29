@@ -77,7 +77,7 @@ class Peep {
     this.display();
 
     // Set Peep's feeling using images
-    this.setFeeling();
+    this.setFeelingImages();
 
     // Switch images
     this.switchImages();
@@ -90,7 +90,7 @@ class Peep {
   }
 
   // Set Peep's feeling using images
-  setFeeling() {
+  setFeelingImages() {
     // Change images in animation + frames between images
     if (this.feeling === `normal`) {
       this.imageIndex.first = 0;
@@ -104,6 +104,14 @@ class Peep {
       this.imageIndex.first = 4;
       this.imageIndex.second = 5;
       this.framesBtwEachImage = 10;
+    }
+  }
+
+  // Set noise of Peep based on feeling
+  setVoice() {
+    if (this.feeling === `normal`) {
+    } else if (this.feeling === `happy`) {
+    } else if (this.feeling === `mad`) {
     }
   }
 
