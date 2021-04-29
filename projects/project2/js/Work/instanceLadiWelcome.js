@@ -33,7 +33,7 @@ function createLadiWelcomeCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let ladiWelcomeCanvas = p.createCanvas(1150, 500);
+      let ladiWelcomeCanvas = p.createCanvas(1098, 490);
       ladiWelcomeCanvas.parent(`ladi-welcome-canvas`);
 
       // Create new Ladi

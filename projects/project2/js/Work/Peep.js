@@ -1,7 +1,7 @@
 // Peep: little birdie character in work place
 
 class Peep {
-  constructor(p, images, yell) {
+  constructor(p, images) {
     // p5 instance
     this.p = p;
 
@@ -26,11 +26,6 @@ class Peep {
     // how is Peep feeling right now?
     // possible feelings: normal, happy, mad
     this.feeling = `normal`;
-
-    // sound emitted when Peep yells
-    this.yell = yell;
-    // true if yell is looping
-    this.yellIsLooping = false;
 
     // size
     this.width = 250;
@@ -92,21 +87,7 @@ class Peep {
 
     // Display tracker
     this.displayTracker();
-
-    // Set voice based on feeling
-    this.setVoice();
   }
-
-  // // Check if yell is looping
-  // checkIfYellIsLooping() {
-  //   // If yell is not looping:
-  //   if (!this.yellIsLooping) {
-  //     // Loop yell until we stop it
-  //     this.yell.loop();
-  //
-  //     this.yellIsLooping = true;
-  //   }
-  // }
 
   // Set Peep's feeling using images
   setFeelingImages() {
@@ -123,17 +104,6 @@ class Peep {
       this.imageIndex.first = 4;
       this.imageIndex.second = 5;
       this.framesBtwEachImage = 10;
-    }
-  }
-
-  // Set noise of Peep based on feeling
-  setVoice() {
-    if (this.feeling === `normal`) {
-      // this.yell.stop();
-    } else if (this.feeling === `happy`) {
-      // this.yell.stop();
-    } else if (this.feeling === `mad`) {
-      this.yell.play();
     }
   }
 

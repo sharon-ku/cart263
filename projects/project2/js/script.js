@@ -258,7 +258,10 @@ function work() {
 // If task completed, remove a task
 function removeATask() {
   if (taskCompleted) {
+    // Remove a task
     numTasksLeft--;
+    // Update number of tasks left
+    $(`#number-of-tasks-left`).text(`${numTasksLeft}`);
 
     // If no more tasks left, start boss dialog
     if (numTasksLeft === 0) {
@@ -266,13 +269,13 @@ function removeATask() {
       // Get feedback from Ladi
       getFeedbackFromBoss();
 
-      // Switch to returnHome state
-      returnHome();
-      $(`#work-state`).hide();
+      // Close all task-related dialog boxes
+      $(`#food-delivery-dialog`).dialog(`close`);
+      $(`#sink-dialog`).dialog(`close`);
+      $(`#to-do-dialog`).dialog(`close`);
     }
 
     taskCompleted = false;
-    console.log(numTasksLeft);
   }
 }
 

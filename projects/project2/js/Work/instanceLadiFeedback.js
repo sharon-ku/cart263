@@ -25,11 +25,6 @@ function createLadiFeedbackCanvas() {
     // Speech that will be said based on gameScore
     let ladiSpeech = undefined;
 
-    // Ladi's speeches
-    let neutralSpeech = new Audio(`assets/sounds/ladi-neutral.mp3`);
-    let madSpeech = new Audio(`assets/sounds/ladi-mad.mp3`);
-    let happySpeech = new Audio(`assets/sounds/ladi-happy.mp3`);
-
     // Preload assets
     p.preload = function () {
       for (let i = 0; i < NUM_LADI_IMAGES; i++) {
@@ -41,9 +36,18 @@ function createLadiFeedbackCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let ladiFeedbackCanvas = p.createCanvas(1150, 500);
+      let ladiFeedbackCanvas = p.createCanvas(1098, 490);
       ladiFeedbackCanvas.parent(`ladi-feedback-canvas`);
 
+      // Start Ladi's speech
+      p.startLadisSpeech();
+
+      // Create new Ladi
+      ladi = new Ladi(p, ladiImages, 0, 1, ladiSpeech);
+    };
+
+    // Start feedback speech
+    p.startLadisSpeech = function () {
       // Set Ladi's speech depending on gameScore
       if (gameScore <= 30) {
         ladiSpeech = madSpeech;
@@ -55,9 +59,16 @@ function createLadiFeedbackCanvas() {
 
       // Play Ladi's speech
       ladiSpeech.play();
+    };
 
-      // Create new Ladi
-      ladi = new Ladi(p, ladiImages, 0, 1, ladiSpeech);
+    // What happens when Ladi finished his speech
+    p.ladiIsDoneTalking = function () {
+      ladiSpeech.addEventListener("ended", function () {
+        createReturnHomeQuestionDialog();
+
+        // Close its dialog box
+        $(`#ladi-feedback-dialog`).dialog("close");
+      });
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
@@ -67,6 +78,9 @@ function createLadiFeedbackCanvas() {
 
       // Update Ladi's behaviour
       ladi.update();
+
+      // When Ladi is done talking:
+      p.ladiIsDoneTalking();
     };
   };
 

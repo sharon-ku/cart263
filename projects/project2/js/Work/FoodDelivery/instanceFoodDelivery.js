@@ -37,7 +37,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const TOTAL_PLATES = 20;
+    const TOTAL_PLATES = 1;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut

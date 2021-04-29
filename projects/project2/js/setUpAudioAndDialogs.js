@@ -1,12 +1,29 @@
 // Load audio and create dialog boxes before story begins
 
+// Ladi's speeches
 let welcomeSpeech;
+let neutralSpeech;
+let madSpeech;
+let happySpeech;
+
+// Peep yell
+let peepYell;
 
 // Load all sounds
 function loadAudio() {
   // Ladi's welcoming speech
   welcomeSpeech = new Audio(`assets/sounds/ladi-welcome.mp3`);
   welcomeSpeech.volume = 0;
+
+  // Ladi's feedback speeches
+  neutralSpeech = new Audio(`assets/sounds/ladi-neutral.mp3`);
+  madSpeech = new Audio(`assets/sounds/ladi-mad.mp3`);
+  happySpeech = new Audio(`assets/sounds/ladi-happy.mp3`);
+
+  madSpeech.playbackRate = 3;
+
+  // Peep's angry yell
+  peepYell = new Audio(`assets/sounds/peep-angry.mp3`);
 }
 
 // CREATE ALL DIALOG BOXES -----------------------------
@@ -264,6 +281,31 @@ function createFoodDeliveryDialog() {
         },
       },
     ],
+  });
+}
+
+// Create return-home-question dialog
+function createReturnHomeQuestionDialog() {
+  $(`#return-home-question-dialog`).dialog({
+    // Set position of dialog based on window position
+    position: { my: "left+100 top+100", at: "left top", of: window },
+    // Adjust size of dialog box based on content it stores
+    height: "500px",
+    width: "500px",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of dialog
+    dialogClass: "no-close email",
+    // Button options
+    buttons: {
+      Yes: function () {
+        // Switch to returnHome state and hide work-state
+        $(`#work-state`).hide();
+
+        $(this).dialog(`close`);
+        returnHome();
+      },
+    },
   });
 }
 

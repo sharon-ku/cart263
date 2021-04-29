@@ -24,7 +24,7 @@ function createSinkCanvas() {
     };
 
     // Number of cups to fill
-    const TOTAL_NUM_CUPS = 3;
+    const TOTAL_NUM_CUPS = 5;
     // Count number of cups filled
     let numCupsFilled = 0;
 
@@ -101,8 +101,8 @@ function createSinkCanvas() {
 
         // If water does not match limit line, dock points
         else {
-          // Play failure sound effect
-          barkSFX.play();
+          // Play Peep yelling
+          peepYell.play();
 
           // Dock points
           gameScore -= scoreDecreaseRate;
@@ -114,9 +114,13 @@ function createSinkCanvas() {
 
         // If done filling total number of cups:
         if (numCupsFilled === TOTAL_NUM_CUPS) {
+          // Hide sink canvas and "Pour" button
           $(`#sink-canvas`).hide();
+          $("#pour-button").hide();
+
+          // Change text in dialog to "Task Complete"
           $(`#sink-dialog`).text(`Task Complete`);
-          // Mark task is completed
+          // Mark task as completed
           taskCompleted = true;
           // Remove a task
           removeATask();

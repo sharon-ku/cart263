@@ -23,9 +23,6 @@ function createPeepCanvas() {
     // Peep (little birdie)
     let peep = undefined;
 
-    // Peep yell (audio)
-    let peepYell = new Audio(`assets/sounds/peep-angry.mp3`);
-
     // Preload assets
     p.preload = function () {
       // Load Peep images
@@ -33,9 +30,6 @@ function createPeepCanvas() {
         let peepImage = p.loadImage(`assets/images/peeps/peep${i}.png`);
         peepImages.push(peepImage);
       }
-
-      // Load Peep yell
-      // peepYell = p.loadSound(`assets/sounds/peep-angry.mp3`);
     };
 
     // Create canvas and objects
@@ -45,7 +39,7 @@ function createPeepCanvas() {
       peepCanvas.parent(`peep-canvas`);
 
       // Create a new Peep
-      peep = new Peep(p, peepImages, peepYell);
+      peep = new Peep(p, peepImages);
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
