@@ -7,7 +7,7 @@ class Peep {
 
     // position
     this.x = p.width / 2;
-    this.y = p.height / 2;
+    this.y = p.height / 2 - 30;
 
     // images
     this.images = images;
@@ -35,28 +35,28 @@ class Peep {
       // positive end
       positive: {
         x: undefined,
-        y: this.p.height - 30,
+        y: this.p.height - 70,
         width: gameScore,
         height: 20,
-        // light green
+        // green
         fill: {
-          r: 215,
-          g: 245,
-          b: 191,
+          r: 117,
+          g: 208,
+          b: 126,
         },
       },
 
       // negative end
       negative: {
         x: undefined,
-        y: this.p.height - 30,
+        y: this.p.height - 70,
         width: maxScore - gameScore,
         height: 20,
         // peachy red
         fill: {
-          r: 229,
-          g: 174,
-          b: 149,
+          r: 239,
+          g: 86,
+          b: 122,
         },
       },
     };

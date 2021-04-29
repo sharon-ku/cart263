@@ -26,7 +26,7 @@ Sound effects sources:
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -120,7 +120,6 @@ if (state === `title`) {
   // start state
   night();
 }
-// }
 
 // Hide all HTML elements
 function hideAllHTML() {

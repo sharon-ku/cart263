@@ -36,6 +36,9 @@ p {
 
 #letter-animation {
   width: 100px;
+  position: absolute;
+  top: 250px;
+  left: 400px;
 }
 
 #letter {
@@ -47,8 +50,6 @@ p {
 .email .ui-widget-header {
   /* border: 1px solid #2c4359; */
   /* Change background color */
-  /* background: #e5ae95 url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
-    repeat; */
   color: #ffe6ff;
 }
 
@@ -117,13 +118,6 @@ p {
   transform: scaleX(-1);
 }
 
-/* Set stars position */
-/* #stars-animation {
-  position: relative;
-  top: -60px;
-  left: 630px;
-} */
-
 /* Canvas that is in the background of each state */
 .background-canvas {
   /* Set top left position */
@@ -143,47 +137,6 @@ p {
 /* Hide close button for dialog box */
 .no-close .ui-dialog-titlebar-close {
   display: none;
-}
-
-#left-puzzle-canvas {
-  display: inline;
-
-  /* Set position relative to parent's position */
-  position: relative;
-  top: 400px;
-  right: 100px;
-}
-
-#right-puzzle-canvas {
-  display: inline;
-
-  /* Set position relative to parent's position */
-  position: relative;
-  top: 300px;
-  left: 500px;
-}
-
-#puzzle-box {
-  /* Dimensions of box */
-  width: 140px;
-  height: 120px;
-
-  /* Display type */
-  display: flex;
-
-  /* Background color */
-  background: white;
-
-  /* Set margin */
-  margin: 200px;
-}
-
-#puzzle-box-instructions {
-  padding: 10px;
-}
-
-#hooray {
-  font-size: 5em;
 }
 
 #peep-canvas {

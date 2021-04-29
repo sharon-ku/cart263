@@ -8,11 +8,11 @@ function createPeepCanvas() {
       y: undefined,
     };
 
-    // Background color: blue
-    let bgFill = {
-      r: 251,
-      g: 235,
-      b: 241,
+    // Background color: yellow
+    const BG_FILL = {
+      r: 216,
+      g: 237,
+      b: 253,
     };
 
     // Store Peep images
@@ -45,7 +45,7 @@ function createPeepCanvas() {
     // Set mouse positions, set background color, update all behaviour of objects
     p.draw = function () {
       // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Update Peep's behaviour
       peep.update(gameScore);
