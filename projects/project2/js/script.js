@@ -4,7 +4,9 @@ Sharon Ku
 
 Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a way to progress the storyline
 
-Attribution: Pippin Barr helped with the code for setting up several p5.js instances.
+Code attribution: Pippin Barr helped with the code for setting up several p5.js instances.
+
+Voice of Ladi and Peep: Bryan Ku
 
 Sound effects sources:
 yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
@@ -13,7 +15,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `night`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;

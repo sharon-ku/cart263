@@ -117,11 +117,11 @@ p {
 }
 
 /* Set stars position */
-#stars-animation {
+/* #stars-animation {
   position: relative;
   top: -60px;
   left: 630px;
-}
+} */
 
 /* Canvas that is in the background of each state */
 .background-canvas {
@@ -189,8 +189,8 @@ p {
   display: block;
   /* Set position relative to parent's position */
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 50px;
+  right: 50px;
 
   width: 200px;
   height: 200px;

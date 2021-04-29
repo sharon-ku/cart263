@@ -34,7 +34,7 @@ function createPeepCanvas() {
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
-      let peepCanvas = p.createCanvas(200, 200);
+      let peepCanvas = p.createCanvas(250, 300);
       peepCanvas.parent(`peep-canvas`);
 
       // Create a new Peep
