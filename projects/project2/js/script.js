@@ -1,12 +1,20 @@
 /**
-Project 2
+Project 2: Fogdog
 Sharon Ku
 
-Experimenting with jQuery dialog boxes, draggable items, and p5.js canvases as a way to progress the storyline
+You are a circle. And your name is Kay. You just got a new job at the restaurant.
 
-Code attribution: Pippin Barr helped with the code for setting up several p5.js instances.
+You start the day reading emails and contemplating whether you want to work out. Then you head to work. At work, you try your best to accomplish the complicated tasks, while Peep the bird trains you. Look out, Peep is a tough trainer. Your boss, Ladi, is here once in a while, but he gives you some form of feedback.
+
+After work, you head home. Every night, you read affirmations out loud.
+
+Don't worry, every day will get better.
+
+***
 
 Voice of Ladi and Peep: Bryan Ku
+
+Code attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 
 Sound effects sources:
 yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
@@ -15,7 +23,7 @@ yay: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
 "use strict";
 
 // All possible states: title, welcome, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
