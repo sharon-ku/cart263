@@ -68,6 +68,7 @@ createInternalDialog();
 // Set up states
 // function resetState() {
 if (state === `title`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // hide day section
@@ -77,6 +78,7 @@ if (state === `title`) {
   // start state
   title();
 } else if (state === `morning`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // start state
@@ -84,21 +86,25 @@ if (state === `title`) {
   // update day number
   updateDayNumber();
 } else if (state === `goToWork`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // start state
   goToWork();
 } else if (state === `work`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // start state
   work();
 } else if (state === `returnHome`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // start state
   returnHome();
 } else if (state === `night`) {
+  loadAudio();
   // hide all HTML elements
   hideAllHTML();
   // start state
@@ -334,254 +340,4 @@ function night() {
 
   // // Make mirror canvas draggable
   // makeElementDraggable(`#mirror-canvas`);
-}
-
-// CREATE ALL DIALOG BOXES -----------------------------
-// Create internal dialog
-function createInternalDialog() {
-  $(`#internal-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: {
-      my: "center center",
-      at: "center bottom",
-      of: $(`.background-canvas`),
-    },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "700px",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-  });
-}
-
-// Create Ladi's welcome dialog
-function createLadiWelcomeDialog() {
-  $(`#ladi-welcome-dialog`).dialog({
-    // // Hide close button
-    // dialogClass: "no-close",
-    // Set position of dialog based on window position
-    position: {
-      my: "center center",
-      at: "left top+300",
-      of: window,
-    },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-  });
-}
-
-// Create Ladi's feedback dialog
-function createLadiFeedbackDialog() {
-  $(`#ladi-feedback-dialog`).dialog({
-    // Hide close button
-    dialogClass: "no-close",
-    // Set position of dialog based on window position
-    position: {
-      my: "center center",
-      at: "left top+300",
-      of: window,
-    },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-  });
-}
-
-// Create an email dialog
-function createEmailDialog() {
-  $(`#email-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-    // Button options
-    buttons: {
-      Save: function () {
-        $(this).dialog(`close`);
-        $(`#workout-dialog`).dialog(`open`);
-        $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
-      },
-      Delete: function () {
-        $(`#workout-dialog`).dialog(`open`);
-        $(this).dialog(`close`);
-      },
-    },
-  });
-}
-
-// Create an workout dialog
-function createWorkoutDialog() {
-  $(`#workout-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    autoOpen: false,
-    // Hide close button and change css of workout dialog
-    dialogClass: "no-close email",
-    // Button options
-    buttons: {
-      Yes: function () {
-        $(this).dialog(`close`);
-        $(`#internal-dialog-text`).text(
-          `Maybe another day. I don't feel like it today.`
-        );
-        $(`#go-to-work-question-dialog`).dialog(`open`);
-      },
-      No: function () {
-        $(this).dialog(`close`);
-        $(`#internal-dialog-text`).text(`Today's not the day.`);
-        $(`#go-to-work-question-dialog`).dialog(`open`);
-      },
-    },
-  });
-}
-
-// Create go-to-work-question dialog
-function createGoToWorkQuestionDialog() {
-  $(`#go-to-work-question-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    autoOpen: false,
-    // Hide close button and change css of dialog
-    dialogClass: "no-close email",
-    // Button options
-    buttons: {
-      Yes: function () {
-        // Close this dialog box
-        $(this).dialog(`close`);
-        // Cue goToWork state
-        goToWork();
-        // Hide current state
-        $(`#morning-state`).hide();
-      },
-      No: function () {
-        $(`#internal-dialog-text`).text(`You're going to be late!`);
-        // console.log(`${$(`#internal-dialog-text`)}`);
-      },
-    },
-  });
-}
-
-// Create choose transportation dialog
-function createChooseTransportationDialog() {
-  $(`#choose-transportation-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-    // Button options
-    // buttons: {
-    //   Save: function () {
-    //     $(this).dialog(`close`);
-    //     $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
-    //   },
-    //   Delete: function () {
-    //     $(this).dialog(`close`);
-    //   },
-    // },
-  });
-}
-
-// Create to-do dialog
-function createToDoDialog() {
-  $(`#to-do-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-  });
-}
-
-// Create affirmations dialog
-function createAffirmationsDialog() {
-  $(`#affirmations-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
-  });
-}
-
-// Create say goodnight dialog
-function createSayGoodnightDialog() {
-  $(`#say-goodnight-dialog`).dialog({
-    // Set position of dialog based on window position
-    position: { my: "left+100 top+100", at: "left top", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Don't open automatically
-    autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close",
-    // Button options
-    buttons: {
-      Goodnight: function () {
-        $(this).dialog(`close`);
-        // Make night state fade out
-        $(`#night-state`).fadeOut(5000, function () {
-          // Set switch day to true
-          switchDay = true;
-          // Update state
-          morning();
-        });
-      },
-    },
-  });
-}
-
-// Create a congratulations dialog
-function createCongratulationsDialog() {
-  $(`#congratulations-dialog`).dialog({
-    // Do not let user interact with anything else on page until dialog closed
-    modal: true,
-    // Don't open automatically
-    autoOpen: false,
-    // Hide close button
-    dialogClass: "no-close",
-    show: { effect: "fade", duration: 300 },
-    // Set position of dialog based on window position
-    position: { my: "center center", at: "center top+200", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-  });
 }

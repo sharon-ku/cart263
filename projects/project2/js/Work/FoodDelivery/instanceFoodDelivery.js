@@ -232,31 +232,3 @@ function createFoodDeliveryCanvas() {
 
   let myp5FoodDelivery = new p5(instanceFoodDeliverySketch);
 }
-
-// Create food delivery dialog
-function createFoodDeliveryDialog() {
-  $(`#food-delivery-dialog`).dialog({
-    // Hide close button
-    dialogClass: "no-close",
-    show: { effect: "fade", duration: 500 },
-    // Set position of dialog based on window position
-    position: { my: "center center", at: "center center", of: window },
-    // Adjust size of dialog box based on content it stores
-    height: "auto",
-    width: "auto",
-    // Button options
-    buttons: [
-      {
-        id: "start-delivering-button",
-        text: "Start delivering!",
-        // When button is clicked:
-        click: function () {
-          // Initiate game
-          deliveryGame = `play`;
-          // Hide button
-          $("#start-delivering-button").hide();
-        },
-      },
-    ],
-  });
-}

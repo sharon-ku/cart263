@@ -22,16 +22,6 @@ function createLadiWelcomeCanvas() {
     let ladiImages = [];
     const NUM_LADI_IMAGES = 2;
 
-    // Ladi's welcoming speech
-    let welcomeSpeech = new Audio(`assets/sounds/ladi-welcome.mp3`);
-    welcomeSpeech.volume = 1;
-    welcomeSpeech.play();
-
-    // When Ladi is done talking, close its dialog box
-    welcomeSpeech.addEventListener("ended", function () {
-      $(`#ladi-welcome-dialog`).dialog("close");
-    });
-
     // Preload assets
     p.preload = function () {
       for (let i = 0; i < NUM_LADI_IMAGES; i++) {
@@ -48,6 +38,14 @@ function createLadiWelcomeCanvas() {
 
       // Create new Ladi
       ladi = new Ladi(p, ladiImages, 0, 1, welcomeSpeech);
+
+      // Play Ladi's welcome speech
+      welcomeSpeech.play();
+
+      // When Ladi is done talking, close its dialog box
+      welcomeSpeech.addEventListener("ended", function () {
+        $(`#ladi-welcome-dialog`).dialog("close");
+      });
     };
 
     // Set mouse positions, set background color, update all behaviour of objects
