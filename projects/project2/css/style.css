@@ -47,8 +47,8 @@ p {
 .email .ui-widget-header {
   /* border: 1px solid #2c4359; */
   /* Change background color */
-  background: #e5ae95 url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
-    repeat;
+  /* background: #e5ae95 url("images/ui-bg_dots-small_35_e770ff_2x2.png") 50% 50%
+    repeat; */
   color: #ffe6ff;
 }
 
@@ -69,10 +69,11 @@ p {
 
   /* Set top left position */
   position: absolute;
-  top: 100px;
+  top: 50px;
   left: 0px;
 
-  padding: 30px;
+  padding: 15px;
+  background: black;
   /* Purple */
   color: #cd76ff;
 }

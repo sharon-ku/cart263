@@ -23,25 +23,20 @@ class Peep {
     this.framesElapsed = 0;
     this.framesBtwEachImage = 30;
 
-    // size
+    // size of images
     this.width = 250;
     this.height = 188;
 
-    // user's game score
-    this.maxScore = 100;
-    this.minScore = 0;
-    this.scoreDecreaseRate = 20;
-    this.scoreIncreaseRate = 0.005;
-
     // tracker displaying peep's mood
     this.tracker = {
-      totalWidth: 100,
+      // total width of tracker rectangle
+      totalWidth: 200,
 
       // positive end
       positive: {
         x: undefined,
         y: this.p.height - 30,
-        width: this.currentScore,
+        width: gameScore,
         height: 20,
         // light green
         fill: {
@@ -55,7 +50,7 @@ class Peep {
       negative: {
         x: undefined,
         y: this.p.height - 30,
-        width: this.maxScore - this.currentScore,
+        width: maxScore - gameScore,
         height: 20,
         // peachy red
         fill: {
@@ -87,7 +82,7 @@ class Peep {
 
   // Set Peep's feeling using images
   setFeelingImages() {
-    if (peepFeeling === `normal`) {
+    if (peepFeeling === `neutral`) {
       this.imageIndex.first = 0;
       this.imageIndex.second = 1;
       this.framesBtwEachImage = 30;
@@ -160,6 +155,21 @@ class Peep {
 
     // Update tracker widths
     this.tracker.positive.width = gameScore;
-    this.tracker.negative.width = this.maxScore - gameScore;
+    this.tracker.negative.width = maxScore - gameScore;
+
+    // Constrain gameScore
+    gameScore = this.p.constrain(gameScore, minScore, maxScore);
+
+    // Constrain tracker to not exceed min or max score
+    this.tracker.positive.width = this.p.constrain(
+      this.tracker.positive.width,
+      minScore,
+      maxScore
+    );
+    this.tracker.negative.width = this.p.constrain(
+      this.tracker.negative.width,
+      minScore,
+      maxScore
+    );
   }
 }

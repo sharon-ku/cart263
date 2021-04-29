@@ -41,10 +41,13 @@ let dayNumber = 1;
 let switchDay = false;
 
 // Track game score
-let gameScore = 50;
+let gameScore = 100;
 // Increase and decrease rate of score
-let scoreDecreaseRate = 10;
-let scoreIncreaseRate = 0.05;
+let scoreDecreaseRate = 2;
+let scoreIncreaseRate = 10;
+// Minimum and maximum scores
+let minScore = 0;
+let maxScore = 200;
 
 // Transportation mode
 // All possible modes: walk, bike, bus
@@ -56,8 +59,11 @@ let numTasksLeft = 2;
 let taskCompleted = false;
 
 // how is Peep feeling right now?
-// possible feelings: normal, happy, mad
-let peepFeeling = `normal`;
+// possible feelings: neutral, happy, mad
+let peepFeeling = `neutral`;
+
+// Set to `play` if the delivery game started
+let deliveryGame = `stop`;
 
 // -----------------------------------------------------
 
@@ -247,13 +253,11 @@ function work() {
   createPeepCanvas();
   createToDoDialog();
   createLadiWelcomeCanvas();
-  // createLadiFeedbackCanvas();
 
   // Create all dialogs
   createFoodDeliveryDialog();
   createSinkDialog();
   createLadiWelcomeDialog();
-  // createLadiFeedbackDialog();
 
   // Update number of tasks left
   $(`#number-of-tasks-left`).text(`${numTasksLeft}`);

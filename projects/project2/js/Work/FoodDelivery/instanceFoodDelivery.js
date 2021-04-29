@@ -1,7 +1,5 @@
 // Instance: Food delivery canvas
 //
-// Set to `play` if the delivery game started
-let deliveryGame = `stop`;
 
 // Create food delivery canvas
 function createFoodDeliveryCanvas() {
@@ -37,7 +35,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const TOTAL_PLATES = 1;
+    const TOTAL_PLATES = 6;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut
@@ -159,6 +157,7 @@ function createFoodDeliveryCanvas() {
 
             // Peep is mad now that you spilled food
             peepFeeling = `mad`;
+            peepYell.play();
 
             // Reset deliverer and update numPlatesSentOut
             p.resetDeliverer();
@@ -173,6 +172,9 @@ function createFoodDeliveryCanvas() {
 
           // Update numPlatesSentOut
           updateNumPlates = true;
+
+          // Peep is happy that you delivered the food properly
+          peepFeeling = `happy`;
 
           // Randomize plate position and create a new plate
           table.randomizePlatePosition();
@@ -199,9 +201,16 @@ function createFoodDeliveryCanvas() {
           numPlatesSentOut++;
           updateNumPlates = false;
 
+          // If all plates have been sent out:
           if (numPlatesSentOut === TOTAL_PLATES) {
+            // Stop game
+            deliveryGame = `stop`;
+
+            // Hide game canvas and text
             $(`#food-delivery-canvas`).hide();
             $(`#food-delivery-task`).hide();
+
+            // Change text to task complete
             $(`#food-delivery-dialog`).text(`Task complete`);
 
             // 1 less task to do!

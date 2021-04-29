@@ -31,9 +31,6 @@ function createSinkCanvas() {
     // Faucet spout
     let faucetSpout = undefined;
 
-    // Bark sound effect
-    let barkSFX = undefined;
-
     // Yay sound effect
     let yaySFX = undefined;
 
@@ -47,9 +44,6 @@ function createSinkCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Create new bark sound effect
-      barkSFX = new Audio("assets/sounds/bark.wav");
-
       // Create new yay sound effect
       yaySFX = new Audio("assets/sounds/yay.mp3");
 
@@ -75,16 +69,10 @@ function createSinkCanvas() {
       // Set background color
       p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
-      // Display faucet spout
-      faucetSpout.update();
-
       // If sink is on:
       if (sinkState === `on`) {
         // Update falling water
         fallingWater.update();
-
-        // Gradually add points
-        gameScore += scoreIncreaseRate;
 
         // Fill cup based on water level
         if (fallingWater.heightCurrent === fallingWater.heightMax) {
@@ -100,6 +88,9 @@ function createSinkCanvas() {
 
           // Peep is happy
           peepFeeling = `happy`;
+
+          // Add points
+          gameScore += scoreIncreaseRate;
         }
 
         // If water does not match limit line, dock points
@@ -112,7 +103,6 @@ function createSinkCanvas() {
 
           // Dock points
           gameScore -= scoreDecreaseRate;
-          console.log(`loser`);
         }
 
         // Update number of cups filled
@@ -138,6 +128,9 @@ function createSinkCanvas() {
         // Done giving feedback
         givingFeedback = false;
       }
+
+      // Display faucet spout
+      faucetSpout.update();
 
       // Update cup water's behaviour
       cupWater.update();

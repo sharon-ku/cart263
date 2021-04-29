@@ -23,7 +23,7 @@ function createLadiFeedbackCanvas() {
     const NUM_LADI_IMAGES = 10;
 
     // Speech that will be said based on gameScore
-    let ladiSpeech = undefined;
+    let ladiFeedbackSpeech = undefined;
 
     // Preload assets
     p.preload = function () {
@@ -39,31 +39,34 @@ function createLadiFeedbackCanvas() {
       let ladiFeedbackCanvas = p.createCanvas(1098, 490);
       ladiFeedbackCanvas.parent(`ladi-feedback-canvas`);
 
-      // Start Ladi's speech
-      p.startLadisSpeech();
+      // Start Ladi's speech. Peep gives feedback in the form of emotions.
+      p.ladiAndPeepGiveFeedback();
 
       // Create new Ladi
-      ladi = new Ladi(p, ladiImages, 0, 1, ladiSpeech);
+      ladi = new Ladi(p, ladiImages, 0, 1, ladiFeedbackSpeech);
     };
 
-    // Start feedback speech
-    p.startLadisSpeech = function () {
+    // Start feedback speech. Peep gives feedback in the form of emotions.
+    p.ladiAndPeepGiveFeedback = function () {
       // Set Ladi's speech depending on gameScore
       if (gameScore <= 30) {
-        ladiSpeech = madSpeech;
+        ladiFeedbackSpeech = madSpeech;
+        peepFeeling = `mad`;
       } else if (gameScore > 30 && gameScore <= 70) {
-        ladiSpeech = neutralSpeech;
+        ladiFeedbackSpeech = neutralSpeech;
+        peepFeeling = `neutral`;
       } else if (gameScore > 70) {
-        ladiSpeech = happySpeech;
+        ladiFeedbackSpeech = happySpeech;
+        peepFeeling = `happy`;
       }
 
       // Play Ladi's speech
-      ladiSpeech.play();
+      ladiFeedbackSpeech.play();
     };
 
     // What happens when Ladi finished his speech
     p.ladiIsDoneTalking = function () {
-      ladiSpeech.addEventListener("ended", function () {
+      ladiFeedbackSpeech.addEventListener("ended", function () {
         createReturnHomeQuestionDialog();
 
         // Close its dialog box

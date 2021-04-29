@@ -51,15 +51,13 @@ function createLadiWelcomeDialog() {
   $(`#ladi-welcome-dialog`).dialog({
     // Set position of dialog based on window position
     position: {
-      my: "center center",
-      at: "left top+300",
+      my: "center top",
+      at: "left top+100",
       of: window,
     },
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
     // Change css of email dialog
     dialogClass: " email",
     // Stop playing audio if dialog is closed
@@ -75,17 +73,15 @@ function createLadiFeedbackDialog() {
   $(`#ladi-feedback-dialog`).dialog({
     // Set position of dialog based on window position
     position: {
-      my: "center center",
-      at: "left top+300",
+      my: "center top",
+      at: "left top+100",
       of: window,
     },
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
-    // Hide close button and change css of email dialog
-    dialogClass: "no-close email",
+    // Change css look
+    dialogClass: "email",
   });
 }
 
@@ -290,15 +286,13 @@ function createReturnHomeQuestionDialog() {
     // Set position of dialog based on window position
     position: { my: "left+100 top+100", at: "left top", of: window },
     // Adjust size of dialog box based on content it stores
-    height: "500px",
-    width: "500px",
-    // Don't open automatically
-    // autoOpen: false,
+    height: "auto",
+    width: "auto",
     // Hide close button and change css of dialog
     dialogClass: "no-close email",
     // Button options
     buttons: {
-      Yes: function () {
+      "I agree": function () {
         // Switch to returnHome state and hide work-state
         $(`#work-state`).hide();
 
