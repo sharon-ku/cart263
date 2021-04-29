@@ -230,10 +230,12 @@ function work() {
   createSinkCanvas();
   createFoodDeliveryCanvas();
   createPeepCanvas();
+  createLadiWelcomeCanvas();
 
   // Create all dialogs
   createSinkDialog();
   createFoodDeliveryDialog();
+  createLadiWelcomeDialog();
   // createToDoListDialog();
 }
 
@@ -361,6 +363,27 @@ function createInternalDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "700px",
+    // Don't open automatically
+    // autoOpen: false,
+    // Hide close button and change css of email dialog
+    dialogClass: "no-close email",
+  });
+}
+
+// Create Ladi's welcome dialog
+function createLadiWelcomeDialog() {
+  $(`#ladi-welcome-dialog`).dialog({
+    // Hide close button
+    dialogClass: "no-close",
+    // Set position of dialog based on window position
+    position: {
+      my: "center center",
+      at: "left top+300",
+      of: window,
+    },
+    // Adjust size of dialog box based on content it stores
+    height: "auto",
+    width: "auto",
     // Don't open automatically
     // autoOpen: false,
     // Hide close button and change css of email dialog

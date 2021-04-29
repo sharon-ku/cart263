@@ -1,7 +1,6 @@
 // Peep: little birdie character in work place
 
 class Peep {
-  // constructor(p, images, yell) {
   constructor(p, images, yell) {
     // p5 instance
     this.p = p;
