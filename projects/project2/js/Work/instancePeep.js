@@ -18,7 +18,7 @@ function createPeepCanvas() {
     // Store Peep images
     let peepImages = [];
     // Number of Peep images
-    const NUM_PEEP_IMAGES = 2;
+    const NUM_PEEP_IMAGES = 6;
 
     // Peep (little birdie)
     let peep = undefined;

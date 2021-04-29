@@ -4,15 +4,32 @@ class Peep {
   constructor(p, images) {
     // p5 instance
     this.p = p;
+
     // position
     this.x = p.width / 2;
     this.y = p.height / 2;
+
     // images
     this.images = images;
-    this.imageIndex = 0;
+    // used to keep track of image in animation
+    this.imageIndex = {
+      current: 0,
+      // animation is composed of 2 images
+      first: undefined,
+      second: undefined,
+    };
+
+    // frames for image animation
+    this.framesElapsed = 0;
+    this.framesBtwEachImage = 30;
+
+    // how is Peep feeling right now?
+    // possible feelings: normal, happy, mad
+    this.feeling = `mad`;
+
     // size
-    // this.width = 50;
-    // this.height = 70;
+    this.width = 250;
+    this.height = 188;
 
     // user's game score
     this.maxScore = 100;
@@ -59,6 +76,12 @@ class Peep {
     // Display image
     this.display();
 
+    // Set Peep's feeling using images
+    this.setFeeling();
+
+    // Switch images
+    this.switchImages();
+
     // Update tracker
     this.updateTracker(gameScore);
 
@@ -66,12 +89,43 @@ class Peep {
     this.displayTracker();
   }
 
+  // Set Peep's feeling using images
+  setFeeling() {
+    // Change images in animation + frames between images
+    if (this.feeling === `normal`) {
+      this.imageIndex.first = 0;
+      this.imageIndex.second = 1;
+      this.framesBtwEachImage = 30;
+    } else if (this.feeling === `happy`) {
+      this.imageIndex.first = 2;
+      this.imageIndex.second = 3;
+      this.framesBtwEachImage = 10;
+    } else if (this.feeling === `mad`) {
+      this.imageIndex.first = 4;
+      this.imageIndex.second = 5;
+      this.framesBtwEachImage = 10;
+    }
+  }
+
   // Display image
   display() {
     this.p.push();
     this.p.imageMode(this.p.CENTER);
-    this.p.image(this.images[this.imageIndex], this.x, this.y);
+    this.p.image(this.images[this.imageIndex.current], this.x, this.y);
     this.p.pop();
+  }
+
+  // Switch images for animation
+  switchImages() {
+    this.framesElapsed++;
+    if (this.framesElapsed === this.framesBtwEachImage) {
+      if (this.imageIndex.current === this.imageIndex.first) {
+        this.imageIndex.current = this.imageIndex.second;
+      } else {
+        this.imageIndex.current = this.imageIndex.first;
+      }
+      this.framesElapsed = 0;
+    }
   }
 
   // Display all tracker pieces
