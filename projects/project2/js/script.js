@@ -36,7 +36,7 @@ https://www.chosic.com/download-audio/?t=24280
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `title`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;

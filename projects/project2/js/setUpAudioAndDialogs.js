@@ -43,8 +43,6 @@ function loadAudio() {
   madSpeech = new Audio(`assets/sounds/ladi-mad.mp3`);
   happySpeech = new Audio(`assets/sounds/ladi-happy.mp3`);
 
-  madSpeech.playbackRate = 3;
-
   // Peep's angry yell
   peepYell = new Audio(`assets/sounds/peep-angry.mp3`);
 }
@@ -62,8 +60,6 @@ function createInternalDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "700px",
-    // Don't open automatically
-    // autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
   });
@@ -210,8 +206,6 @@ function createChooseTransportationDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
     // Button options
@@ -323,7 +317,6 @@ function createReturnHomeQuestionDialog() {
       "I agree": function () {
         // Switch to returnHome state and hide work-state
         $(`#work-state`).hide();
-
         $(this).dialog(`close`);
         returnHome();
       },
