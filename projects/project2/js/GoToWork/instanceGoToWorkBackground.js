@@ -2,14 +2,8 @@
 //
 function createGoToWorkBackgroundCanvas() {
   let instanceGoToWorkBackgroundSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background color: white
-    let bgFill = {
+    const BG_FILL = {
       r: 255,
       g: 255,
       b: 255,
@@ -37,9 +31,6 @@ function createGoToWorkBackgroundCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Remove all strokes
-      p.noStroke();
-
       // Create a goToWork canvas
       let goToWorkCanvas = p.createCanvas(1280, 720);
       goToWorkCanvas.parent(`go-to-work-background-canvas`);
@@ -48,14 +39,10 @@ function createGoToWorkBackgroundCanvas() {
       goToWorkBackground = new Background(p, backgroundImages);
     };
 
-    // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
+    // Update behaviour of background
     p.draw = function () {
-      // Set mouse x and y positions
-      mouse.x = p.mouseX;
-      mouse.y = p.mouseY;
-
       // // Set background color
-      // p.background(bgFill.r, bgFill.g, bgFill.b);
+      // p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Update goToWork background's behaviour
       goToWorkBackground.update();

@@ -1,9 +1,8 @@
 // Mirror mouth in night scene
 
-class MirrorMouth {
+class MirrorMouth extends MirrorRoundBodyPart {
   constructor(p) {
-    // p5 instance
-    this.p = p;
+    super(p);
     // position
     this.x = {
       leftPosition: undefined,
@@ -17,22 +16,13 @@ class MirrorMouth {
     this.xOffset = -5;
     this.yOffset = -5;
 
-    // size
-    this.width = undefined;
-    this.height = undefined;
-
     // color
     this.fill = {
       r: 241,
       g: 142,
       b: 48,
     };
-    // stroke color: light purple
-    this.strokeFill = {
-      r: 241,
-      g: 142,
-      b: 48,
-    };
+
     // stroke
     this.strokeWeight = 0;
   }

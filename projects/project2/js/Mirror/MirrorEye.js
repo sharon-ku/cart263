@@ -1,12 +1,9 @@
-// Mirror eye in night scene
+// Mirror eye
 
-class MirrorEye {
+class MirrorEye extends MirrorRoundBodyPart {
   constructor(p, xOffset, yOffset) {
-    // p5 instance
-    this.p = p;
-    // position
-    this.x = undefined;
-    this.y = undefined;
+    super(p, xOffset, yOffset);
+
     // offset to add to head's position to make it centered
     this.xOffset = xOffset;
     this.yOffset = yOffset;
@@ -21,12 +18,7 @@ class MirrorEye {
       g: 142,
       b: 48,
     };
-    // stroke color
-    this.strokeFill = {
-      r: 241,
-      g: 142,
-      b: 48,
-    };
+
     // stroke
     this.strokeWeight = 0;
   }

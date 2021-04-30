@@ -2,14 +2,8 @@
 //
 function createAffirmationsCanvas() {
   let instanceAffirmationsSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background fill
-    let bgFill = {
+    const BG_FILL = {
       r: 0,
       g: 0,
       b: 0,
@@ -49,9 +43,6 @@ function createAffirmationsCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // // Prep audio: need p5.sound for this!
-      // p.userStartAudio();
-
       // Set up anyang
       p.setUpAnnyang();
 
@@ -67,11 +58,14 @@ function createAffirmationsCanvas() {
 
       // Remove caps and punctuation from affirmations
       for (let i = 0; i < affirmations.length; i++) {
+        // List of special characters:
         const regex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g;
+        // Remove punctuation
         let stringWithNoPunctuation = affirmations[i].replace(regex, "");
-
+        // Remove caps:
         let stringWithNoCaps = stringWithNoPunctuation.toLowerCase();
 
+        // Store result in array
         affirmationsWithoutPunctuationAndCaps.push(stringWithNoCaps);
       }
     };
@@ -102,10 +96,10 @@ function createAffirmationsCanvas() {
       $(`#internal-dialog-text`).text(guess);
     };
 
-    // Set mouse positions, set background color, update all behaviour of objects
+    // Set background fill, update all behaviour of objects
     p.draw = function () {
       // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Display affirmations
       for (let i = 0; i < affirmations.length; i++) {
@@ -120,15 +114,6 @@ function createAffirmationsCanvas() {
 
       // If user's guess is correct, make cat feel scared
       p.checkIfGuessIsCorrect();
-
-      // // Display current answer on screen
-      // p.push();
-      // // p.textFont(font);
-      // p.fill(255, 255, 0);
-      // p.textAlign(p.CENTER);
-      // p.textSize(32);
-      // p.text(currentAnswer, 50, 50);
-      // p.pop();
     };
 
     // If user's guess is correct, make cat feel scared
@@ -138,13 +123,11 @@ function createAffirmationsCanvas() {
         affirmationsWithoutPunctuationAndCaps[currentAffirmationIndex] ===
         currentAnswer
       ) {
-        console.log(`YAY!`);
         // Update current affirmation index
         currentAffirmationIndex += 1;
 
         // If user said all 3 affirmations, time to say goodnight <3
         if (currentAffirmationIndex === affirmations.length) {
-          console.log(`finished!`);
           // Close affirmations dialog
           $(`#affirmations-dialog`).dialog("close");
           // Open "Say goodnight" dialog

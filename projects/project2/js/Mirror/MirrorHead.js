@@ -1,12 +1,9 @@
 // Mirror head in night scene
 
-class MirrorHead {
+class MirrorHead extends MirrorRoundBodyPart {
   constructor(p) {
-    // p5 instance
-    this.p = p;
-    // position
-    this.x = undefined;
-    this.y = undefined;
+    super(p);
+
     // Offset to add to head's position to make it centered
     this.xOffset = undefined;
     this.yOffset = 0;
@@ -21,12 +18,7 @@ class MirrorHead {
       g: 215,
       b: 175,
     };
-    // stroke color: light purple
-    this.strokeFill = {
-      r: 241,
-      g: 142,
-      b: 48,
-    };
+
     // stroke
     this.strokeWeight = 2;
   }

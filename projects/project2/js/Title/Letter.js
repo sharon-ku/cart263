@@ -33,12 +33,6 @@ class Letter {
   update() {
     // Display letter
     this.display();
-
-    // // Apply gravity to letter
-    // this.applyGravity();
-
-    // // Make letter float
-    // this.float();
   }
 
   // Display letter
@@ -50,26 +44,5 @@ class Letter {
     this.p.textSize(this.size);
     this.p.text(this.character, this.x, this.y);
     this.p.pop();
-  }
-
-  // Apply gravitational force
-  applyGravity() {
-    this.ay = this.gravity;
-  }
-
-  // Make letter float
-  float() {
-    // Update position
-    if (this.p.random() < 0.05) {
-      this.vx = this.p.random(-2, 2);
-      this.vy = this.p.random(-2, 2);
-    }
-
-    this.x += this.vx;
-    this.y += this.vy;
-
-    // Update position with velocity and acceleration
-    // this.vy += this.ay;
-    // this.y += this.vy;
   }
 }

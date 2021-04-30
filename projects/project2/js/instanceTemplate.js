@@ -1,15 +1,9 @@
-// Instance: Template canvas
+// Instance: Template canvas (NOT USED IN GAME)
 //
 function createTemplateCanvas() {
   let instanceTemplateSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background fill
-    let bgFill = {
+    const BG_FILL = {
       r: 0,
       g: 0,
       b: 0,
@@ -22,10 +16,10 @@ function createTemplateCanvas() {
       templateCanvas.parent(`template-canvas`);
     };
 
-    // Set mouse positions, set background color, update all behaviour of objects
+    // Update all behaviour of objects
     p.draw = function () {
       // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
     };
   };
 

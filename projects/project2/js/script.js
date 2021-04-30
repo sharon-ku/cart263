@@ -36,7 +36,7 @@ https://www.chosic.com/download-audio/?t=24280
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `title`;
+let state = `work`;
 
 // Track number of day (starts at 1)
 let dayNumber = 1;
@@ -55,7 +55,6 @@ let maxScore = 200;
 
 // Delay before creating internal dialog
 const DELAY_INTERNAL_DIALOG_CREATION = 3000;
-
 // Delay before removing internal dialog text
 const DELAY_REMOVE_INTERNAL_DIALOG_TEXT = 5000;
 
@@ -68,6 +67,8 @@ let transportationMode = undefined;
 
 // Amount of time needed to get to work
 const DURATION_TO_ARRIVE_TO_WORK = 10000;
+// Time it takes to go home from work
+const DURATION_TO_RETURN_HOME = 20000;
 
 // Number of work tasks left to do
 let numTasksLeft = 2;
@@ -82,6 +83,9 @@ let peepFeeling = `neutral`;
 let deliveryGame = `stop`;
 
 // -----------------------------------------------------
+
+// Load all the audio
+loadAudio();
 
 // Begin with title
 // title();
@@ -115,21 +119,20 @@ function changeInternalDialogText(string) {
 // function updateDayNumber() {
 //   $(`#day-number`).text(`${dayNumber}`);
 // }
-loadAudio();
 
 // Set up states
-// function resetState() {
 if (state === `title`) {
+  // hide all HTML elements
+  hideAllHTML();
 
-  // // hide all HTML elements
-  // hideAllHTML();
-  // // hide day section
-  // // $(`#day-section`).hide();
-  // // create canvas
-  // createTitleCanvas();
+  // hide day section
+  // $(`#day-section`).hide();
+
   // start state
   title();
-} else if (state === `morning`) {
+}
+// Or else, for other states:
+else if (state === `morning`) {
   loadAudio();
   // hide all HTML elements
   hideAllHTML();
@@ -162,7 +165,7 @@ if (state === `title`) {
   // start state
   night();
 }
-//
+
 // Hide all HTML elements
 function hideAllHTML() {
   $(`#title-state`).hide();
@@ -181,12 +184,6 @@ function title() {
   // Show HTML elements for this state
   $(`#title-state`).show();
 
-  // Load audio
-  loadAudio();
-
-  // Hide all HTML elements
-  hideAllHTML();
-
   // Create canvas
   createTitleCanvas();
 
@@ -201,7 +198,11 @@ function title() {
 function morning() {
   state = `morning`;
   // Made title canvas fade away
-  $(`#title-state`).toggle("fade", TITLE_STATE_FADE_DURATION, showMorningElements);
+  $(`#title-state`).toggle(
+    "fade",
+    TITLE_STATE_FADE_DURATION,
+    showMorningElements
+  );
 
   // // Add 1 to day number
   // if (switchDay) {
@@ -387,7 +388,7 @@ function switchToNight() {
   setTimeout(() => {
     $(`#return-home-state`).hide();
     night();
-  }, 20000);
+  }, DURATION_TO_RETURN_HOME);
 }
 
 // -----------------------------------------------------

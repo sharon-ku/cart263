@@ -1,15 +1,12 @@
 // Instance: Mirror canvas
 //
-// Attribution for Face API code: https://editor.p5js.org/ml5/sketches/FaceApi_Video_Landmarks
+// Attribution: I started using the code for FaceApi from this example:
+// https://editor.p5js.org/ml5/sketches/FaceApi_Video_Landmarks
+
+// Note: I uncommented some of the code from the example in case I want to use this in the future
 
 function createMirrorCanvas() {
   let instanceMirrorSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background fill
     let bgFill = {
       current: {
@@ -54,21 +51,19 @@ function createMirrorCanvas() {
     let video = undefined;
     // Store all detections
     let detections;
-
     // Modifying detection options (by default, they are set to true)
-    const detection_options = {
+    const DETECTION_OPTIONS = {
       withLandmarks: true,
       withDescriptors: false,
     };
+    // -----------------------------
 
     // Create canvas and objects
     p.setup = function () {
       // Create canvas
       let mirrorCanvas = p.createCanvas(300, 300);
-      // $(`#mirror-canvas`).innerHTML = mirrorCanvas;
-      // let parentTest = $(`.mirror-canvas`);
-      // mirrorCanvas.parent(parentTest);
-      // mirrorCanvas.parent(`mirror-canvas`);
+
+      // Stick to different parents depending on state
       if (state === `morning`) {
         mirrorCanvas.parent(`mirror-canvas1`);
       } else if (state === `night`) {
@@ -78,8 +73,10 @@ function createMirrorCanvas() {
       // load up user's video
       video = p.createCapture(p.VIDEO);
       video.size(p.width, p.height);
-      video.hide(); // Hide the video element, and just show the canvas
-      faceapi = ml5.faceApi(video, detection_options, p.modelReady);
+      // Hide the video element, and just show the canvas
+      video.hide();
+      // Set up faceApi
+      faceapi = ml5.faceApi(video, DETECTION_OPTIONS, p.modelReady);
       p.textAlign(p.RIGHT);
 
       // Create new head in mirror
@@ -99,24 +96,20 @@ function createMirrorCanvas() {
       rightEye = new MirrorEye(p, RIGHT_EYE_X_OFFSET, RIGHT_EYE_Y_OFFSET);
     };
 
-    // Set mouse positions, set background color, update all behaviour of objects
-    p.draw = function () {
-      // Set background color
-      // p.background(bgFill.r, bgFill.g, bgFill.b);
-    };
+    // Update every frame: unused
+    p.draw = function () {};
 
+    // Start detection when model is ready
     p.modelReady = function () {
-      // console.log("ready!");
-      // console.log(faceapi);
       faceapi.detect(p.gotResults);
     };
 
+    // Get results
     p.gotResults = function (err, result) {
       if (err) {
         console.log(err);
         return;
       }
-      // console.log(result)
       detections = result;
 
       // Set background color based on current state
@@ -125,45 +118,77 @@ function createMirrorCanvas() {
       } else if (state === `night`) {
         bgFill.current = bgFill.night;
       }
-
       p.background(bgFill.current.r, bgFill.current.g, bgFill.current.b);
+
+      // Use this if I show my video capture:
       // image(video, 0,0, width, height)
+
+      // If detections found:
       if (detections) {
         if (detections.length > 0) {
-          // Update behaviour of body parts
+          // Update behaviour of all body parts
+          // head + mouth
           mirrorHead.update(detections);
           mirrorMouth.update(detections);
 
+          // eyes
           let leftEyePosition = detections[0].parts.leftEye;
           leftEye.update(detections, leftEyePosition);
 
           let rightEyePosition = detections[0].parts.rightEye;
           rightEye.update(detections, rightEyePosition);
 
-          // p.drawBox(detections);
-          // p.drawHead(detections);
+          // eyebrows
           p.drawLandmarks(detections);
         }
       }
       faceapi.detect(p.gotResults);
     };
 
-    p.drawBox = function (detections) {
-      for (let i = 0; i < detections.length; i++) {
-        const alignedRect = detections[i].alignedRect;
-        const x = alignedRect._box._x;
-        const y = alignedRect._box._y;
-        const boxWidth = alignedRect._box._width;
-        const boxHeight = alignedRect._box._height;
+    // Draw box for border around head: did not use
+    // p.drawBox = function (detections) {
+    //   for (let i = 0; i < detections.length; i++) {
+    //     const alignedRect = detections[i].alignedRect;
+    //     const x = alignedRect._box._x;
+    //     const y = alignedRect._box._y;
+    //     const boxWidth = alignedRect._box._width;
+    //     const boxHeight = alignedRect._box._height;
+    //
+    //     p.noFill();
+    //     p.stroke(161, 95, 251);
+    //     p.strokeWeight(2);
+    //     p.rect(x, y, boxWidth, boxHeight);
+    //   }
+    // };
 
-        p.noFill();
-        p.stroke(161, 95, 251);
-        p.strokeWeight(2);
-        p.rect(x, y, boxWidth, boxHeight);
+    // Draw landmarks of face parts
+    p.drawLandmarks = function () {
+      for (let i = 0; i < detections.length; i++) {
+        // Did not end up drawing these parts:
+        // const mouth = detections[i].parts.mouth;
+        // const nose = detections[i].parts.nose;
+        // const leftEye = detections[i].parts.leftEye;
+        // const rightEye = detections[i].parts.rightEye;
+
+        // Store detections for eyebrows
+        const rightEyeBrow = detections[i].parts.rightEyeBrow;
+        const leftEyeBrow = detections[i].parts.leftEyeBrow;
+
+        // Did not end up drawing these parts:
+        // p.drawPart(mouth, true);
+        // p.drawPart(nose, false);
+        // p.drawPart(leftEye, true);
+        // p.drawPart(rightEye, true);
+
+        // Draw eyebrows
+        p.drawPart(leftEyeBrow, false);
+        p.drawPart(rightEyeBrow, false);
       }
     };
 
-    p.drawLandmarks = function () {
+    // Draw body part
+    p.drawPart = function (feature, closed) {
+      p.push();
       p.noFill();
       p.stroke(
         LANDMARK_STROKE_FILL.r,
@@ -172,26 +197,7 @@ function createMirrorCanvas() {
       );
       p.strokeWeight(LANDMARK_STROKE_WEIGHT);
 
-      // console.log(detections[0].parts.mouth);
-
-      for (let i = 0; i < detections.length; i++) {
-        const mouth = detections[i].parts.mouth;
-        const nose = detections[i].parts.nose;
-        const leftEye = detections[i].parts.leftEye;
-        const rightEye = detections[i].parts.rightEye;
-        const rightEyeBrow = detections[i].parts.rightEyeBrow;
-        const leftEyeBrow = detections[i].parts.leftEyeBrow;
-
-        // p.drawPart(mouth, true);
-        // p.drawPart(nose, false);
-        // p.drawPart(leftEye, true);
-        p.drawPart(leftEyeBrow, false);
-        // p.drawPart(rightEye, true);
-        p.drawPart(rightEyeBrow, false);
-      }
-    };
-
-    p.drawPart = function (feature, closed) {
+      // Draw shape
       p.beginShape();
       for (let i = 0; i < feature.length; i++) {
         const x = feature[i]._x;
@@ -204,6 +210,7 @@ function createMirrorCanvas() {
       } else {
         p.endShape();
       }
+      p.pop();
     };
   };
 

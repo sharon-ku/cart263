@@ -1,4 +1,4 @@
-// Pulsating circle in start scene
+// Pulsating circle in title state
 
 class PulsatingCircle {
   constructor(p, x, y) {
