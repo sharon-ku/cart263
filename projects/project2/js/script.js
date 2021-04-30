@@ -36,7 +36,7 @@ https://www.chosic.com/download-audio/?t=24280
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `night`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -105,9 +105,9 @@ function changeInternalDialogText(string) {
 }
 
 // Set day number
-function updateDayNumber() {
-  $(`#day-number`).text(`${dayNumber}`);
-}
+// function updateDayNumber() {
+//   $(`#day-number`).text(`${dayNumber}`);
+// }
 
 // Set up states
 // function resetState() {
@@ -116,7 +116,7 @@ if (state === `title`) {
   // hide all HTML elements
   hideAllHTML();
   // hide day section
-  $(`#day-section`).hide();
+  // $(`#day-section`).hide();
   // create canvas
   createTitleCanvas();
   // start state
@@ -127,8 +127,8 @@ if (state === `title`) {
   hideAllHTML();
   // start state
   morning();
-  // update day number
-  updateDayNumber();
+  // // update day number
+  // updateDayNumber();
 } else if (state === `goToWork`) {
   loadAudio();
   // hide all HTML elements
@@ -186,14 +186,14 @@ function morning() {
   // Made title canvas fade away
   $(`#title-state`).toggle("fade", 3000, showMorningElements);
 
-  // Add 1 to day number
-  if (switchDay) {
-    dayNumber++;
-    switchDay = false;
-  }
+  // // Add 1 to day number
+  // if (switchDay) {
+  //   dayNumber++;
+  //   switchDay = false;
+  // }
 
-  // Update day number
-  updateDayNumber();
+  // // Update day number
+  // updateDayNumber();
 
   // Create canvases
   createMirrorCanvas();
@@ -219,7 +219,7 @@ function morning() {
 // Show HTML elements for morning state
 function showMorningElements() {
   $(`#morning-state`).show();
-  $(`#day-section`).show();
+  // $(`#day-section`).show();
 }
 
 // When letter animation is clicked on, open email and hide letter animation
@@ -375,8 +375,6 @@ function switchToNight() {
 //
 function night() {
   state = `night`;
-
-  updateDayNumber();
 
   // Show night HTML
   $(`#night-state`).show();
