@@ -1,4 +1,5 @@
 // Ladi: boss
+// All behaviour found here
 
 class Ladi {
   constructor(p, images, imageIndex1, imageIndex2, speech) {
@@ -24,8 +25,8 @@ class Ladi {
     this.framesBtwEachImage = 30;
 
     // how is Ladi feeling right now?
-    // possible feelings: welcoming, normal, happy, mad
-    this.feeling = `normal`;
+    // possible feelings: welcoming, neutral, happy, mad
+    this.feeling = `neutral`;
 
     // Ladi's speech (audio)
     this.speech = speech;
@@ -42,9 +43,6 @@ class Ladi {
 
     // Switch images
     this.switchImages();
-
-    // Set voice based on feeling
-    // this.talk();
   }
 
   // Set Peep's feeling using images
@@ -62,20 +60,6 @@ class Ladi {
     //   this.imageIndex.first = 4;
     //   this.imageIndex.second = 5;
     //   this.framesBtwEachImage = 10;
-    // }
-  }
-
-  // Let Ladi talk
-  talk() {
-    this.speech.play();
-    //   if (this.feeling === `welcoming`) {
-    //     this.speech.play();
-    //   } else if (this.feeling === `neutral`) {
-    //     this.speech.play();
-    //   } else if (this.feeling === `happy`) {
-    //     this.speech.play();
-    //   }else if (this.feeling === `mad`) {
-    //     this.speech.play();
     // }
   }
 

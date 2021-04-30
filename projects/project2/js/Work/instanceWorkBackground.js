@@ -2,12 +2,6 @@
 //
 function createWorkBackgroundCanvas() {
   let instanceWorkBackgroundSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background color: white
     const BG_FILL = {
       r: 255,
@@ -37,10 +31,7 @@ function createWorkBackgroundCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Remove all strokes
-      p.noStroke();
-
-      // Create a night canvas
+      // Create a work canvas
       let workBackgroundCanvas = p.createCanvas(1280, 720);
       workBackgroundCanvas.parent(`work-background-canvas`);
 
@@ -48,12 +39,8 @@ function createWorkBackgroundCanvas() {
       workBackground = new Background(p, backgroundImages);
     };
 
-    // Set mouse positions, set background color, update behaviour of rectangle, pulsating circle, and drop
+    // Set background color, update behaviour of objects
     p.draw = function () {
-      // Set mouse x and y positions
-      mouse.x = p.mouseX;
-      mouse.y = p.mouseY;
-
       // Set background color
       p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 

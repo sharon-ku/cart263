@@ -2,14 +2,8 @@
 //
 function createLadiFeedbackCanvas() {
   let instanceLadiFeedbackSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background fill
-    let BG_FILL = {
+    const BG_FILL = {
       r: 0,
       g: 0,
       b: 0,
@@ -52,29 +46,22 @@ function createLadiFeedbackCanvas() {
       if (gameScore <= 30) {
         ladiFeedbackSpeech = madSpeech;
         peepFeeling = `mad`;
+        // ladiFeeling = `mad`;
       } else if (gameScore > 30 && gameScore <= 70) {
         ladiFeedbackSpeech = neutralSpeech;
         peepFeeling = `neutral`;
+        // ladiFeeling = `neutral`;
       } else if (gameScore > 70) {
         ladiFeedbackSpeech = happySpeech;
         peepFeeling = `happy`;
+        // ladiFeeling = `happy`;
       }
 
       // Play Ladi's speech
       ladiFeedbackSpeech.play();
     };
 
-    // What happens when Ladi finished his speech
-    p.ladiIsDoneTalking = function () {
-      ladiFeedbackSpeech.addEventListener("ended", function () {
-        createReturnHomeQuestionDialog();
-
-        // Close its dialog box
-        $(`#ladi-feedback-dialog`).dialog("close");
-      });
-    };
-
-    // Set mouse positions, set background color, update all behaviour of objects
+    // Set background color, update all behaviour of objects
     p.draw = function () {
       // Set background color
       p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
@@ -85,6 +72,16 @@ function createLadiFeedbackCanvas() {
       // When Ladi is done talking:
       p.ladiIsDoneTalking();
     };
+  };
+
+  // What happens when Ladi finished his speech
+  p.ladiIsDoneTalking = function () {
+    ladiFeedbackSpeech.addEventListener("ended", function () {
+      createReturnHomeQuestionDialog();
+
+      // Close its dialog box
+      $(`#ladi-feedback-dialog`).dialog("close");
+    });
   };
 
   let myp5LadiFeedback = new p5(instanceLadiFeedbackSketch);

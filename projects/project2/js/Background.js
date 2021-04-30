@@ -19,7 +19,7 @@ class Background {
     this.height = 720;
   }
 
-  // Update all room behaviour
+  // Update all background behaviour
   update() {
     // Display image
     this.display();

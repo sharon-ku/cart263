@@ -22,8 +22,10 @@ class Customer {
 
     // customer's body
     this.body = {
+      // offset from this.x and this.y
       xOffset: 0,
       yOffset: 0,
+      // size
       size: 35,
       // color
       fill: {
@@ -31,6 +33,7 @@ class Customer {
         g: 176,
         b: 153,
       },
+      // stroke info
       strokeFill: {
         r: 230,
         g: 86,

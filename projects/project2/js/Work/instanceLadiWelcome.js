@@ -2,14 +2,8 @@
 //
 function createLadiWelcomeCanvas() {
   let instanceLadiWelcomeSketch = function (p) {
-    // Mouse position
-    let mouse = {
-      x: undefined,
-      y: undefined,
-    };
-
     // Background fill
-    let BG_FILL = {
+    const BG_FILL = {
       r: 0,
       g: 0,
       b: 0,

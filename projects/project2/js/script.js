@@ -36,7 +36,7 @@ https://www.chosic.com/download-audio/?t=24280
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `title`;
 
 // Track number of day (starts at 1)
 let dayNumber = 1;
@@ -359,6 +359,13 @@ function getFeedbackFromBoss() {
   createLadiFeedbackCanvas();
   createLadiFeedbackDialog();
 }
+
+// Make peep canvas draggable
+$(`#peep-canvas`).draggable({
+  drag: function (event, ui) {
+    $(this).css(`cursor`, `grab`);
+  },
+});
 
 // -----------------------------------------------------
 

@@ -1,4 +1,4 @@
-// Deliverer: little birdie character in work place
+// Deliverer: off to deliver food to the tables!
 
 class Deliverer {
   constructor(p, images) {
@@ -7,7 +7,7 @@ class Deliverer {
     // position
     this.x = p.width / 2;
     this.y = 20;
-    // images
+    // image info
     this.images = images;
     this.imageIndex = 0;
     // size
@@ -33,7 +33,7 @@ class Deliverer {
     this.p.pop();
   }
 
-  // Move image with mouse position
+  // Move image using mouse position
   move() {
     // Only move if mouse is inside canvas
     if (
@@ -42,7 +42,7 @@ class Deliverer {
       this.p.mouseY > 0 &&
       this.p.mouseY < this.p.height
     ) {
-      // Move deliverer
+      // Move deliverer based on mouse position
       this.x = this.p.mouseX;
       this.y = this.p.mouseY;
     }
@@ -68,13 +68,8 @@ class Deliverer {
     this.imageIndex = 1;
   }
 
-  // Deliver food successfully to table
-  deliversFood() {}
-
-  // Reset position and image
+  // Reset image
   reset() {
-    // this.x = this.p.width / 2;
-    // this.y = 20;
     this.imageIndex = 0;
   }
 }

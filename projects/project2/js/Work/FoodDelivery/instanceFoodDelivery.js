@@ -1,7 +1,6 @@
 // Instance: Food delivery canvas
 //
 
-// Create food delivery canvas
 function createFoodDeliveryCanvas() {
   let instanceFoodDeliverySketch = function (p) {
     // Mouse
@@ -50,9 +49,11 @@ function createFoodDeliveryCanvas() {
     let tables = [];
     const NUM_TABLES = 6;
 
+    // Used to calculate x positions of table
     const FIRST_TABLE_X = 100;
     const X_DISTANCE_BTW_TABLES = 300;
 
+    // Used to calculate y positions of table
     const FIRST_TABLE_Y = 75;
     const Y_DISTANCE_BTW_TABLES = 120;
 
@@ -138,63 +139,17 @@ function createFoodDeliveryCanvas() {
           customers[i].update();
         }
 
-        // Replace cursor with circle
-        p.push();
-        p.fill(mouse.fill);
-        p.noStroke();
-        p.ellipse(mouse.x, mouse.y, mouse.size);
-        p.noCursor();
-        p.pop();
+        // Draw cursor as a circle
+        p.displayCursor();
 
         // Update behaviour of deliverer
         deliverer.update(mouse);
 
-        for (let i = 0; i < customers.length; i++) {
-          if (deliverer.intersects(customers[i])) {
-            console.log(`touche`);
-            // Deliverer drops the food (switch images)
-            deliverer.spillsFood();
+        // Consequences when deliverer hits a customer
+        p.delivererHitsCustomer();
 
-            // Peep is mad now that you spilled food
-            peepFeeling = `mad`;
-            peepYell.play();
-
-            // Reset deliverer and update numPlatesSentOut
-            p.resetDeliverer();
-
-            // Remove points
-            gameScore -= scoreDecreaseRate;
-          }
-        }
-
-        if (deliverer.intersects(tables[tableToDeliver - 1])) {
-          let table = tables[tableToDeliver - 1];
-
-          // Update numPlatesSentOut
-          updateNumPlates = true;
-
-          // Peep is happy that you delivered the food properly
-          peepFeeling = `happy`;
-
-          // Randomize plate position and create a new plate
-          table.randomizePlatePosition();
-          table.timeToCreatePlate = true;
-          console.log(`reached table!`);
-
-          // Choose random table to deliver food to
-          chooseNewTable = true;
-
-          // Deliverer delivers the food successfully!
-          deliverer.deliversFood();
-
-          // Reset deliverer and update numPlatesSentOut
-          setTimeout(() => {
-            p.resetDeliverer();
-          }, 1000);
-
-          // Add points
-          gameScore += scoreIncreaseRate;
-        }
+        // Consequences of a successfully delivery to table
+        p.successfulDelivery();
 
         // Update numPlates sent out
         if (updateNumPlates) {
@@ -202,33 +157,93 @@ function createFoodDeliveryCanvas() {
           updateNumPlates = false;
 
           // If all plates have been sent out:
-          if (numPlatesSentOut === TOTAL_PLATES) {
-            // Stop game
-            deliveryGame = `stop`;
-
-            // Hide game canvas and text
-            $(`#food-delivery-canvas`).hide();
-            $(`#food-delivery-task`).hide();
-
-            // Change text to task complete
-            $(`#food-delivery-dialog`).text(`Task complete`);
-
-            // 1 less task to do!
-            // Mark task is completed
-            taskCompleted = true;
-            // Remove a task
-            removeATask();
-          }
+          p.noMorePlates();
         }
       }
+    };
+
+    // If all the plates have been sent out:
+    p.noMorePlates = function () {
+      if (numPlatesSentOut === TOTAL_PLATES) {
+        // Stop game
+        deliveryGame = `stop`;
+
+        // Hide game canvas and text
+        $(`#food-delivery-canvas`).hide();
+        $(`#food-delivery-task`).hide();
+
+        // Change text to task complete
+        $(`#food-delivery-dialog`).text(`Task complete`);
+
+        // 1 less task to do!
+        // Mark task is completed
+        taskCompleted = true;
+        // Remove a task
+        removeATask();
+      }
+    };
+
+    // Delivered food successfully!
+    p.successfulDelivery = function () {
+      if (deliverer.intersects(tables[tableToDeliver - 1])) {
+        let table = tables[tableToDeliver - 1];
+
+        // Update numPlatesSentOut
+        updateNumPlates = true;
+
+        // Peep is happy that you delivered the food properly
+        peepFeeling = `happy`;
+
+        // Randomize plate position and create a new plate
+        table.randomizePlatePosition();
+        table.timeToCreatePlate = true;
+
+        // Choose random table to deliver food to
+        chooseNewTable = true;
+
+        // Reset deliverer and update numPlatesSentOut
+        setTimeout(() => {
+          p.resetDeliverer();
+        }, 1000);
+
+        // Add points
+        gameScore += scoreIncreaseRate;
+      }
+    };
+
+    // Consequences when deliverer hits a customer
+    p.delivererHitsCustomer = function () {
+      for (let i = 0; i < customers.length; i++) {
+        if (deliverer.intersects(customers[i])) {
+          // Deliverer drops the food (switch images)
+          deliverer.spillsFood();
+
+          // Peep is mad now that you spilled food
+          peepFeeling = `mad`;
+          peepYell.play();
+
+          // Reset deliverer and update numPlatesSentOut
+          p.resetDeliverer();
+
+          // Remove points
+          gameScore -= scoreDecreaseRate;
+        }
+      }
+    };
+
+    // Draw cursor as a circle
+    p.displayCursor = function () {
+      p.push();
+      p.fill(mouse.fill);
+      p.noStroke();
+      p.ellipse(mouse.x, mouse.y, mouse.size);
+      p.noCursor();
+      p.pop();
     };
 
     // Reset deliverer and udpate numPlates
     p.resetDeliverer = function () {
       deliverer.reset();
-
-      // // Update numPlatesSentOut
-      // updateNumPlates = true;
     };
 
     // Choose random table to deliver food to

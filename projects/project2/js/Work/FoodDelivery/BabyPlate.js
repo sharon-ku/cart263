@@ -1,4 +1,4 @@
-// Baby plates
+// Baby plates that go on top of table
 
 class BabyPlate {
   constructor(p, x, y, image) {
