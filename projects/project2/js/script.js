@@ -18,15 +18,25 @@ Voice of Ladi and Peep: Bryan Ku
 
 Code attribution: Pippin Barr helped with the code for setting up several p5.js instances.
 
-Sound effects sources:
-"yay" sound effect: http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
+Sound sources:
+- "Yay" sound effect:
+http://www.mediafire.com/file/y3crrluv5xne9z8/Yay.mp3/file
+
+- Relaxing background music:
+lukrembo - bored
+https://www.youtube.com/watch?v=t9r4cHSnjq4&ab_channel=LuKremBo
+
+- Restaurant background music:
+School by Komiku
+https://www.chosic.com/
+https://www.chosic.com/download-audio/?t=24280
 
 */
 
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `work`;
+let state = `title`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;

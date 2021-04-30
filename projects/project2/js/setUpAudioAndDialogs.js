@@ -9,6 +9,9 @@ let happySpeech;
 // Peep yell
 let peepYell;
 
+// Sparkle
+let sparkle;
+
 // Relaxing music that plays for title, morning, goToWork, returnHome, and night
 let relaxingBackgroundMusic;
 
@@ -21,13 +24,16 @@ function loadAudio() {
   relaxingBackgroundMusic = new Audio(
     `assets/sounds/relaxing-background-music.mp3`
   );
-  relaxingBackgroundMusic.volume = 0.7;
+  relaxingBackgroundMusic.volume = 0.5;
 
   // Restaurant music: snap your fingers to this!
   restaurantBackgroundMusic = new Audio(
     `assets/sounds/restaurant-background-music.mp3`
   );
-  restaurantBackgroundMusic.volume = 0.07;
+  restaurantBackgroundMusic.volume = 0.3;
+
+  // Sparkle in title state
+  sparkle = new Audio(`assets/sounds/sparkle.wav`);
 
   // Ladi's welcoming speech
   welcomeSpeech = new Audio(`assets/sounds/ladi-welcome.mp3`);

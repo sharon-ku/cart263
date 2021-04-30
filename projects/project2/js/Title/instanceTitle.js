@@ -1,7 +1,7 @@
-// Instance 1: Title canvas
+// Instance: Title canvas
 //
 function createTitleCanvas() {
-  let instance1Sketch = function (p) {
+  let instanceTitleSketch = function (p) {
     // Mouse position
     let mouse = {
       x: undefined,
@@ -40,8 +40,8 @@ function createTitleCanvas() {
     // Pulsating circle
     let pulsatingCircle = undefined;
 
-    // Background color: white
-    let bgFill = {
+    // Background color: black
+    const BG_FILL = {
       r: 0,
       g: 0,
       b: 0,
@@ -132,7 +132,7 @@ function createTitleCanvas() {
       mouse.y = p.mouseY;
 
       // Set background color
-      p.background(bgFill.r, bgFill.g, bgFill.b);
+      p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
       // Update all behaviour of rectangle
       titleRectangle.update();
@@ -158,6 +158,9 @@ function createTitleCanvas() {
       // If drop overlaps with circle, make circle expand throughout entire canvas
       if (pulsatingCircle.overlapsWith(drop)) {
         pulsatingCircle.expandAllTheWay();
+
+        // Make sparkle sound effect
+        sparkle.play();
       }
 
       // If circle exceeds rectangle height, switch states
@@ -170,5 +173,5 @@ function createTitleCanvas() {
     };
   };
 
-  let myp5Title = new p5(instance1Sketch);
+  let myp5Title = new p5(instanceTitleSketch);
 }
