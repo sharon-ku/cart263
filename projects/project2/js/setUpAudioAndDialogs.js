@@ -57,7 +57,7 @@ function createInternalDialog() {
     position: {
       my: "center center",
       at: "center bottom",
-      of: $(`.background-canvas`),
+      of: window,
     },
     // Adjust size of dialog box based on content it stores
     height: "auto",
@@ -125,7 +125,6 @@ function createEmailDialog() {
       Save: function () {
         $(this).dialog(`close`);
         $(`#workout-dialog`).dialog(`open`);
-        $(`#distraction-description`).text(`Tomorrow's going to be a good day`);
       },
       Delete: function () {
         $(`#workout-dialog`).dialog(`open`);
@@ -151,14 +150,18 @@ function createWorkoutDialog() {
     buttons: {
       Yes: function () {
         $(this).dialog(`close`);
-        $(`#internal-dialog-text`).text(
+        // Change internal dialog text
+        changeInternalDialogText(
           `Maybe another day. I don't feel like it today.`
         );
+        // Open question dialog
         $(`#go-to-work-question-dialog`).dialog(`open`);
       },
       No: function () {
         $(this).dialog(`close`);
-        $(`#internal-dialog-text`).text(`Today's not the day.`);
+        // Change internal dialog text
+        changeInternalDialogText(`Today's not the day.`);
+        // Open question dialog
         $(`#go-to-work-question-dialog`).dialog(`open`);
       },
     },
@@ -172,7 +175,7 @@ function createGoToWorkQuestionDialog() {
     position: { my: "left+100 top+100", at: "left top", of: window },
     // Adjust size of dialog box based on content it stores
     height: "auto",
-    width: "auto",
+    width: "300px",
     // Don't open automatically
     autoOpen: false,
     // Hide close button and change css of dialog
@@ -186,10 +189,14 @@ function createGoToWorkQuestionDialog() {
         goToWork();
         // Hide current state
         $(`#morning-state`).hide();
+        // Change internal dialog text
+        changeInternalDialogText(`Off to work I go!`);
       },
       No: function () {
-        $(`#internal-dialog-text`).text(`You're going to be late!`);
-        // console.log(`${$(`#internal-dialog-text`)}`);
+        // Change internal dialog text
+        changeInternalDialogText(
+          `I can't procrastinate today! I'm going to be late!`
+        );
       },
     },
   });
@@ -228,8 +235,6 @@ function createToDoDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
   });
@@ -334,8 +339,6 @@ function createAffirmationsDialog() {
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
-    // Don't open automatically
-    // autoOpen: false,
     // Hide close button and change css of email dialog
     dialogClass: "no-close email",
   });

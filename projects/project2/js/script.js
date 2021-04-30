@@ -59,6 +59,8 @@ let scoreIncreaseRate = 10;
 let minScore = 0;
 let maxScore = 200;
 
+// Delay before creating internal dialog
+const DELAY_INTERNAL_DIALOG_CREATION = 3000;
 // Transportation mode
 // All possible modes: walk, bike, bus
 let transportationMode = undefined;
@@ -88,6 +90,18 @@ function stopLoopingAudio(soundToStop) {
   soundToStop.loop = false;
   soundToStop.pause();
   soundToStop.currentTime = 0;
+}
+
+// Change internal dialog with string provided
+function changeInternalDialogText(string) {
+  // Make internal dialog blink
+  $(`#internal-dialog`).effect("highlight");
+  // Change internal dialog text
+  $(`#internal-dialog-text`).text(`${string}`);
+  // After 5 seconds, remove the text
+  setTimeout(() => {
+    $(`#internal-dialog-text`).empty();
+  }, 5000);
 }
 
 // Set day number
@@ -189,7 +203,11 @@ function morning() {
   createEmailDialog();
   createWorkoutDialog();
   createGoToWorkQuestionDialog();
-  createInternalDialog();
+
+  // Wait a little before creating internal dialog
+  setTimeout(() => {
+    createInternalDialog();
+  }, DELAY_INTERNAL_DIALOG_CREATION);
 
   // Show letter animation
   $(`#letter-animation`).show();
