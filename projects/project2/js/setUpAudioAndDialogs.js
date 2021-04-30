@@ -9,11 +9,28 @@ let happySpeech;
 // Peep yell
 let peepYell;
 
+// Relaxing music that plays for title, morning, goToWork, returnHome, and night
+let relaxingBackgroundMusic;
+
+// Resturant music that plays in work state
+let restaurantBackgroundMusic;
+
 // Load all sounds
 function loadAudio() {
+  // Relaxing music: ahhh peaceful
+  relaxingBackgroundMusic = new Audio(
+    `assets/sounds/relaxing-background-music.mp3`
+  );
+  relaxingBackgroundMusic.volume = 0.7;
+
+  // Restaurant music: snap your fingers to this!
+  restaurantBackgroundMusic = new Audio(
+    `assets/sounds/restaurant-background-music.mp3`
+  );
+  restaurantBackgroundMusic.volume = 0.07;
+
   // Ladi's welcoming speech
   welcomeSpeech = new Audio(`assets/sounds/ladi-welcome.mp3`);
-  welcomeSpeech.volume = 0;
 
   // Ladi's feedback speeches
   neutralSpeech = new Audio(`assets/sounds/ladi-neutral.mp3`);

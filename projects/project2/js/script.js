@@ -26,7 +26,7 @@ Sound effects sources:
 "use strict";
 
 // All possible states: title, morning, goToWork, work, returnHome, night
-let state = `title`;
+let state = `work`;
 
 // Number of puzzles dropped in box
 let numPuzzlesDropped = 0;
@@ -67,13 +67,23 @@ let deliveryGame = `stop`;
 
 // -----------------------------------------------------
 
+// Play sound provided and loop through it
+function playLoopingAudio(soundToPlay) {
+  soundToPlay.loop = true;
+  soundToPlay.play();
+}
+
+// Stop looping audio from playing
+function stopLoopingAudio(soundToStop) {
+  soundToStop.loop = false;
+  soundToStop.pause();
+  soundToStop.currentTime = 0;
+}
+
 // Set day number
 function updateDayNumber() {
   $(`#day-number`).text(`${dayNumber}`);
 }
-
-// Create internal dialog
-createInternalDialog();
 
 // Set up states
 // function resetState() {
@@ -138,6 +148,9 @@ function hideAllHTML() {
 function title() {
   // Show HTML elements for this state
   $(`#title-state`).show();
+
+  // Play background music and loop it
+  playLoopingAudio(relaxingBackgroundMusic);
 }
 
 // -----------------------------------------------------
@@ -166,6 +179,7 @@ function morning() {
   createEmailDialog();
   createWorkoutDialog();
   createGoToWorkQuestionDialog();
+  createInternalDialog();
 
   // Show letter animation
   $(`#letter-animation`).show();
@@ -245,6 +259,10 @@ function work() {
   // Show work-state HTML
   $(`#work-state`).show();
 
+  // Stop relaxing music and play resturant music instead
+  stopLoopingAudio(relaxingBackgroundMusic);
+  playLoopingAudio(restaurantBackgroundMusic);
+
   // Create canvases
   createWorkBackgroundCanvas();
   createSinkCanvas();
@@ -302,16 +320,12 @@ function returnHome() {
   // Show return-home HTML
   $(`#return-home-state`).show();
 
+  // Stop restaurant music and play relaxing music instead
+  stopLoopingAudio(restaurantBackgroundMusic);
+  playLoopingAudio(relaxingBackgroundMusic);
+
   // Cue time before returning home
   switchToNight();
-
-  // // Hide all HTML from other states
-  // $(`#title-state`).hide();
-  // $(`#morning-state`).hide();
-  // $(`#go-to-work-state`).hide();
-  // $(`#work-state`).hide();
-  // $(`#return-home-state`).hide();
-  // $(`#night-state`).hide();
 
   // Create canvases
   // createReturnHomeBackgroundCanvas();
@@ -347,7 +361,4 @@ function night() {
   // Create all dialogs
   createAffirmationsDialog();
   createSayGoodnightDialog();
-
-  // // Make mirror canvas draggable
-  // makeElementDraggable(`#mirror-canvas`);
 }
