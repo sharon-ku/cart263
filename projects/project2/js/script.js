@@ -90,6 +90,16 @@ let ladiFeeling = `welcoming`;
 // Set to `play` if the delivery game started
 let deliveryGame = `stop`;
 
+// Current state of sink
+// All possible states: `on`, `off`
+let sinkState = `off`;
+
+// True if giving feedback to sink stopping
+let givingFeedbackForPouring = false;
+
+// True if deliverer dropped food in food delivery task
+let foodIsOnFloor = `false`;
+
 // -----------------------------------------------------
 
 // Load all the audio
@@ -138,40 +148,6 @@ if (state === `title`) {
 
   // start state
   title();
-}
-// Or else, for other states:
-else if (state === `morning`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  morning();
-  // // update day number
-  // updateDayNumber();
-} else if (state === `goToWork`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  goToWork();
-} else if (state === `work`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  work();
-} else if (state === `returnHome`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  returnHome();
-} else if (state === `night`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // start state
-  night();
 }
 
 // Hide all HTML elements

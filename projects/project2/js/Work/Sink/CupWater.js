@@ -15,7 +15,7 @@ class CupWater {
     this.heightMin = 0;
     this.heightMax = cup.height;
     this.heightCurrent = this.heightMin;
-    this.heightIncreaseRate = 0.8;
+    this.heightIncreaseRate = 1;
     // fill: blue
     this.fill = {
       r: 74,
@@ -27,11 +27,6 @@ class CupWater {
 
   // Update all cup behaviour
   update() {
-    // console.log(this.heightCurrent);
-
-    // // Fill cup with water
-    // this.fillCup();
-
     // Draw water
     this.display();
   }

@@ -1,12 +1,8 @@
 // Instance: Sink canvas
 //
-
-// Current state of sink
-// All possible states: `on`, `off`
-let sinkState = `off`;
-
-// True if giving feedback to sink stopping
-let givingFeedback = false;
+// In this task, Kay needs to pour water into a cup.
+// Some customers are thirsty and some are not. Kay must respect the water limit line.
+// Click on "Pour" and "Stop" to control sink output.
 
 function createSinkCanvas() {
   let instanceSinkSketch = function (p) {
@@ -74,7 +70,7 @@ function createSinkCanvas() {
         }
       }
       // Else if sink is off and time to give feedback
-      else if (sinkState === `off` && givingFeedback === true) {
+      else if (sinkState === `off` && givingFeedbackForPouring === true) {
         // Reset water line if water reaches limit line
         if (cup.limitLineIsReached(cupWater)) {
           // Play victory sound effect
@@ -120,7 +116,7 @@ function createSinkCanvas() {
         p.resetCupValues();
 
         // Done giving feedback
-        givingFeedback = false;
+        givingFeedbackForPouring = false;
       }
 
       // Display faucet spout

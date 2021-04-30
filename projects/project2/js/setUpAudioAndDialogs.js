@@ -274,7 +274,7 @@ function createSinkDialog() {
             // Turn it off
             sinkState = `off`;
             // It's time to give feedback
-            givingFeedback = true;
+            givingFeedbackForPouring = true;
             // Update button text to "Pour!"
             $("#pour-button").button("option", "label", "Pour!");
           }

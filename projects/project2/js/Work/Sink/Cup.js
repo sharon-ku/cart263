@@ -85,9 +85,9 @@ class Cup {
     // If cup water overlaps with limit line, return true
     if (
       cupBaseY - cupWater.heightCurrent <
-        this.waterLimit.y + this.waterLimit.strokeWeight / 2 &&
+        this.waterLimit.y + this.waterLimit.strokeWeight &&
       cupBaseY - cupWater.heightCurrent >
-        this.waterLimit.y - this.waterLimit.strokeWeight / 2
+        this.waterLimit.y - this.waterLimit.strokeWeight
     ) {
       return true;
     } else {

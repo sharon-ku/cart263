@@ -1,5 +1,9 @@
 // Instance: Food delivery canvas
 //
+// In this task, Kay must bring the plates to the right table.
+// User controls Kay by hovering over Kay.
+// If Kay hits a customer instead, user loses control of Kay's movement; Kay freezes and watches as the food gets soaked into the floor for 3 solid seconds.
+// If Kay gets food to the correct table, kids cheer.
 
 function createFoodDeliveryCanvas() {
   let instanceFoodDeliverySketch = function (p) {
@@ -34,7 +38,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const TOTAL_PLATES = 10;
+    const TOTAL_PLATES = 15;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut
@@ -65,6 +69,9 @@ function createFoodDeliveryCanvas() {
 
     // True if time to choose random table
     let chooseNewTable = false;
+
+    // Have to wait this much time before deliverer unfreezes
+    const DELAY_RESET_DELIVERER = 3000;
 
     // Preload assets
     p.preload = function () {
@@ -142,22 +149,35 @@ function createFoodDeliveryCanvas() {
         // Draw cursor as a circle
         p.displayCursor();
 
-        // Update behaviour of deliverer
-        deliverer.update(mouse);
+        // If food fell on floor, give user 3 seconds of shame
+        if (foodIsOnFloor) {
+          // Only allowed to display deliverer
+          deliverer.display();
 
-        // Consequences when deliverer hits a customer
-        p.delivererHitsCustomer();
+          // Freeze deliverer for 3 seconds, then reset it to normal
+          setTimeout(() => {
+            foodIsOnFloor = false;
+            // Reset deliverer's image
+            deliverer.reset();
+          }, DELAY_RESET_DELIVERER);
+        } else {
+          // Update behaviour of deliverer
+          deliverer.update(mouse);
 
-        // Consequences of a successfully delivery to table
-        p.successfulDelivery();
+          // Consequences when deliverer hits a customer
+          p.delivererHitsCustomer();
 
-        // Update numPlates sent out
-        if (updateNumPlates) {
-          numPlatesSentOut++;
-          updateNumPlates = false;
+          // Consequences of a successfully delivery to table
+          p.successfulDelivery();
 
-          // If all plates have been sent out:
-          p.noMorePlates();
+          // Update numPlates sent out
+          if (updateNumPlates) {
+            numPlatesSentOut++;
+            updateNumPlates = false;
+
+            // If all plates have been sent out:
+            p.noMorePlates();
+          }
         }
       }
     };
@@ -204,9 +224,9 @@ function createFoodDeliveryCanvas() {
         // Choose random table to deliver food to
         chooseNewTable = true;
 
-        // Reset deliverer and update numPlatesSentOut
+        // Reset deliverer
         setTimeout(() => {
-          p.resetDeliverer();
+          deliverer.reset();
         }, 1000);
 
         // Add points
@@ -220,13 +240,14 @@ function createFoodDeliveryCanvas() {
         if (deliverer.intersects(customers[i])) {
           // Deliverer drops the food (switch images)
           deliverer.spillsFood();
+          foodIsOnFloor = `true`;
 
           // Peep is mad now that you spilled food
           peepFeeling = `mad`;
           peepYell.play();
 
-          // Reset deliverer and update numPlatesSentOut
-          p.resetDeliverer();
+          // // Reset deliverer's image
+          // deliverer.reset();
 
           // Remove points
           gameScore -= scoreDecreaseRate;
@@ -242,11 +263,6 @@ function createFoodDeliveryCanvas() {
       p.ellipse(mouse.x, mouse.y, mouse.size);
       p.noCursor();
       p.pop();
-    };
-
-    // Reset deliverer and udpate numPlates
-    p.resetDeliverer = function () {
-      deliverer.reset();
     };
 
     // Choose random table to deliver food to
