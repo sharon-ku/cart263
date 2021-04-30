@@ -38,12 +38,6 @@ https://www.chosic.com/download-audio/?t=24280
 // All possible states: title, morning, goToWork, work, returnHome, night
 let state = `title`;
 
-// Number of puzzles dropped in box
-let numPuzzlesDropped = 0;
-
-// Number of total puzzles
-const NUM_TOTAL_PUZZLES = 2;
-
 // Track number of day (starts at 1)
 let dayNumber = 1;
 
@@ -61,16 +55,26 @@ let maxScore = 200;
 
 // Delay before creating internal dialog
 const DELAY_INTERNAL_DIALOG_CREATION = 3000;
+
+// Delay before removing internal dialog text
+const DELAY_REMOVE_INTERNAL_DIALOG_TEXT = 5000;
+
+// Duration to make title state fade away
+const TITLE_STATE_FADE_DURATION = 3000;
+
 // Transportation mode
 // All possible modes: walk, bike, bus
 let transportationMode = undefined;
+
+// Amount of time needed to get to work
+const DURATION_TO_ARRIVE_TO_WORK = 10000;
 
 // Number of work tasks left to do
 let numTasksLeft = 2;
 // True when a task is completed
 let taskCompleted = false;
 
-// how is Peep feeling right now?
+// How is Peep feeling right now?
 // possible feelings: neutral, happy, mad
 let peepFeeling = `neutral`;
 
@@ -78,6 +82,9 @@ let peepFeeling = `neutral`;
 let deliveryGame = `stop`;
 
 // -----------------------------------------------------
+
+// Begin with title
+// title();
 
 // Play sound provided and loop through it
 function playLoopingAudio(soundToPlay) {
@@ -101,24 +108,25 @@ function changeInternalDialogText(string) {
   // After 5 seconds, remove the text
   setTimeout(() => {
     $(`#internal-dialog-text`).empty();
-  }, 5000);
+  }, DELAY_REMOVE_INTERNAL_DIALOG_TEXT);
 }
 
 // Set day number
 // function updateDayNumber() {
 //   $(`#day-number`).text(`${dayNumber}`);
 // }
+loadAudio();
 
 // Set up states
 // function resetState() {
 if (state === `title`) {
-  loadAudio();
-  // hide all HTML elements
-  hideAllHTML();
-  // hide day section
-  // $(`#day-section`).hide();
-  // create canvas
-  createTitleCanvas();
+
+  // // hide all HTML elements
+  // hideAllHTML();
+  // // hide day section
+  // // $(`#day-section`).hide();
+  // // create canvas
+  // createTitleCanvas();
   // start state
   title();
 } else if (state === `morning`) {
@@ -154,7 +162,7 @@ if (state === `title`) {
   // start state
   night();
 }
-
+//
 // Hide all HTML elements
 function hideAllHTML() {
   $(`#title-state`).hide();
@@ -173,6 +181,15 @@ function title() {
   // Show HTML elements for this state
   $(`#title-state`).show();
 
+  // Load audio
+  loadAudio();
+
+  // Hide all HTML elements
+  hideAllHTML();
+
+  // Create canvas
+  createTitleCanvas();
+
   // Play background music and loop it
   playLoopingAudio(relaxingBackgroundMusic);
 }
@@ -184,7 +201,7 @@ function title() {
 function morning() {
   state = `morning`;
   // Made title canvas fade away
-  $(`#title-state`).toggle("fade", 3000, showMorningElements);
+  $(`#title-state`).toggle("fade", TITLE_STATE_FADE_DURATION, showMorningElements);
 
   // // Add 1 to day number
   // if (switchDay) {
@@ -228,7 +245,7 @@ $(`#letter-animation`).click(function () {
   $(this).hide();
 });
 
-// Make something draggable
+// Make element draggable
 function makeElementDraggable(element) {
   $(`${element}`).draggable({
     drag: function (event, ui) {
@@ -244,9 +261,6 @@ function makeElementDraggable(element) {
 function goToWork() {
   state = `goToWork`;
 
-  // Hide title canvas
-  $(`#title-canvas`).slideToggle();
-
   // Show go-to-work HTML elements
   $(`#go-to-work-state`).show();
 
@@ -260,21 +274,22 @@ function goToWork() {
   createChooseTransportationDialog();
 }
 
-// When walk button is clicked on, set walking transportation method
+// When walk button is clicked on:
 $(`#walk-button`).click(function () {
+  // Hide dialog for choosing transportation
   $(`#choose-transportation-dialog`).dialog("close");
-
+  // set walking transportation method
   transportationMode = `walk`;
-
-  console.log(transportationMode);
 });
 
 // Start timer that will activate work state
 function arriveToWork() {
   setTimeout(() => {
+    // Hide goToWork state
     $(`#go-to-work-state`).hide();
+    // Cue work state
     work();
-  }, 20000);
+  }, DURATION_TO_ARRIVE_TO_WORK);
 }
 
 // -----------------------------------------------------
@@ -316,23 +331,29 @@ function removeATask() {
     // Update number of tasks left
     $(`#number-of-tasks-left`).text(`${numTasksLeft}`);
 
-    // If no more tasks left, start boss dialog
-    if (numTasksLeft === 0) {
-      console.log(`COMPLETED ALL TASKS!`);
-      // Get feedback from Ladi
-      getFeedbackFromBoss();
-
-      // Close all task-related dialog boxes
-      $(`#food-delivery-dialog`).dialog(`close`);
-      $(`#sink-dialog`).dialog(`close`);
-      $(`#to-do-dialog`).dialog(`close`);
-    }
+    // Check if there are tasks left
+    checkIfTasksLeft();
 
     taskCompleted = false;
   }
 }
 
-// Let Ladi make a speech
+// Check if any tasks left
+function checkIfTasksLeft() {
+  // If not tasks left
+  if (numTasksLeft === 0) {
+    console.log(`COMPLETED ALL TASKS!`);
+    // Get feedback from Ladi
+    getFeedbackFromBoss();
+
+    // Close all task-related dialog boxes
+    $(`#food-delivery-dialog`).dialog(`close`);
+    $(`#sink-dialog`).dialog(`close`);
+    $(`#to-do-dialog`).dialog(`close`);
+  }
+}
+
+// Create canvas and dialog that allows Ladi to give feedback
 function getFeedbackFromBoss() {
   createLadiFeedbackCanvas();
   createLadiFeedbackDialog();
