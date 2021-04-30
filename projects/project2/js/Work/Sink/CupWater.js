@@ -15,12 +15,12 @@ class CupWater {
     this.heightMin = 0;
     this.heightMax = cup.height;
     this.heightCurrent = this.heightMin;
-    this.heightIncreaseRate = 0.5; //0.1
-    // fill: light blue
+    this.heightIncreaseRate = 0.8;
+    // fill: blue
     this.fill = {
-      r: 207,
-      g: 229,
-      b: 255,
+      r: 74,
+      g: 138,
+      b: 242,
       alpha: 255,
     };
   }

@@ -24,15 +24,12 @@ function createSinkCanvas() {
     };
 
     // Number of cups to fill
-    const TOTAL_NUM_CUPS = 5;
+    const TOTAL_NUM_CUPS = 20;
     // Count number of cups filled
     let numCupsFilled = 0;
 
     // Faucet spout
     let faucetSpout = undefined;
-
-    // Yay sound effect
-    let yaySFX = undefined;
 
     // Cup
     let cup = undefined;
@@ -44,9 +41,6 @@ function createSinkCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Create new yay sound effect
-      yaySFX = new Audio("assets/sounds/yay.mp3");
-
       // Create a start canvas
       let sinkCanvas = p.createCanvas(300, 400);
       sinkCanvas.parent(`sink-canvas`);

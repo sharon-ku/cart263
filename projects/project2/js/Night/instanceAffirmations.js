@@ -93,7 +93,7 @@ function createAffirmationsCanvas() {
       // Store guess in currentAnswer and convert to all lowercase
       currentAnswer = guess.toLowerCase();
       // Place guess in internal dialog box
-      $(`#internal-dialog-text`).text(guess);
+      changeInternalDialogText(guess);
     };
 
     // Set background fill, update all behaviour of objects
@@ -125,11 +125,14 @@ function createAffirmationsCanvas() {
       ) {
         // Update current affirmation index
         currentAffirmationIndex += 1;
+        // Play "yay" sound effect
+        longerYaySFX.play();
 
         // If user said all 3 affirmations, time to say goodnight <3
         if (currentAffirmationIndex === affirmations.length) {
           // Close affirmations dialog
           $(`#affirmations-dialog`).dialog("close");
+
           // Open "Say goodnight" dialog
           $(`#say-goodnight-dialog`).dialog("open");
         }

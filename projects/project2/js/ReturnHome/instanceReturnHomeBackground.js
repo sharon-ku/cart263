@@ -1,7 +1,7 @@
-// Instance: GoToWork background canvas
+// Instance: ReturnHome background canvas
 //
-function createGoToWorkBackgroundCanvas() {
-  let instanceGoToWorkBackgroundSketch = function (p) {
+function createReturnHomeBackgroundCanvas() {
+  let instanceReturnHomeBackgroundSketch = function (p) {
     // Background color: black
     const BG_FILL = {
       r: 0,
@@ -15,15 +15,15 @@ function createGoToWorkBackgroundCanvas() {
     // Store background images in here
     let backgroundImages = [];
 
-    // Go to work background with all its behaviour
-    let goToWorkBackground = undefined;
+    // returnHome background with all its behaviour
+    let returnHomeBackground = undefined;
 
     // Load assets
     p.preload = function () {
       // Load background images
       for (let i = 0; i < NUM_BACKGROUND_IMAGES; i++) {
         let backgroundImage = p.loadImage(
-          `assets/images/backgrounds/go-to-work-background${i}.jpg`
+          `assets/images/backgrounds/return-home-background${i}.jpg`
         );
         backgroundImages.push(backgroundImage);
       }
@@ -31,12 +31,12 @@ function createGoToWorkBackgroundCanvas() {
 
     // Create canvas and objects
     p.setup = function () {
-      // Create a goToWork canvas
-      let goToWorkCanvas = p.createCanvas(1280, 720);
-      goToWorkCanvas.parent(`go-to-work-background-canvas`);
+      // Create a returnHome canvas
+      let returnHomeCanvas = p.createCanvas(1280, 720);
+      returnHomeCanvas.parent(`return-home-background-canvas`);
 
       // Create a new background
-      goToWorkBackground = new Background(p, backgroundImages);
+      returnHomeBackground = new Background(p, backgroundImages);
     };
 
     // Update behaviour of background
@@ -44,10 +44,10 @@ function createGoToWorkBackgroundCanvas() {
       // Set background color
       p.background(BG_FILL.r, BG_FILL.g, BG_FILL.b);
 
-      // Update goToWork background's behaviour
-      goToWorkBackground.update();
+      // Update returnHome background's behaviour
+      returnHomeBackground.update();
     };
   };
 
-  let myp5GoToWorkBackground = new p5(instanceGoToWorkBackgroundSketch);
+  let myp5ReturnHomeBackground = new p5(instanceReturnHomeBackgroundSketch);
 }

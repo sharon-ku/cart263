@@ -15,14 +15,14 @@ class FallingWater {
     this.heightMax = cup.y + cup.height / 2 - this.y;
     this.heightCurrent = this.heightMin;
 
-    this.heightIncreaseRate = 0.2; //0.5
-    this.heightIncreaseAcceleration = 0.1;
+    this.heightIncreaseRate = 0.5;
+    this.heightIncreaseAcceleration = 0.3;
     this.gravity = 0.1;
-    // fill: light blue
+    // fill: blue
     this.fill = {
-      r: 207,
-      g: 229,
-      b: 255,
+      r: 74,
+      g: 138,
+      b: 242,
       alpha: 255,
     };
   }

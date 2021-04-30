@@ -9,6 +9,10 @@ let happySpeech;
 // Peep yell
 let peepYell;
 
+// Yay sound effect
+let yaySFX;
+let longerYaySFX;
+
 // Sparkle
 let sparkle;
 
@@ -34,6 +38,12 @@ function loadAudio() {
 
   // Sparkle in title state
   sparkle = new Audio(`assets/sounds/sparkle.wav`);
+
+  // Yay sound effect
+  yaySFX = new Audio(`assets/sounds/yay.mp3`);
+
+  // Longer yay sound effect for affirmations
+  longerYaySFX = new Audio(`assets/sounds/longer-yay.mp3`);
 
   // Ladi's welcoming speech
   welcomeSpeech = new Audio(`assets/sounds/ladi-welcome.mp3`);
@@ -281,7 +291,7 @@ function createFoodDeliveryDialog() {
     dialogClass: "no-close",
     show: { effect: "fade", duration: 500 },
     // Set position of dialog based on window position
-    position: { my: "left+200 center-100", at: "left center", of: window },
+    position: { my: "left+500 top+100", at: "left top", of: window },
     // Adjust size of dialog box based on content it stores
     height: "auto",
     width: "auto",
@@ -353,12 +363,17 @@ function createSayGoodnightDialog() {
     buttons: {
       Goodnight: function () {
         $(this).dialog(`close`);
+        $(`#internal-dialog`).dialog("close");
         // Make night state fade out
         $(`#night-state`).fadeOut(5000, function () {
-          // Set switch day to true
-          switchDay = true;
-          // Update state
-          morning();
+          // // Set switch day to true
+          // switchDay = true;
+          // // Update state
+          // morning();
+
+          // Let end text fade in
+          $(`#end-text`).text(`A little star shines brightly in the sky.`);
+          $(`#end-text`).fadeIn(1000);
         });
       },
     },

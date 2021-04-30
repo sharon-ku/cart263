@@ -34,7 +34,7 @@ function createFoodDeliveryCanvas() {
     const NUM_DELIVERER_IMAGES = 2;
 
     // Number of plates to deliver
-    const TOTAL_PLATES = 6;
+    const TOTAL_PLATES = 10;
     // Number of plates sent out
     let numPlatesSentOut = 0;
     // True if time to update numPlatesSentOut
@@ -193,6 +193,9 @@ function createFoodDeliveryCanvas() {
 
         // Peep is happy that you delivered the food properly
         peepFeeling = `happy`;
+
+        // Play "yay" sound effect
+        longerYaySFX.play();
 
         // Randomize plate position and create a new plate
         table.randomizePlatePosition();

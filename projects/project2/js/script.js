@@ -66,9 +66,13 @@ const TITLE_STATE_FADE_DURATION = 3000;
 let transportationMode = undefined;
 
 // Amount of time needed to get to work
-const DURATION_TO_ARRIVE_TO_WORK = 10000;
+const DURATION_TO_ARRIVE_TO_WORK = 8000;
+// Takes this much time to fade out go to work state
+const DURATION_FOR_GO_TO_WORK_FADEOUT = 2000;
 // Time it takes to go home from work
-const DURATION_TO_RETURN_HOME = 20000;
+const DURATION_TO_RETURN_HOME = 10000;
+// Takes this much time to fade out return home state
+const DURATION_FOR_RETURN_HOME_FADEOUT = 2000;
 
 // Number of work tasks left to do
 let numTasksLeft = 2;
@@ -78,6 +82,10 @@ let taskCompleted = false;
 // How is Peep feeling right now?
 // possible feelings: neutral, happy, mad
 let peepFeeling = `neutral`;
+
+// How is Ladi feeling right now?
+// possible feelings: welcoming, pointy, neutral, happy, mad
+let ladiFeeling = `welcoming`;
 
 // Set to `play` if the delivery game started
 let deliveryGame = `stop`;
@@ -262,6 +270,9 @@ function makeElementDraggable(element) {
 function goToWork() {
   state = `goToWork`;
 
+  // Close internal dialog box
+  $(`#internal-dialog`).dialog(`close`);
+
   // Show go-to-work HTML elements
   $(`#go-to-work-state`).show();
 
@@ -287,9 +298,10 @@ $(`#walk-button`).click(function () {
 function arriveToWork() {
   setTimeout(() => {
     // Hide goToWork state
-    $(`#go-to-work-state`).hide();
-    // Cue work state
-    work();
+    $(`#go-to-work-state`).fadeOut(DURATION_FOR_GO_TO_WORK_FADEOUT, () => {
+      // Cue work state once done fading out
+      work();
+    });
   }, DURATION_TO_ARRIVE_TO_WORK);
 }
 
@@ -316,8 +328,8 @@ function work() {
   createLadiWelcomeCanvas();
 
   // Create all dialogs
-  createFoodDeliveryDialog();
   createSinkDialog();
+  createFoodDeliveryDialog();
   createLadiWelcomeDialog();
 
   // Update number of tasks left
@@ -385,16 +397,17 @@ function returnHome() {
   switchToNight();
 
   // Create canvases
-  // createReturnHomeBackgroundCanvas();
-
-  // Create dialogs
+  createReturnHomeBackgroundCanvas();
 }
 
 // Start timer that will activate night state
 function switchToNight() {
   setTimeout(() => {
-    $(`#return-home-state`).hide();
-    night();
+    // Make returnHome fade out
+    $(`#return-home-state`).fadeOut(DURATION_FOR_RETURN_HOME_FADEOUT, () => {
+      // Cue night state once fade out is over
+      night();
+    });
   }, DURATION_TO_RETURN_HOME);
 }
 
@@ -407,6 +420,10 @@ function night() {
 
   // Show night HTML
   $(`#night-state`).show();
+
+  // Reopen internal dialog box
+  createInternalDialog();
+  $(`#internal-dialog`).dialog(`open`);
 
   // Create canvases
   createMirrorCanvas();

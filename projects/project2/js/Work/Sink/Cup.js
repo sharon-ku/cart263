@@ -15,7 +15,7 @@ class Cup {
       r: 233,
       g: 199,
       b: 195,
-      alpha: 150,
+      alpha: 50,
     };
     // stroke color: magenta
     this.strokeFill = {

@@ -24,10 +24,6 @@ class Ladi {
     this.framesElapsed = 0;
     this.framesBtwEachImage = 30;
 
-    // how is Ladi feeling right now?
-    // possible feelings: welcoming, neutral, happy, mad
-    this.feeling = `neutral`;
-
     // Ladi's speech (audio)
     this.speech = speech;
 
@@ -38,6 +34,9 @@ class Ladi {
 
   // Update all behaviour
   update(gameScore) {
+    // Set Ladi's feeling using images
+    this.setFeelingImages();
+
     // Display image
     this.display();
 
@@ -45,22 +44,24 @@ class Ladi {
     this.switchImages();
   }
 
-  // Set Peep's feeling using images
+  // Set Ladi's feeling using images
   setFeelingImages() {
-    // Change images in animation + frames between images
-    // if (this.feeling === `normal`) {
-    //   this.imageIndex.first = 0;
-    //   this.imageIndex.second = 1;
-    //   this.framesBtwEachImage = 30;
-    // } else if (this.feeling === `happy`) {
-    //   this.imageIndex.first = 2;
-    //   this.imageIndex.second = 3;
-    //   this.framesBtwEachImage = 10;
-    // } else if (this.feeling === `mad`) {
-    //   this.imageIndex.first = 4;
-    //   this.imageIndex.second = 5;
-    //   this.framesBtwEachImage = 10;
-    // }
+    if (ladiFeeling === `welcoming`) {
+      this.imageIndex.first = 0;
+      this.imageIndex.second = 1;
+    } else if (ladiFeeling === `pointy`) {
+      this.imageIndex.first = 2;
+      this.imageIndex.second = 3;
+    } else if (ladiFeeling === `neutral`) {
+      this.imageIndex.first = 4;
+      this.imageIndex.second = 5;
+    } else if (ladiFeeling === `happy`) {
+      this.imageIndex.first = 6;
+      this.imageIndex.second = 7;
+    } else if (ladiFeeling === `mad`) {
+      this.imageIndex.first = 8;
+      this.imageIndex.second = 9;
+    }
   }
 
   // Display image
