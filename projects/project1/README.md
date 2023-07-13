@@ -1,6 +1,10 @@
 # Project 1: Learn English for Food Lovers
 
-## Sharon Ku
+## Play it!
+
+https://sharon-ku.github.io/cart263/projects/project1/
+
+## Artist Statement
 
 The goal of this game is to teach Cantonese speakers how to pronounce 10 English words related to emotions.
 
