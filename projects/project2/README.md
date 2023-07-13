@@ -1,7 +1,11 @@
-# Artist Statement: Fogdog
+# Fogdog
+by Sharon Ku
 
-## Sharon Ku
+## Play It
+https://sharon-ku.github.io/cart263/projects/project1/
 
+
+## Artist Statement
 Fogdog is an interactive game about a little circular character named Kay. Kay follows a routine each day: waking up in the morning to check emails, heading to work, doing tasks at work while being judged harshly by Peep the bird, then going home at night and spending some quality time saying affirmations out loud.
 
 My goal is to have the user dive into the world of Kay and experience different interactions that enable them to feel part of the story. For instance, I programmed Kay to be shown through a mirror in the morning and night scenes. Mirror Kay actually mirrors the user’s face! Also, I asked my brother to voice Ladi and Peep so that the characters feel more alive. Clicking on the buttons of the dialogs triggers different events.
