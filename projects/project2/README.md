@@ -2,7 +2,7 @@
 by Sharon Ku
 
 ## Play It
-https://sharon-ku.github.io/cart263/projects/project1/
+https://sharon-ku.github.io/cart263/projects/project2/
 
 
 ## Artist Statement
