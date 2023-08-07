@@ -6,7 +6,7 @@ class LargeText {
     this.y = undefined;
     // text information
     this.string = undefined;
-    this.size = 150;
+    this.size = 120;
     this.fill = 255;
   }
 
@@ -19,6 +19,7 @@ class LargeText {
   // Display the text
   display() {
     fill(this.fill);
+    textFont(fontRegular);
     textSize(this.size);
     textAlign(CENTER, CENTER);
     text(this.string, this.x, this.y);

@@ -81,12 +81,17 @@ let mouse = {
   y: 0,
 };
 
+// font
+let fontRegular;
+
 /* ----------------------------------------------------------------------- */
 
 // preload()
 //
 // Preload all images
 function preload() {
+  fontRegular = loadFont('assets/fonts/DarumadropOne-Regular.ttf');
+
   // Loop through all animal images, load them, and push into animalImages array (does not include sausage dog)
   for (let i = 0; i < NUM_ANIMAL_IMAGES; i++) {
     let animalImage = loadImage(`assets/images/animal${i}.png`);
@@ -109,7 +114,7 @@ function setup() {
   // Remove all strokes
   noStroke();
 
-// Create all elements for intro: title, intro dog, and play button
+  // Create all elements for intro: title, intro dog, and play button
   createIntroElements();
 
   // Create new animal objects and push to animals array

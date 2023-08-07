@@ -39,7 +39,7 @@ class PlayButton {
       size: 50,
       // offset positions from rectangle's position
       xOffset: 0,
-      yOffset: 5,
+      yOffset: -13,
     };
 
     // returns true if button has been clicked
